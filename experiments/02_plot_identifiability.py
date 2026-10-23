@@ -233,7 +233,7 @@ def _fisher_figure(rows: list[dict[str, str]], output: Path) -> Path:
     singular = 0
     for position, key in enumerate(keys):
         group = [row for row in unique if (row["family"], _regime(row), _design(row)) == key]
-        labels.append(f"{key[0]}\nregime {key[1]} · {key[2]}")
+        labels.append(f"{key[0]}\nregime {key[1]}\n{key[2]}")
         color = "#2563a6" if key[2] == "partial" else "#ce6a22"
         values = [
             [_number(row, "lambda_min") / int(row["replicates"]) for row in group],
