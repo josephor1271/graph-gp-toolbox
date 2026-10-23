@@ -1,0 +1,120 @@
+{
+  "study": "primary",
+  "n": 49,
+  "families": [
+    "path",
+    "grid",
+    "irregular"
+  ],
+  "graph_seed": 2718,
+  "graph_family_codes": {
+    "path": 1,
+    "grid": 2,
+    "irregular": 3
+  },
+  "laplacian": "combinatorial / maximum degree (spectrum enclosed by [0,2])",
+  "amplitude": 1.0,
+  "mean": 0.0,
+  "regimes": [
+    [
+      0.6,
+      0.03,
+      0.75
+    ],
+    [
+      2.0,
+      0.12,
+      0.5
+    ]
+  ],
+  "observation_designs": [
+    "partial",
+    "full"
+  ],
+  "pool_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "mask_seed": 44001,
+  "rng": "NumPy SeedSequence with separate latent, noise and mask streams; PCG64",
+  "stream_key": "(n, graph_family_code, regime); topology uses separate graph_seed",
+  "mask_policy": "one fixed permutation per graph/regime, shared across pools and replicate budgets",
+  "paired_observations": "partial/full use identical full latent/noisy draws in each pool",
+  "nested_replicates": "prefixes of one max-R draw sequence, with fresh latent AND noise per column",
+  "replicates": [
+    1,
+    5,
+    20
+  ],
+  "fit_modes": [
+    "joint",
+    "noise_known"
+  ],
+  "heat_range": [
+    0.05,
+    4.0
+  ],
+  "noise_variance_range": [
+    0.005,
+    0.5
+  ],
+  "optimizer": "scipy.optimize.minimize, bounded L-BFGS-B in log parameters",
+  "initials": [
+    [
+      0.3,
+      0.04
+    ],
+    [
+      2.8,
+      0.2
+    ]
+  ],
+  "maxiter": 250,
+  "gtol": 1e-09,
+  "ftol": 1e-13,
+  "stationarity_tolerance": 1e-06,
+  "boundary_definition": "within 1% of physical range width",
+  "selection": "lowest evaluated exact NLL among numerically valid starts, including nonconverged starts",
+  "extra_grid_starts": false,
+  "representative": {
+    "family": "grid",
+    "n": 49,
+    "regime": 0,
+    "observation_design": "partial",
+    "pool_seed": 0,
+    "replicates": 1
+  },
+  "landscape_grid": {
+    "tau_log_nodes": 45,
+    "noise_log_nodes": 45,
+    "include_truth": true,
+    "include_selected_fit": true
+  },
+  "dtype": "float64",
+  "torch_threads": 1,
+  "normalization": "NLL per observed node per independent realization; KL per observed node",
+  "fisher_normalization": "total log-parameter information across R independent vectors, not divided by nodes or R",
+  "source_commit": "d57b30ac2b31a8224decfac1fc6e097e4ac4af8c",
+  "source_dirty": false,
+  "driver_sha256": "b8a194c41e73e98e4848da7c27c55b6635843ee94f9fa0811ed7bd9bb231229f",
+  "oracle_sha256": "c2706f154ed721b7f18ba8423eec1eff56ea4296b293696d7c1ecc7ba5644f92",
+  "expected_selected_fits": 1440
+}

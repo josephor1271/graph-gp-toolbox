@@ -1,0 +1,12 @@
+{
+  "selected_fits": 1440,
+  "optimizer_starts": 2880,
+  "independent_pools": 120,
+  "invalid_selected": 0,
+  "invalid_starts": 0,
+  "selected_optimizer_non_success": 1,
+  "selected_nonstationary": 2,
+  "selected_boundary_count": 318,
+  "selected_start_disagreements": 83,
+  "elapsed_seconds": 8.106323292013258
+}

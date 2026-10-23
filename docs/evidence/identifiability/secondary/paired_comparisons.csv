@@ -1,0 +1,9 @@
+family,n,regime,observation_design,observed_fraction,n_observed,fit_mode,replicates_reference,replicates_comparison,paired_pools,tau_error_delta_median,tau_improved_fraction,noise_error_delta_median,noise_improved_fraction
+grid,100,0,full,1.0,100,joint,1,20,10,-0.19361337364386952,0.6,-1.0295692573111166,0.7
+grid,100,0,full,1.0,100,noise_known,1,20,10,-0.06253054454748784,0.6,,
+grid,100,1,full,1.0,100,joint,1,20,10,-0.13606745216295596,0.8,-0.36520261802047316,0.9
+grid,100,1,full,1.0,100,noise_known,1,20,10,-0.023159615735103056,0.6,,
+irregular,100,0,full,1.0,100,joint,1,20,10,-0.7594588103580431,1.0,-0.2365803442012015,0.5
+irregular,100,0,full,1.0,100,noise_known,1,20,10,-0.4195884533769582,0.9,,
+irregular,100,1,full,1.0,100,joint,1,20,10,-0.07738773602744925,0.6,-0.1262863970836558,0.7
+irregular,100,1,full,1.0,100,noise_known,1,20,10,-0.06477982697440549,0.6,,

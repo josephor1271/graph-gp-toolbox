@@ -1,0 +1,8 @@
+{
+  "cases": 84,
+  "extra_optimizer_starts": 252,
+  "invalid_extra_starts": 0,
+  "selected_nonstationary": 0,
+  "selected_optimizer_non_success": 1,
+  "max_nll_improvement": 0.001800381734037737
+}

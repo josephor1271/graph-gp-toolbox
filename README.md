@@ -42,6 +42,8 @@ python experiments/01_heat_hyperparameter_recovery.py --plot-only
 # Stage 02 primary study and bounded graph-size check
 python experiments/02_heat_identifiability.py
 python experiments/02_heat_identifiability.py --secondary
+# Bounded additional-start diagnostic; original study results are preserved
+python experiments/02_audit_identifiability.py
 # Regenerate Stage 02 figures from saved CSV
 python experiments/02_plot_identifiability.py --input results/identifiability --secondary-input results/identifiability_secondary --output docs/figures
 ```
