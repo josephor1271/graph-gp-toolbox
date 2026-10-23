@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graph-gp-toolbox"
+version = "0.1.0"
+description = "Validated graph Gaussian processes with sparse Chebyshev operators"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["torch==2.11.0", "gpytorch==1.15.2", "linear_operator==0.6.1", "numpy>=2.0,<3", "scipy>=1.14,<2", "networkx>=3,<4", "matplotlib>=3.9,<4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

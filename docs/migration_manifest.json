@@ -1,0 +1,77 @@
+[
+  {
+    "source": "sparsecheblinop.py",
+    "destination": "src/graphgp/operators/chebyshev.py",
+    "source_sha256": "658735ace250919446100f61e85ab4b61b45291dd5ca84b4b8cf6bdae1a9640b"
+  },
+  {
+    "source": "chebyshev_inputs.py",
+    "destination": "src/graphgp/operators/coefficients.py",
+    "source_sha256": "1c8c6341370ccb55f071eab6a12c2728396f78f8d3f5980129a2bf97d8652458"
+  },
+  {
+    "source": "graph_kernels.py",
+    "destination": "src/graphgp/kernels/heat.py",
+    "source_sha256": "70c5ccfadd72c9ea00218d166beac3500ade4f2b8b198e91c2dd7ceb31889a76"
+  },
+  {
+    "source": "baseline_kernels.py",
+    "destination": "src/graphgp/kernels/dense.py",
+    "source_sha256": "bf3ba1cc5383413a6433d198fee39f3df16ecbb18c8f8ae783e5734194537b2a"
+  },
+  {
+    "source": "graph_gp_demo.py",
+    "destination": "src/graphgp/demo.py",
+    "source_sha256": "102093b13120a9e12b152956c3047a1ea0506c941483ebdc6b3f889939f13bcc"
+  },
+  {
+    "source": "experiment_utils.py",
+    "destination": "src/graphgp/validation.py",
+    "source_sha256": "2837736b9619dbc2c17a33597d5dc4ba7808c0c0bae0a0eebc79176ef3714477"
+  },
+  {
+    "source": "graph_gp_diagnostics.py",
+    "destination": "src/graphgp/diagnostics.py",
+    "source_sha256": "1877f60d191e3129d64362497582b28de9be99c9106b13e557b002ed2b7d366f"
+  },
+  {
+    "source": "tests/__init__.py",
+    "destination": "tests/__init__.py",
+    "source_sha256": "7a6892ea4415e5413ae938c65a8957c7c5709fab9af7c284798390b034e446a7"
+  },
+  {
+    "source": "tests/helpers.py",
+    "destination": "tests/helpers.py",
+    "source_sha256": "c4e34124ba00f3556591a54fea8795a771d2de4bf2470014c2a975358cc965e0"
+  },
+  {
+    "source": "tests/test_sparsecheblinop.py",
+    "destination": "tests/test_sparsecheblinop.py",
+    "source_sha256": "0e2f2d4841fe82d748eabf7ea1e6867bd2db03d1d96981212793d4fa2d61cfd4"
+  },
+  {
+    "source": "tests/test_chebyshev_inputs.py",
+    "destination": "tests/test_chebyshev_inputs.py",
+    "source_sha256": "ca5d50da8169ed1902fb0046b89b750f8ba6142545c65da0acb5bed37f27aa50"
+  },
+  {
+    "source": "tests/test_graph_heat_kernel.py",
+    "destination": "tests/test_graph_heat_kernel.py",
+    "source_sha256": "bf225ecc96a8a8f2032dd10a3389a135a3b4d3ac53a302fbae550ece99572134"
+  },
+  {
+    "source": "tests/test_exact_gp_integration.py",
+    "destination": "tests/test_exact_gp_integration.py",
+    "source_sha256": "6c9a612a60164d70549544670d626be56261d26b8fca5ae61b6a34334833a0e5"
+  },
+  {
+    "source": "tests/test_baseline_kernels.py",
+    "destination": "tests/test_baseline_kernels.py",
+    "source_sha256": "7566f746d8fc46ab8149579768166b3429319d0bf88c5f84d48bfd9e01328170"
+  },
+  {
+    "source": "tests/test_graph_gp_validation.py",
+    "destination": "tests/test_graph_gp_validation.py",
+    "source_sha256": "a0be3f1b4f97b9f0ad3ef3e281ad37aaed35209c490ead3dca490218c7dd370d"
+  }
+]
