@@ -3,7 +3,6 @@
 from graphgp.models.exact_gp import GraphGP, iterative_settings
 
 import argparse
-from contextlib import ExitStack, contextmanager
 
 import gpytorch
 import numpy as np
@@ -11,10 +10,6 @@ import scipy.sparse
 import torch
 
 from graphgp.kernels.heat import GraphHeatKernel
-
-
-
-
 
 
 def make_problem(n=40, seed=123):

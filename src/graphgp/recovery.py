@@ -65,6 +65,8 @@ def fit(problem, method, *, initial=(0.3, 0.04), steps=180, learn_amplitude=Fals
     train, target = problem['train'], problem['test']
     model = make_heat_gp(problem['L'], train, problem['y'][train], method,
         heat_time=initial[0], noise=initial[1], learn_amplitude=learn_amplitude, degree=degree)
+    model.train()
+    model.likelihood.train()
     mll = gpytorch.mlls.ExactMarginalLogLikelihood(model.likelihood, model)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.07)
     trajectory = []
