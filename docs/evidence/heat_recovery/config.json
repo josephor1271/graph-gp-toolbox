@@ -1,0 +1,73 @@
+{
+  "n": 49,
+  "graph_seed": 2718,
+  "families": [
+    "path",
+    "grid",
+    "irregular"
+  ],
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "regimes": [
+    [
+      0.6,
+      0.03,
+      0.75
+    ],
+    [
+      2.0,
+      0.12,
+      0.5
+    ]
+  ],
+  "initials": [
+    [
+      0.3,
+      0.04
+    ],
+    [
+      2.8,
+      0.2
+    ]
+  ],
+  "steps": 180,
+  "learning_rate": 0.07,
+  "optimizer": "Adam",
+  "learn_amplitude": false,
+  "heat_range": [
+    0.05,
+    4.0
+  ],
+  "noise_variance_range": [
+    0.005,
+    0.5
+  ],
+  "amplitude_range": [
+    0.1,
+    4.0
+  ],
+  "polynomial": {
+    "degree": 32,
+    "num_nodes": 33,
+    "lambda_min": 0.0,
+    "lambda_max": 2.0,
+    "max_heat_time": 4.0,
+    "exact_spectral_floor": 0.00033546262790251185,
+    "interpolation_error_bound": 1.9784913944390037e-27,
+    "roundoff_allowance": 2.418065747633591e-11,
+    "positivity_margin": 0.0003354626037218544
+  },
+  "cg_tolerance": 0.0001,
+  "max_cg_iterations": 500,
+  "trace_probes": "complete orthonormal basis: n_train probes, quadratic storage",
+  "lanczos_iterations": "n_train",
+  "max_preconditioner_size": 0,
+  "prediction": "target marginals, ordinary GP conditioning",
+  "dense_inference": "Cholesky",
+  "sparse_inference": "CG/SLQ",
+  "dtype": "float64",
+  "torch_threads": 1
+}

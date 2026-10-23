@@ -10,6 +10,13 @@ Dense exact, dense polynomial and sparse polynomial models fit the same correctl
 sampled data. Finite-data parameter recovery is assessed separately from numerical
 correctness. No claim of superiority over GNNs or general speedup is made.
 
+The first A–C milestone is complete: 51 tests pass (one CUDA skip), GitHub CPU
+CI passes, and 216 main fits plus 12 optimizer-audit fits completed. Dense/sparse
+heat-time estimates agree within 2.14e-5 in the main studies. Statistical recovery
+is much weaker: fixed-amplitude median relative heat-time error is 72.1% on these
+18 small datasets. See the measured findings below before interpreting fitted
+parameters as truth.
+
 ## Install and run
 
 Python 3.12 and CPU float64 are the tested setup. No license has been selected.
@@ -32,6 +39,8 @@ GPs from the dense **exact** heat covariance and adds independent Gaussian noise
 python experiments/01_heat_hyperparameter_recovery.py
 # Repeat with trainable signal amplitude
 python experiments/01_heat_hyperparameter_recovery.py --learn-amplitude --output results/free_amplitude
+# Diagnose the three largest fixed-amplitude initialization discrepancies
+python experiments/01_optimizer_audit.py
 # Regenerate summaries and all plots from saved CSV, without retraining
 python experiments/01_heat_hyperparameter_recovery.py --plot-only
 ```
