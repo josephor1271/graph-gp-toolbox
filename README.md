@@ -30,8 +30,7 @@ python -m graphgp.demo --steps 20
 python experiments/01_heat_hyperparameter_recovery.py --smoke
 ```
 
-The original short demo fits a smooth sine signal; it is an API demonstration,
-not a parameter-recovery claim. The scientific study samples independent latent
+The original short demo fits a smooth sine signal; it is an API demonstration. The scientific study samples independent latent
 GPs from the dense **exact** heat covariance and adds independent Gaussian noise.
 
 ```bash
@@ -97,6 +96,4 @@ implemented. See the [roadmap](docs/research_roadmap.md) and clearly separated
 
 ## Collaboration
 
-The GitHub repository is private. To invite Nicholas, the owner should use
-Settings → Collaborators and enter his confirmed GitHub username. No account has
-been guessed or invited. CI runs the numerical tests and a short recovery smoke run.
+The GitHub repository is private.
