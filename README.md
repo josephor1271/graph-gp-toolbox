@@ -2,24 +2,20 @@
 
 A small research codebase for Gaussian processes on fixed graphs, using GPyTorch
 and sparse Chebyshev matrix products. The intended direction is compositional
-kernels and functions of **graph vertex plus time**. This first implementation
-covers a trainable heat kernel and controlled synthetic parameter-recovery study.
+kernels and functions of **graph vertex plus time**. The current implementation
+covers a trainable heat kernel and controlled synthetic recovery and
+identifiability studies.
 
-The first question is whether numerical approximations change what the GP learns.
-Dense exact, dense polynomial and sparse polynomial models fit the same correctly
-sampled data. Finite-data parameter recovery is assessed separately from numerical
-correctness. No claim of superiority over GNNs or general speedup is made.
-
-The first A–C milestone is complete: 51 tests pass (one CUDA skip), GitHub CPU
-CI passes, and 216 main fits plus 12 optimizer-audit fits completed. Dense/sparse
-heat-time estimates agree within 2.14e-5 in the main studies. Statistical recovery
-is much weaker: fixed-amplitude median relative heat-time error is 72.1% on these
-18 small datasets. See the measured findings below before interpreting fitted
-parameters as truth.
+[Stage 01](docs/experiment_01_findings.md) establishes numerical agreement between
+dense exact and sparse polynomial GP fits; it does not establish reliable
+hyperparameter recovery. [Stage 02](docs/experiment_02_findings.md) studies
+finite-data identifiability using an independent dense statistical oracle,
+including multiple independent realizations sharing one covariance. These small
+studies make no claim of general speedup or superiority over GNNs.
 
 ## Install and run
 
-Python 3.12 and CPU float64 are the tested setup. No license has been selected.
+Python 3.12 and CPU float64 are the tested setup.
 
 ```bash
 python3 -m venv .venv
@@ -28,6 +24,7 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python -m graphgp.demo --steps 20
 python experiments/01_heat_hyperparameter_recovery.py --smoke
+python experiments/02_heat_identifiability.py --smoke --output results/identifiability_smoke
 ```
 
 The original short demo fits a smooth sine signal; it is an API demonstration. The scientific study samples independent latent
@@ -42,15 +39,19 @@ python experiments/01_heat_hyperparameter_recovery.py --learn-amplitude --output
 python experiments/01_optimizer_audit.py
 # Regenerate summaries and all plots from saved CSV, without retraining
 python experiments/01_heat_hyperparameter_recovery.py --plot-only
+# Stage 02 primary study and bounded graph-size check
+python experiments/02_heat_identifiability.py
+python experiments/02_heat_identifiability.py --secondary
+# Regenerate Stage 02 figures from saved CSV
+python experiments/02_plot_identifiability.py --input results/identifiability --secondary-input results/identifiability_secondary --output docs/figures
 ```
 
-Each run writes config and environment JSON, fit/trajectory/landscape/numerical
-CSV, generated data and prediction NPZ arrays, and three figures under `results/`.
-Raw generated results are gitignored. A compact measured evidence bundle and
-figures are retained under `docs/evidence/` and `docs/figures/`.
+Stage 01 saves config/environment JSON, diagnostic CSV, data/prediction NPZ arrays,
+and figures under `results/`. Stage 02 saves config/environment JSON and compact
+statistical CSV; its plot command reads those saved results. Generated results
+are gitignored. Selected evidence and report figures are retained under
+`docs/evidence/` and `docs/figures/`.
 
-[Experiment findings](docs/experiment_01_findings.md) explain numerical agreement,
-parameter errors across independent draws, optimizer sensitivity and limits.
 [Migration notes](docs/migration_notes.md) identify source provenance and tests.
 [Numerical safety](docs/numerical_safety.md) explains the enforced parameter domain,
 polynomial positivity analysis, and exact/approximate inference distinction.
@@ -85,8 +86,9 @@ require their own approximation/PSD validation.
 
 The sparse covariance applies a polynomial of the Laplacian without constructing
 the full graph covariance. Exact target variance extraction remains expensive.
-The tiny recovery study intentionally uses exhaustive trace probes with quadratic
-storage; it is **not a scaling benchmark**. The standalone demo uses random probes.
+The tiny numerical recovery comparison intentionally uses exhaustive trace probes
+with quadratic storage. Stage 02's dense statistical oracle also targets small
+graphs; neither study is a scaling benchmark. The standalone demo uses random probes.
 Inherited CSR/deprecation warnings remain visible; numerical warnings are logged
 separately. GPU behavior is unverified.
 
@@ -96,4 +98,5 @@ implemented. See the [roadmap](docs/research_roadmap.md) and clearly separated
 
 ## Collaboration
 
-The GitHub repository is private.
+The GitHub repository is public. No license has been selected; redistribution
+terms have not been specified.

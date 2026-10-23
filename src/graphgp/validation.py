@@ -28,7 +28,7 @@ from graphgp.operators.coefficients import (
     chebyshev_basis_on_interval_torch,
     evaluate_chebyshev_polynomial_torch,
 )
-from graphgp.demo import GraphGP, iterative_settings
+from graphgp.models.exact_gp import GraphGP, iterative_settings
 from graphgp.kernels.heat import GraphHeatKernel
 from graphgp.operators.chebyshev import ChebyshevFunctionLinearOperator
 

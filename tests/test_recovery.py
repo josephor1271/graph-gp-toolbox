@@ -1,5 +1,6 @@
 """Deterministic numerical prerequisites, not statistical recovery thresholds."""
 import unittest
+from unittest.mock import patch
 import warnings
 import gpytorch
 import torch
@@ -77,6 +78,27 @@ class RecoveryTests(unittest.TestCase):
         self.assertAlmostEqual(dense['heat_time'],sparse['heat_time'],places=5)
         self.assertLess(sparse['posterior_variance_max_error'],1e-5)
         self.assertEqual(sparse['numerical_warnings'],'[]')
+
+    def test_fit_trains_model_returned_in_eval_mode(self):
+        p=sample_problem('path',n=16)
+        expected,expected_history,expected_moments=fit(p,'A',steps=3)
+
+        def eval_factory(*args,**kwargs):
+            model=make_heat_gp(*args,**kwargs)
+            model.eval()
+            model.likelihood.eval()
+            return model
+
+        with patch('graphgp.recovery.make_heat_gp',side_effect=eval_factory):
+            actual,actual_history,actual_moments=fit(p,'A',steps=3)
+        for name in ('heat_time','noise','own_nll','exact_nll'):
+            self.assertAlmostEqual(actual[name],expected[name],places=12)
+        torch.testing.assert_close(
+            torch.tensor([point['loss'] for point in actual_history],dtype=torch.float64),
+            torch.tensor([point['loss'] for point in expected_history],dtype=torch.float64),
+            rtol=0,atol=0)
+        torch.testing.assert_close(actual_moments.mean,expected_moments.mean)
+        torch.testing.assert_close(actual_moments.latent_variance,expected_moments.latent_variance)
 
 
 if __name__=='__main__':
