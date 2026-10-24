@@ -94,14 +94,22 @@ class GraphHeatKernel(gpytorch.kernels.Kernel):
             raise ValueError(f"node IDs must be in [0, {self.L.shape[0] - 1}]")
         return x.long()
 
+    def full_graph_operator(self) -> ChebyshevFunctionLinearOperator:
+        """Return differentiable ``exp(-heat_time * L)`` polynomial MVPs.
+
+        Reuse the registered CSR graph and coefficient basis. This constructs
+        an operator, without materializing its graph covariance or copying L.
+        """
+        coefficients = chebyshev_coefficients_from_samples_torch(
+            torch.exp(-self.heat_time * self.spectral_nodes), self.cosine_basis)
+        return ChebyshevFunctionLinearOperator(
+            self.L, coefficients, lambda_min=self.lambda_min, lambda_max=self.lambda_max)
+
     def forward(self, x1, x2, diag=False, last_dim_is_batch=False, **params):
         if last_dim_is_batch:
             raise ValueError("last_dim_is_batch is unsupported")
         i1, i2 = self._node_indices(x1), self._node_indices(x2)
-        coefficients = chebyshev_coefficients_from_samples_torch(
-            torch.exp(-self.heat_time * self.spectral_nodes), self.cosine_basis)
-        base = ChebyshevFunctionLinearOperator(
-            self.L, coefficients, lambda_min=self.lambda_min, lambda_max=self.lambda_max)
+        base = self.full_graph_operator()
         result = InterpolatedLinearOperator(
             base_linear_op=base, left_interp_indices=i1, right_interp_indices=i2)
         return result.diagonal() if diag else result

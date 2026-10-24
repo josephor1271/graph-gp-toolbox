@@ -1,0 +1,94 @@
+{
+  "study": "full",
+  "starting_main_sha": "19b022fd9cadad3026534b4c98f4134d8b3c5d64",
+  "graph": "grid",
+  "n": 16,
+  "num_times": 10,
+  "graph_seed": 2718,
+  "laplacian": "combinatorial / maximum degree; spectrum enclosed by [0,2]",
+  "time_grid": "j/(T-1), fixed across training and targets",
+  "coordinate_order": "vertex-major/time-minor: v*T+j",
+  "true_heat_time": 1.2,
+  "true_lengthscale": 0.24,
+  "true_noise_variance": 0.06,
+  "amplitude": 1.0,
+  "mean": 0.0,
+  "seeds": [
+    11,
+    22,
+    33,
+    44
+  ],
+  "tasks": [
+    "interpolation",
+    "forecast"
+  ],
+  "interpolation_train_count": 64,
+  "forecast_train_count": 48,
+  "forecast_start": 6,
+  "main_models": [
+    "graph_only",
+    "time_only",
+    "joint"
+  ],
+  "main_steps": 160,
+  "parity_steps": 40,
+  "parity_seeds": [
+    11,
+    22
+  ],
+  "sensitivity_seeds": [
+    11
+  ],
+  "learning_rate": 0.05,
+  "optimizer": "torch.optim.Adam",
+  "initialization": {
+    "heat_time": 0.7,
+    "lengthscale": 0.4,
+    "noise_variance": 0.06,
+    "sensitivity_noise_variance": 0.12
+  },
+  "known_noise_main": true,
+  "parity_backends": [
+    "dense_exact",
+    "sparse_chebyshev"
+  ],
+  "degree": 32,
+  "heat_range": [
+    0.05,
+    4.0
+  ],
+  "lengthscale_range": [
+    0.08,
+    0.8
+  ],
+  "noise_range": [
+    0.005,
+    0.5
+  ],
+  "parity_cg_tolerance": 1e-07,
+  "validation_cg_tolerance": 1e-08,
+  "max_cg_iterations": 500,
+  "max_preconditioner_size": 0,
+  "exhaustive_probes": "complete training-space orthonormal basis, quadratic storage",
+  "requested_lanczos_iterations": "n_train; actual tridiagonal orders are recorded",
+  "installed_cg_eps": 1e-10,
+  "solver_defaults_modified": false,
+  "independent_unit": "one latent/noisy full field per seed; tasks and models are paired",
+  "rng": "NumPy SeedSequence(seed), spawn keys latent=(0,), noise=(1,), interpolation=(2,0), forecast=(2,1)",
+  "representative": {
+    "seed": 11,
+    "task": "interpolation",
+    "model": "joint",
+    "protocol": "main",
+    "backend": "dense_exact"
+  },
+  "expected_fit_counts": {
+    "main": 24,
+    "parity": 8,
+    "noise_sensitivity": 2
+  },
+  "train_time_definition": "optimization plus final loss/gradient evaluation; excludes setup and prediction",
+  "dtype": "CPU float64",
+  "posterior": "requested target marginals, raw latent diagonal, no clipping"
+}
