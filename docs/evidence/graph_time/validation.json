@@ -1,0 +1,608 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "conditions": {
+        "n": 9,
+        "num_times": 5,
+        "n_train": 18,
+        "n_targets": 8,
+        "heat_time": 0.93,
+        "lengthscale": 0.29,
+        "noise_variance": 0.073456789123,
+        "degree": 32,
+        "cg_tolerance": 1e-08
+      },
+      "reference_nll": 1.8173921240217281,
+      "reference_gradients": {
+        "heat_time": 0.77352900880559,
+        "lengthscale": 1.4408636156467878,
+        "noise_variance": -2.607775285605358
+      },
+      "backends": {
+        "dense_exact": {
+          "nll": 1.8173921240217281,
+          "nll_abs_error": 0.0,
+          "nll_relative_error": 0.0,
+          "gradients": {
+            "heat_time": {
+              "raw": 0.5290546756491267,
+              "physical": 0.7735290088055925,
+              "reference_physical": 0.77352900880559,
+              "reference_raw": 0.5290546756491249,
+              "physical_abs_error": 2.55351295663786e-15,
+              "raw_abs_error": 1.7763568394002505e-15
+            },
+            "lengthscale": {
+              "raw": 0.21432846558135465,
+              "physical": 1.440863615646787,
+              "reference_physical": 1.4408636156467878,
+              "reference_raw": 0.21432846558135477,
+              "physical_abs_error": 6.661338147750939e-16,
+              "raw_abs_error": 1.1102230246251565e-16
+            },
+            "noise_variance": {
+              "raw": -0.15383123472054838,
+              "physical": -2.6077752856053573,
+              "reference_physical": -2.607775285605358,
+              "reference_raw": -0.15383123472054844,
+              "physical_abs_error": 8.881784197001252e-16,
+              "raw_abs_error": 5.551115123125783e-17
+            }
+          },
+          "posterior": {
+            "mean_max_abs_error": 6.106226635438361e-16,
+            "mean_chunk_max_abs_error": 0.0,
+            "latent_variance_max_abs_error": 2.7755575615628914e-16,
+            "latent_variance_chunk_max_abs_error": 0.0,
+            "observation_variance_max_abs_error": 2.220446049250313e-16,
+            "observation_variance_chunk_max_abs_error": 0.0,
+            "mean_only_max_abs_error": 0.0
+          },
+          "solver": {
+            "backend": "dense_exact",
+            "cg_tolerance": 1e-08,
+            "exhaustive": true,
+            "lanczos_iterations": 18,
+            "cg_calls": 0,
+            "slq_calls": 0,
+            "cg_rhs_shapes": [],
+            "cg_tridiag_counts": [],
+            "slq_tridiagonal_orders": [],
+            "installed_cg_eps": 1e-10,
+            "max_cg_iterations": 500
+          },
+          "operator_phases": {
+            "forward": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            },
+            "backward": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            },
+            "prediction": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            }
+          },
+          "warnings": [
+            {
+              "category": "UserWarning",
+              "message": "Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at <upstream-pytorch-build>/aten/src/ATen/Context.cpp:767.)"
+            }
+          ]
+        },
+        "sparse_chebyshev": {
+          "nll": 1.8173921238808914,
+          "nll_abs_error": 1.4083667565500946e-10,
+          "nll_relative_error": 7.749382964384722e-11,
+          "gradients": {
+            "heat_time": {
+              "raw": 0.5290539064915218,
+              "physical": 0.7735278842229226,
+              "reference_physical": 0.77352900880559,
+              "reference_raw": 0.5290546756491249,
+              "physical_abs_error": 1.1245826673222936e-06,
+              "raw_abs_error": 7.691576030532943e-07
+            },
+            "lengthscale": {
+              "raw": 0.21432973070552053,
+              "physical": 1.440872120683087,
+              "reference_physical": 1.4408636156467878,
+              "reference_raw": 0.21432846558135477,
+              "physical_abs_error": 8.505036299233382e-06,
+              "raw_abs_error": 1.2651241657613e-06
+            },
+            "noise_variance": {
+              "raw": -0.1538312341388718,
+              "physical": -2.607775275744669,
+              "reference_physical": -2.607775285605358,
+              "reference_raw": -0.15383123472054844,
+              "physical_abs_error": 9.860689154095326e-09,
+              "raw_abs_error": 5.816766512900529e-10
+            }
+          },
+          "posterior": {
+            "mean_max_abs_error": 5.058038846428303e-06,
+            "mean_chunk_max_abs_error": 0.0,
+            "latent_variance_max_abs_error": 2.293862322311213e-11,
+            "latent_variance_chunk_max_abs_error": 0.0,
+            "observation_variance_max_abs_error": 2.2938650978687747e-11,
+            "observation_variance_chunk_max_abs_error": 0.0,
+            "mean_only_max_abs_error": 0.0
+          },
+          "solver": {
+            "backend": "sparse_chebyshev",
+            "cg_tolerance": 1e-08,
+            "exhaustive": true,
+            "lanczos_iterations": 18,
+            "cg_calls": 8,
+            "slq_calls": 1,
+            "cg_rhs_shapes": [
+              [
+                18,
+                19
+              ],
+              [
+                18,
+                1
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                18,
+                1
+              ],
+              [
+                18,
+                3
+              ],
+              [
+                18,
+                3
+              ],
+              [
+                18,
+                2
+              ],
+              [
+                18,
+                1
+              ]
+            ],
+            "cg_tridiag_counts": [
+              18,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "slq_tridiagonal_orders": [
+              15
+            ],
+            "installed_cg_eps": 1e-10,
+            "max_cg_iterations": 500
+          },
+          "operator_phases": {
+            "forward": {
+              "operator_matmul_calls": 501,
+              "estimated_sparse_l_mvps": 16032,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.14559054397977889,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {
+                "95": 501
+              }
+            },
+            "backward": {
+              "operator_matmul_calls": 3,
+              "estimated_sparse_l_mvps": 96,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.001026625744998455,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {
+                "95": 3
+              }
+            },
+            "prediction": {
+              "operator_matmul_calls": 3535,
+              "estimated_sparse_l_mvps": 113120,
+              "get_indices_calls": 4,
+              "get_indices_entries": 16,
+              "matmul_seconds": 0.9501873385161161,
+              "get_indices_seconds": 0.0046803338918834925,
+              "rhs_width_counts": {
+                "5": 1511,
+                "40": 502,
+                "1": 16,
+                "15": 1004,
+                "10": 502
+              }
+            }
+          },
+          "warnings": [
+            {
+              "category": "UserWarning",
+              "message": "Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at <upstream-pytorch-build>/aten/src/ATen/SparseCsrTensorImpl.cpp:51.)"
+            },
+            {
+              "category": "UserWarning",
+              "message": "TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()"
+            },
+            {
+              "category": "UserWarning",
+              "message": "torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at <upstream-pytorch-build>/torch/csrc/utils/tensor_new.cpp:656.)"
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 7.044408424860707e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.834035351620603e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 5.609623257367164e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.834035351620603e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 4.9569263215147555e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 5.689086854832143e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.469473264948317e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.834035351620603e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conditions": {
+        "n": 9,
+        "num_times": 5,
+        "n_train": 18,
+        "n_targets": 8,
+        "heat_time": 1.73,
+        "lengthscale": 0.43,
+        "noise_variance": 0.16,
+        "degree": 32,
+        "cg_tolerance": 1e-08
+      },
+      "reference_nll": 2.1052626316797163,
+      "reference_gradients": {
+        "heat_time": 0.34721933401481264,
+        "lengthscale": 0.7381092523652258,
+        "noise_variance": -5.245674977935973
+      },
+      "backends": {
+        "dense_exact": {
+          "nll": 2.105262631679725,
+          "nll_abs_error": 8.881784197001252e-15,
+          "nll_relative_error": 4.218848548085796e-15,
+          "gradients": {
+            "heat_time": {
+              "raw": 0.33522927895225546,
+              "physical": 0.34721933401481264,
+              "reference_physical": 0.34721933401481264,
+              "reference_raw": 0.33522927895225546,
+              "physical_abs_error": 0.0,
+              "raw_abs_error": 0.0
+            },
+            "lengthscale": {
+              "raw": 0.13275715267957391,
+              "physical": 0.7381092523652252,
+              "reference_physical": 0.7381092523652258,
+              "reference_raw": 0.13275715267957403,
+              "physical_abs_error": 6.661338147750939e-16,
+              "raw_abs_error": 1.1102230246251565e-16
+            },
+            "noise_variance": {
+              "raw": -0.558478932270982,
+              "physical": -5.245674977935978,
+              "reference_physical": -5.245674977935973,
+              "reference_raw": -0.5584789322709816,
+              "physical_abs_error": 4.440892098500626e-15,
+              "raw_abs_error": 4.440892098500626e-16
+            }
+          },
+          "posterior": {
+            "mean_max_abs_error": 1.5654144647214707e-14,
+            "mean_chunk_max_abs_error": 0.0,
+            "latent_variance_max_abs_error": 2.9698465908722937e-15,
+            "latent_variance_chunk_max_abs_error": 0.0,
+            "observation_variance_max_abs_error": 2.9976021664879227e-15,
+            "observation_variance_chunk_max_abs_error": 0.0,
+            "mean_only_max_abs_error": 0.0
+          },
+          "solver": {
+            "backend": "dense_exact",
+            "cg_tolerance": 1e-08,
+            "exhaustive": true,
+            "lanczos_iterations": 18,
+            "cg_calls": 0,
+            "slq_calls": 0,
+            "cg_rhs_shapes": [],
+            "cg_tridiag_counts": [],
+            "slq_tridiagonal_orders": [],
+            "installed_cg_eps": 1e-10,
+            "max_cg_iterations": 500
+          },
+          "operator_phases": {
+            "forward": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            },
+            "backward": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            },
+            "prediction": {
+              "operator_matmul_calls": 0,
+              "estimated_sparse_l_mvps": 0,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {}
+            }
+          },
+          "warnings": []
+        },
+        "sparse_chebyshev": {
+          "nll": 2.1052626314790603,
+          "nll_abs_error": 2.0065593631102274e-10,
+          "nll_relative_error": 9.531159357107208e-11,
+          "gradients": {
+            "heat_time": {
+              "raw": 0.3352276340035145,
+              "physical": 0.34721763023163443,
+              "reference_physical": 0.34721933401481264,
+              "reference_raw": 0.33522927895225546,
+              "physical_abs_error": 1.7037831782085178e-06,
+              "raw_abs_error": 1.6449487409420094e-06
+            },
+            "lengthscale": {
+              "raw": 0.13275901591023076,
+              "physical": 0.7381196116397302,
+              "reference_physical": 0.7381092523652258,
+              "reference_raw": 0.13275715267957403,
+              "physical_abs_error": 1.0359274504323501e-05,
+              "raw_abs_error": 1.8632306567345491e-06
+            },
+            "noise_variance": {
+              "raw": -0.5584789309031936,
+              "physical": -5.245674965088629,
+              "reference_physical": -5.245674977935973,
+              "reference_raw": -0.5584789322709816,
+              "physical_abs_error": 1.2847344521560444e-08,
+              "raw_abs_error": 1.3677879939777426e-09
+            }
+          },
+          "posterior": {
+            "mean_max_abs_error": 5.577492797226302e-06,
+            "mean_chunk_max_abs_error": 0.0,
+            "latent_variance_max_abs_error": 1.0494455304765893e-10,
+            "latent_variance_chunk_max_abs_error": 1.942890293094024e-16,
+            "observation_variance_max_abs_error": 1.049444975365077e-10,
+            "observation_variance_chunk_max_abs_error": 1.6653345369377348e-16,
+            "mean_only_max_abs_error": 0.0
+          },
+          "solver": {
+            "backend": "sparse_chebyshev",
+            "cg_tolerance": 1e-08,
+            "exhaustive": true,
+            "lanczos_iterations": 18,
+            "cg_calls": 8,
+            "slq_calls": 1,
+            "cg_rhs_shapes": [
+              [
+                18,
+                19
+              ],
+              [
+                18,
+                1
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                18,
+                1
+              ],
+              [
+                18,
+                3
+              ],
+              [
+                18,
+                3
+              ],
+              [
+                18,
+                2
+              ],
+              [
+                18,
+                1
+              ]
+            ],
+            "cg_tridiag_counts": [
+              18,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "slq_tridiagonal_orders": [
+              15
+            ],
+            "installed_cg_eps": 1e-10,
+            "max_cg_iterations": 500
+          },
+          "operator_phases": {
+            "forward": {
+              "operator_matmul_calls": 501,
+              "estimated_sparse_l_mvps": 16032,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.15410862490534782,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {
+                "95": 501
+              }
+            },
+            "backward": {
+              "operator_matmul_calls": 3,
+              "estimated_sparse_l_mvps": 96,
+              "get_indices_calls": 0,
+              "get_indices_entries": 0,
+              "matmul_seconds": 0.0009953761473298073,
+              "get_indices_seconds": 0.0,
+              "rhs_width_counts": {
+                "95": 3
+              }
+            },
+            "prediction": {
+              "operator_matmul_calls": 3535,
+              "estimated_sparse_l_mvps": 113120,
+              "get_indices_calls": 4,
+              "get_indices_entries": 16,
+              "matmul_seconds": 0.948674117680639,
+              "get_indices_seconds": 0.004724956816062331,
+              "rhs_width_counts": {
+                "5": 1511,
+                "40": 502,
+                "1": 16,
+                "15": 1004,
+                "10": 502
+              }
+            }
+          },
+          "warnings": [
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.0551444145841125e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 7.382858102662462e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.721998824835533e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 7.382858102662462e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.467200096630271e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 7.069234561388308e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 6.583343312314276e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            },
+            {
+              "category": "NumericalWarning",
+              "message": "CG terminated in 500 iterations with average residual norm 7.382858102662462e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "guards": {
+    "graph_to_dense": true,
+    "full_kronecker_to_dense": true,
+    "torch_kron": true,
+    "direct_cholesky": true,
+    "unbatched_dense_eigh": true,
+    "limitation": "Method guards cover exercised CPU paths; selected cross blocks, dense temporal factors and batched Lanczos eigensystems are allowed."
+  },
+  "iterative_solver_note": "Pinned linear_operator CG defaults remain unchanged. Requested tolerance can be below its eps=1e-10 denominator cutoff residual floor; all emitted warnings are retained and actual statistical errors are measured.",
+  "kernel_sweep": {
+    "passed": true,
+    "cases": 32,
+    "families": [
+      "path",
+      "grid"
+    ],
+    "nodes": [
+      9,
+      16
+    ],
+    "num_times": [
+      4,
+      7
+    ],
+    "heat_times": [
+      0.7,
+      2.2
+    ],
+    "lengthscales": [
+      0.24,
+      0.56
+    ],
+    "dense_prior_max_abs": 2.1649348980190553e-15,
+    "sparse_mvp_max_abs": 2.2093438190040615e-14,
+    "sparse_selected_max_abs": 2.0821762850614027e-15,
+    "row_major_action_max_abs": 2.19824158875781e-14
+  },
+  "installed_kronecker_backend": "KroneckerProductLinearOperator; no custom fallback"
+}
