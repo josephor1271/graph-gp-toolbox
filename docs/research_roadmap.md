@@ -1,28 +1,42 @@
 # Research roadmap
 
-The first implementation pass covers A–C: selective migration, numerical fidelity,
-and controlled synthetic heat-kernel recovery. Statistical non-identifiability is
-an experimental finding, not something to hide with a favorable seed.
+Stage 01 is complete: selective migration, numerical fidelity and controlled
+synthetic heat-kernel recovery. Dense exact, dense polynomial and sparse
+polynomial methods agree numerically; reliable finite-data parameter recovery
+was not established. See [the Stage 01 report](experiment_01_findings.md).
 
-Next, expand independent draws and assess optimizer convergence in regimes where
-initializations disagree. Distinguish finite-sample uncertainty from a constrained
-boundary optimum, and keep a dense exact likelihood surface as the diagnostic.
+Stage 02 is complete: an independent dense statistical oracle, likelihood/KL and
+Fisher diagnostics, independent-draw experiments and additional optimizer audits.
+More independent draws improved several recovery measures, while joint noise
+recovery and some optimizer disagreements remain limitations. Weak finite-data
+identification is a measured finding even where local Fisher information is
+nonsingular. See [the Stage 02 report](experiment_02_findings.md).
 
-Stage D: one nonnegative weighted sum of two heat kernels with an exact dense
-reference. Assess covariance/spectral-response recovery as well as weights and
-shape parameters; account for label symmetry. Matrix products f(L)g(L) and
-Hadamard kernel products are different. Two heat matrix factors merely add heat
-times, so their matrix product adds no new family. A latent nugget and observation
-noise should not be learned redundantly without an identification argument.
+Stage 03 is current: one separable graph × finite-time-grid heat/RBF GP through
+GPyTorch, with unit latent amplitude and vertex-major/time-minor coordinates.
+An independent dense oracle checks covariance action, gradients, likelihood and
+requested target marginals. The sparse graph factor acts through a Kronecker
+operator, while arbitrary missing and repeated node-time pairs use observation
+selection. This retains full `n*T` workspace and a dense `T*T` temporal factor.
+The fixed predictive study compares graph-only, time-only and joint models,
+separating random-pair interpolation from future forecasting and keeping matched
+dense/sparse training parity separate from the main comparison. The
+[Stage 03 report](experiment_03_findings.md) records measured outcomes and the
+prioritized next step; predictions do not have to favor the joint model.
 
-Stage E (main strategic extension): a tiny separable graph×time heat/RBF GP,
-with explicitly documented vertex-major/time-minor order and dense exact
-K_graph ⊗ K_time sampling. Validate gradients, likelihood and requested target
-marginals. Then use a sparse graph factor in a Kronecker action K_graph X K_timeᵀ,
-with gather/scatter for missing or repeated node-time pairs. This still uses full
-vertex×time storage and a dense temporal factor. Compare graph-only, time-only and
-joint models; distinguish random interpolation splits from future forecasting.
+Future work includes spatiotemporal operator scalability under irregular
+observations, structured observation compression, temporal compression and
+validated scalable target-diagonal variance methods. Exact marginal variance
+extraction remains the present reference; an approximate estimator needs its own
+accuracy and cost study before replacing it.
 
-Later: temporal compression, validated approximate variance estimators, realistic
-data and appropriate baselines. Broad kernel catalogs, GNN benchmark suites,
-cross-graph transfer, custom solvers and GPU specialization are deferred.
+Kernel composition is a separate future stage: start with a nonnegative weighted
+sum of two heat kernels and an independent dense reference, assess covariance and
+spectral-response recovery as well as weights, and account for label symmetry.
+Matrix products `f(L)g(L)` and Hadamard kernel products are different; two heat
+matrix factors merely add heat times. Learning a latent nugget alongside
+observation noise requires an identification argument.
+
+Applied datasets and suitable baselines follow numerical validation and a bounded
+cost study. Broad kernel catalogs, GNN benchmark suites, cross-graph transfer,
+custom solvers and GPU specialization remain deferred.

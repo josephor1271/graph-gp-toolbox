@@ -14,3 +14,4 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python experiments/01_heat_hyperparameter_recovery.py --smoke --output results/ci
       - run: python experiments/02_heat_identifiability.py --smoke --output results/ci_identifiability
+      - run: python experiments/03_graph_time.py --smoke --output results/ci_graph_time
