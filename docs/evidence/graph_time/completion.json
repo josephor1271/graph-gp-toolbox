@@ -1,0 +1,10 @@
+{
+  "independent_fields": 4,
+  "tasks_share_fields": true,
+  "main_fits": 24,
+  "parity_fits": 8,
+  "noise_sensitivity_fits": 2,
+  "total_fits": 34,
+  "failed_fits": 0,
+  "fits_with_numerical_warnings": 4
+}

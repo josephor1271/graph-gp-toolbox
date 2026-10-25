@@ -1,0 +1,31 @@
+{
+  "python": "3.12.0 (v3.12.0:0fb18b02c8, Oct  2 2023, 09:45:56) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "torch": "2.11.0",
+  "scipy": "1.17.1",
+  "numpy": "2.4.3",
+  "networkx": "3.6.1",
+  "gpytorch": "1.15.2",
+  "linear_operator": "0.6.1",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "torch_threads": 1,
+  "dtype": "float64",
+  "timestamp_utc": "2026-10-24T01:05:43Z",
+  "matplotlib": "3.10.8",
+  "source_commit": "6d1f850964098fd98f353739f3be46618d85071a",
+  "source_dirty": false,
+  "source_hashes": {
+    "experiments/03_graph_time.py": "4abef0021f8dbef455d3321ca179a818685c6693ae638113b07e0877c179745b",
+    "src/graphgp/analysis/graph_time_oracle.py": "2a385ededd2c9e758ac994ddf225ba246610567bcfe0869717dc81b895dc4d51",
+    "src/graphgp/kernels/graph_time.py": "19fef9439fa17002cfe948b6fefb76c2ac687c8ced02d4aabf8227d5cdab5de5",
+    "src/graphgp/kernels/heat.py": "15175b32178847f3b6d8b803d22e6e48edb63c75c68ca2ad782adc340ccad632",
+    "src/graphgp/models/graph_time.py": "b93474cba513274759b8feaf7b981816a16163f57955aa86776abf5be29d8cf2",
+    "src/graphgp/models/factory.py": "3fed355d36810345f88cf032ff79eeb693439ea08fed9fd1c61b7852de2d3ca8",
+    "src/graphgp/validation_graph_time.py": "c8570e68c2173ea5dea8af4bb8feeee7cfcb8ff6cbc8084b0c0b28f28e041920"
+  },
+  "blas_thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

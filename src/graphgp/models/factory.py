@@ -13,13 +13,18 @@ NOISE_RANGE = (0.005, 0.5)
 AMPLITUDE_RANGE = (0.1, 4.0)
 
 
-def make_heat_gp(L, train_ids, train_y, method="C", *, heat_time=1.0,
-                 noise=0.08, amplitude=1.0, learn_amplitude=False, degree=32):
-    """Float64 GP on a fixed Laplacian with spectrum enclosed by [0,2].
+def validate_study_laplacian(L) -> scipy.sparse.csr_matrix:
+    """Validate a fixed SciPy Laplacian with maximum weighted degree <= 1.
 
-    Generic migrated kernels remain available for other validated domains.
-    This factory enforces the study's narrower numerical contract.
+    Return float64 CSR, retaining the degree-scaled combinatorial convention
+    and its analytically enclosing spectral interval [0, 2].
     """
+    if not scipy.sparse.issparse(L):
+        raise TypeError("expected a SciPy sparse Laplacian")
+    if L.ndim != 2 or not L.shape[0] or L.shape[0] != L.shape[1]:
+        raise ValueError("Laplacian must be nonempty and square")
+    if np.iscomplexobj(L.data):
+        raise ValueError("Laplacian must be real")
     L = L.astype(np.float64).tocsr()
     off = L - scipy.sparse.diags(L.diagonal())
     asymmetry = L-L.T
@@ -29,6 +34,17 @@ def make_heat_gp(L, train_ids, train_y, method="C", *, heat_time=1.0,
         np.any(off.data > 1e-12) or np.any(L.diagonal() < 0) or
         np.max(L.diagonal()) > 1+1e-12):
         raise ValueError("expected symmetric Laplacian with maximum weighted degree <= 1")
+    return L
+
+
+def make_heat_gp(L, train_ids, train_y, method="C", *, heat_time=1.0,
+                 noise=0.08, amplitude=1.0, learn_amplitude=False, degree=32):
+    """Float64 GP on a fixed Laplacian with spectrum enclosed by [0,2].
+
+    Generic migrated kernels remain available for other validated domains.
+    This factory enforces the study's narrower numerical contract.
+    """
+    L = validate_study_laplacian(L)
     heat_interpolation_certificate(degree)
     for name, value, bounds in [('heat_time',heat_time,HEAT_RANGE),
                                 ('noise',noise,NOISE_RANGE),
@@ -47,9 +63,9 @@ def make_heat_gp(L, train_ids, train_y, method="C", *, heat_time=1.0,
     kernel.heat_time = heat_time
     likelihood = gpytorch.likelihoods.GaussianLikelihood(
         noise_constraint=gpytorch.constraints.Interval(*NOISE_RANGE).double()).double()
-    likelihood.noise = noise
+    likelihood.noise = torch.as_tensor(noise, dtype=torch.float64)
     scaled = gpytorch.kernels.ScaleKernel(kernel,
         outputscale_constraint=gpytorch.constraints.Interval(*AMPLITUDE_RANGE).double()).double()
-    scaled.outputscale = amplitude
+    scaled.outputscale = torch.as_tensor(amplitude, dtype=torch.float64)
     scaled.raw_outputscale.requires_grad_(learn_amplitude)
     return GraphGP(train_ids, train_y, likelihood, scaled).double()
