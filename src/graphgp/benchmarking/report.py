@@ -18,7 +18,7 @@ def save_csv(path, rows):
 
 def flatten(record):
     row = {key: record.get(key) for key in ("run_id", "campaign", "operation", "backend", "profile", "probe_seed", "repeat", "rhs_width", "status",
-        "child_wall_seconds", "elapsed_seconds", "data_setup_seconds", "model_build_seconds", "first_call_seconds", "forward_seconds", "backward_seconds",
+        "child_wall_seconds", "elapsed_seconds", "import_seconds", "common_diagnostic_imports_preloaded", "data_setup_seconds", "model_build_seconds", "first_call_seconds", "forward_seconds", "backward_seconds",
         "rss_peak_mib", "rss_before_operation_mib", "memory_status", "error_type", "error", "returncode", "numerical_warning_count", "warnings",
         "nnz", "graph_scale", "settings", "fixed_settings", "effective_probe_seed", "operator", "solver", "measurement_seconds", "warmup_count", "data_fingerprint", "setup_warnings")}
     case = record["case"]

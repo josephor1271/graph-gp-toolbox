@@ -53,6 +53,7 @@ def run(spec):
     before = {key: os.environ.get(key) for key in THREAD_VARIABLES}
     for key in THREAD_VARIABLES:
         os.environ[key] = "1"
+    import_start = time.perf_counter()
     import gpytorch
     import numpy as np
     import torch
@@ -64,13 +65,20 @@ def run(spec):
     from graphgp.inference.solver_settings import iterative_context
     from graphgp.models.graph_time import make_graph_time_gp
     from graphgp.validation import exhaustive_trace_probes
+    # Both backends load the same diagnostic dependencies before setup timers.
+    # A first sparse guard entry otherwise imports SciPy/analysis dependencies
+    # inside model construction and contaminates both construction time and RSS.
+    import scipy.linalg
+    import graphgp.validation_graph_time
 
     torch.set_num_threads(1)
     case_fields = {key: value for key, value in spec["case"].items()
                    if key in ("case_id", "n", "num_times", "m", "q", "groups")}
     case_fields["groups"] = tuple(case_fields["groups"])
     case = Case(**case_fields)
-    row = {**spec, "status": "ok", "threads_before": before, "threads_effective": {k: "1" for k in THREAD_VARIABLES},
+    row = {**spec, "status": "ok", "import_seconds": time.perf_counter()-import_start,
+           "common_diagnostic_imports_preloaded": True,
+           "threads_before": before, "threads_effective": {k: "1" for k in THREAD_VARIABLES},
            "torch_threads": torch.get_num_threads(), "rss_convention": "Darwin bytes / 2^20; Linux KiB / 1024", "iteration_count": None}
     setup_start = time.perf_counter()
     try:
@@ -102,10 +110,10 @@ def run(spec):
     train = torch.from_numpy(problem["train_pairs"])
     target = torch.from_numpy(problem["target_pairs"])
     values = torch.from_numpy(problem["train_y"])
-    start = time.perf_counter()
     with ExitStack() as construction:
         if sparse:
             construction.enter_context(guarded_sparse())
+        start = time.perf_counter()
         model = make_graph_time_gp(problem["L"], train, values, num_times=case.num_times,
             backend=spec["backend"], heat_time=1.2, lengthscale=0.24, noise_variance=0.06)
         model.train()
@@ -117,7 +125,7 @@ def run(spec):
             operator = model.covar_module._full_grid_operator()
             if not sparse:
                 operator = operator.to_dense()
-    row["model_build_seconds"] = time.perf_counter()-start
+        row["model_build_seconds"] = time.perf_counter()-start
     row["rss_before_operation_mib"] = current_rss_mib()
     caught = []
     with warnings.catch_warnings(record=True) as caught, ExitStack() as stack:
