@@ -1,0 +1,273 @@
+{
+  "study": "fixed_full",
+  "solver_only": false,
+  "debug_max_cases": null,
+  "baseline_main": "4f90ba5d64f7fe08f9f89697f3be06ce508c450a",
+  "cases": [
+    {
+      "case_id": "n016_t08_m0032_q0064",
+      "n": 16,
+      "num_times": 8,
+      "m": 32,
+      "q": 64,
+      "groups": [
+        "N"
+      ],
+      "numeric_id": 1,
+      "integer_id": 1,
+      "stream_case_id": 1,
+      "nT": 128,
+      "observed_fraction": 0.25,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n049_t08_m0098_q0064",
+      "n": 49,
+      "num_times": 8,
+      "m": 98,
+      "q": 64,
+      "groups": [
+        "N"
+      ],
+      "numeric_id": 2,
+      "integer_id": 2,
+      "stream_case_id": 2,
+      "nT": 392,
+      "observed_fraction": 0.25,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n100_t08_m0200_q0064",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 64,
+      "groups": [
+        "N",
+        "T",
+        "M",
+        "Q"
+      ],
+      "numeric_id": 3,
+      "integer_id": 3,
+      "stream_case_id": 3,
+      "nT": 800,
+      "observed_fraction": 0.25,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n225_t08_m0450_q0064",
+      "n": 225,
+      "num_times": 8,
+      "m": 450,
+      "q": 64,
+      "groups": [
+        "N"
+      ],
+      "numeric_id": 4,
+      "integer_id": 4,
+      "stream_case_id": 4,
+      "nT": 1800,
+      "observed_fraction": 0.25,
+      "dense_eligible": false
+    },
+    {
+      "case_id": "n400_t08_m0800_q0064",
+      "n": 400,
+      "num_times": 8,
+      "m": 800,
+      "q": 64,
+      "groups": [
+        "N"
+      ],
+      "numeric_id": 5,
+      "integer_id": 5,
+      "stream_case_id": 5,
+      "nT": 3200,
+      "observed_fraction": 0.25,
+      "dense_eligible": false
+    },
+    {
+      "case_id": "n100_t04_m0200_q0064",
+      "n": 100,
+      "num_times": 4,
+      "m": 200,
+      "q": 64,
+      "groups": [
+        "T"
+      ],
+      "numeric_id": 6,
+      "integer_id": 6,
+      "stream_case_id": 6,
+      "nT": 400,
+      "observed_fraction": 0.5,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n100_t16_m0200_q0064",
+      "n": 100,
+      "num_times": 16,
+      "m": 200,
+      "q": 64,
+      "groups": [
+        "T"
+      ],
+      "numeric_id": 7,
+      "integer_id": 7,
+      "stream_case_id": 7,
+      "nT": 1600,
+      "observed_fraction": 0.125,
+      "dense_eligible": false
+    },
+    {
+      "case_id": "n100_t32_m0200_q0064",
+      "n": 100,
+      "num_times": 32,
+      "m": 200,
+      "q": 64,
+      "groups": [
+        "T"
+      ],
+      "numeric_id": 8,
+      "integer_id": 8,
+      "stream_case_id": 8,
+      "nT": 3200,
+      "observed_fraction": 0.0625,
+      "dense_eligible": false
+    },
+    {
+      "case_id": "n100_t08_m0080_q0064",
+      "n": 100,
+      "num_times": 8,
+      "m": 80,
+      "q": 64,
+      "groups": [
+        "M"
+      ],
+      "numeric_id": 9,
+      "integer_id": 9,
+      "stream_case_id": 3,
+      "nT": 800,
+      "observed_fraction": 0.1,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n100_t08_m0400_q0064",
+      "n": 100,
+      "num_times": 8,
+      "m": 400,
+      "q": 64,
+      "groups": [
+        "M"
+      ],
+      "numeric_id": 10,
+      "integer_id": 10,
+      "stream_case_id": 3,
+      "nT": 800,
+      "observed_fraction": 0.5,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n100_t08_m0200_q0016",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 16,
+      "groups": [
+        "Q"
+      ],
+      "numeric_id": 11,
+      "integer_id": 11,
+      "stream_case_id": 3,
+      "nT": 800,
+      "observed_fraction": 0.25,
+      "dense_eligible": true
+    },
+    {
+      "case_id": "n100_t08_m0200_q0256",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 256,
+      "groups": [
+        "Q"
+      ],
+      "numeric_id": 12,
+      "integer_id": 12,
+      "stream_case_id": 3,
+      "nT": 800,
+      "observed_fraction": 0.25,
+      "dense_eligible": true
+    }
+  ],
+  "model": {
+    "heat_time": 1.2,
+    "lengthscale": 0.24,
+    "noise_variance": 0.06,
+    "amplitude": 1,
+    "mean": 0,
+    "degree": 32
+  },
+  "profiles": {
+    "fast_probe": [
+      8,
+      16,
+      0.001,
+      200
+    ],
+    "balanced_probe": [
+      16,
+      32,
+      0.0001,
+      500
+    ],
+    "strict_probe": [
+      16,
+      32,
+      1e-06,
+      500
+    ],
+    "exhaustive_tiny": [
+      32,
+      32,
+      1e-08,
+      500
+    ]
+  },
+  "profile_columns": [
+    "trace_samples",
+    "lanczos_iterations",
+    "cg_tolerance_and_eval_cg_tolerance",
+    "max_cg_iterations"
+  ],
+  "fixed_settings": {
+    "max_preconditioner_size": 0,
+    "terminate_cg_by_size": false,
+    "max_cholesky_size": 0,
+    "max_eager_kernel_size": 0,
+    "fast_pred_var": false
+  },
+  "screening": {
+    "nll_abs": 0.05,
+    "raw_gradient_atol": 0.02,
+    "raw_gradient_rtol": 0.2,
+    "posterior_mean_abs": 0.01,
+    "latent_variance_abs": 0.01,
+    "residual_fast": 0.01,
+    "residual_other": 0.001
+  },
+  "probe_seed_labels": [
+    301,
+    302,
+    303
+  ],
+  "master_seed": 202604,
+  "probe_policy": "SeedSequence-derived Torch seed; labels and effective seeds recorded; fixed common probes at all three-update evaluations",
+  "timeout_seconds": 180,
+  "expected_rows": 368,
+  "worker_rule": "one fresh sequential subprocess per operation/backend/profile/case/repeat",
+  "primary_profile": "balanced_probe",
+  "warmup": "exactly one for MVP only, then five products; no GP warmup or cache reuse",
+  "repeats": "small construct/MVP 3; small GP 2; n>=225 or T32 1; smoke1",
+  "data": "approximate P32(exp(-tau L/2)) Z chol(KT).T, independent noise; not an exact sampling oracle"
+}

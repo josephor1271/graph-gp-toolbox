@@ -1,0 +1,76 @@
+{
+  "expected_rows": 368,
+  "actual_rows": 368,
+  "cases_attempted": [
+    "n016_t08_m0032_q0064",
+    "n049_t08_m0098_q0064",
+    "n100_t04_m0200_q0064",
+    "n100_t08_m0080_q0064",
+    "n100_t08_m0200_q0016",
+    "n100_t08_m0200_q0064",
+    "n100_t08_m0200_q0256",
+    "n100_t08_m0400_q0064",
+    "n100_t16_m0200_q0064",
+    "n100_t32_m0200_q0064",
+    "n225_t08_m0450_q0064",
+    "n400_t08_m0800_q0064"
+  ],
+  "status_counts": {
+    "data_error": 6,
+    "ok": 362
+  },
+  "missing_rows": [],
+  "duplicate_keys": false,
+  "solver_accuracy_rows": 207,
+  "solver_check_rows": 69,
+  "profile_screening": {
+    "fast_probe": {
+      "attempts": 8,
+      "failures": 0
+    },
+    "balanced_probe": {
+      "attempts": 8,
+      "failures": 0
+    },
+    "strict_probe": {
+      "attempts": 6,
+      "failures": 0
+    },
+    "exhaustive_tiny": {
+      "attempts": 1,
+      "failures": 0
+    }
+  },
+  "profiling_gaps": [
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-mean-sparse_chebyshev-balanced_probe-s301-r0-w0",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    },
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-marginal-sparse_chebyshev-balanced_probe-s301-r0-w0",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    },
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-mll-sparse_chebyshev-balanced_probe-s301-r0-w0",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    },
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-construct-sparse_chebyshev-balanced_probe-s301-r0-w0",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    },
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-mvp-sparse_chebyshev-balanced_probe-s301-r0-w1",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    },
+    {
+      "run_id": "scaling-n100_t32_m0200_q0064-q64-mvp-sparse_chebyshev-balanced_probe-s301-r0-w8",
+      "status": "data_error",
+      "error": "LinAlgError: Matrix is not positive definite"
+    }
+  ]
+}

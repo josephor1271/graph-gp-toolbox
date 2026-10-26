@@ -1,0 +1,59 @@
+{
+  "linear_operator_version": "0.6.1",
+  "gpytorch_version": "1.15.2",
+  "sources": {
+    "linear_cg": {
+      "source_path": "linear_operator/utils/linear_cg.py",
+      "first_line": 99,
+      "last_line": 360,
+      "signature": "(matmul_closure, rhs, n_tridiag=0, tolerance=None, eps=1e-10, stop_updating_after=1e-10, max_iter=None, max_tridiag_iter=None, initial_guess=None, preconditioner=None)",
+      "source_file_sha256": "a86cbde75e81599ae2f41b0e80f900809579eac81a8744cc02252724c97f4d53"
+    },
+    "inv_quad_logdet_forward": {
+      "source_path": "linear_operator/functions/_inv_quad_logdet.py",
+      "first_line": 27,
+      "last_line": 161,
+      "signature": "(ctx, representation_tree, precond_representation_tree, preconditioner, num_precond_args, inv_quad, probe_vectors, probe_vector_norms, *args)",
+      "source_file_sha256": "83f57bc1df07ba7c572b2283e292db05767942f15f6416d77f1393242ddf7f21"
+    },
+    "linear_operator_solve": {
+      "source_path": "linear_operator/operators/_linear_operator.py",
+      "first_line": 781,
+      "last_line": 803,
+      "signature": "(self: 'LinearOperator', rhs: 'torch.Tensor', preconditioner: 'Callable[[torch.Tensor], torch.Tensor] | None' = None, num_tridiag: 'int | None' = 0) -> 'torch.Tensor | tuple[torch.Tensor, torch.Tensor]'",
+      "source_file_sha256": "b5e2e9ce4955563602fed686e9bba0ae31c08e752961aeebaa56ece9f17abb02"
+    },
+    "stochastic_lq_to_dense": {
+      "source_path": "linear_operator/utils/stochastic_lq.py",
+      "first_line": 45,
+      "last_line": 82,
+      "signature": "(self, matrix_shape, eigenvalues, eigenvectors, funcs)",
+      "source_file_sha256": "12fcd7e3d7981359fbb8091fa00deb7110fa6019d3dc74a2287491237845c8bd"
+    }
+  },
+  "installed_cg_eps": 1e-10,
+  "installed_stop_updating_after": 1e-10,
+  "iteration_count_instrumented": false,
+  "limitation": "CG calls and matmul workloads are not actual iteration counts. Source suggests a small-denominator stagnation mechanism; unmodified-solver measurements do not isolate eps as a universal cause.",
+  "line_citations": {
+    "linear_cg.py": [
+      "51-94: non-preconditioned alpha/beta small-denominator suppression",
+      "99-110: installed defaults incl eps=1e-10 and stop_updating_after=1e-10",
+      "170-186: terminate-by-size, tridiagonal dimension cap, RHS normalization",
+      "299-309: mean normalized residual stopping and minimum/tridiagonal-work conditions",
+      "312-330: returned tridiagonal update can stop early",
+      "338-350: warning after tolerance not reached"
+    ],
+    "_inv_quad_logdet.py": [
+      "77-110: configured probe count and unmodified sampler",
+      "117-135: shared probe and inverse-quadratic RHS; n_tridiag=probe count",
+      "139-151: eigendecompose actual tridiagonal and call SLQ"
+    ],
+    "added_diag_linear_operator.py": [
+      "112-116: no preconditioner when max_preconditioner_size=0"
+    ],
+    "stochastic_lq.py": [
+      "69-80: estimator uses actual probe count and tridiagonal eigenvalues"
+    ]
+  }
+}

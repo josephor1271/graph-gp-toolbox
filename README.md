@@ -13,6 +13,10 @@ including multiple independent realizations sharing one covariance. These small
 studies make no claim of general speedup or superiority over GNNs.
 [Stage 03](docs/experiment_03_findings.md) documents the finite-grid graph × time
 model, independent dense oracle, numerical validation and measured predictive results.
+[Stage 04](docs/experiment_04_findings.md) measures solver accuracy, isolated
+operation costs and resident memory. It finds no product or GP inference time
+crossover in the matched small range; some operations use less worker memory.
+Exact target marginal variances remain a major measured cost.
 
 ## Install and run
 
