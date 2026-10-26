@@ -129,7 +129,11 @@ class Stage04SolverTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "dimensions"):
             dense_reference(prefix_problem, case)
         prefix_reference = dense_reference(prefix_problem, case, target_count=3)
-        np.testing.assert_array_equal(prefix_reference["mean"], reference["mean"][:3])
+        # Different RHS widths may select different BLAS kernels and change
+        # final rounding (Linux CI differed by 1.4e-17). Require float64
+        # agreement rather than bitwise identity of independently solved blocks.
+        np.testing.assert_allclose(prefix_reference["mean"], reference["mean"][:3],
+                                   rtol=1e-14, atol=1e-14)
         # The ceiling is checked before trying to access any problem data.
         with self.assertRaisesRegex(ValueError, "ceiling"):
             dense_reference({}, SimpleNamespace(n=225, num_times=8, m=450, q=64))
