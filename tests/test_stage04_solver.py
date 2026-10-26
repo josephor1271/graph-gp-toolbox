@@ -125,6 +125,11 @@ class Stage04SolverTests(unittest.TestCase):
         for name in ("mean", "latent_variance", "observation_variance"):
             np.testing.assert_allclose(getattr(moments, name).numpy(), reference[name],
                                        rtol=1e-11, atol=1e-12)
+        prefix_problem = {**problem, "target_pairs": problem["target_pairs"][:3]}
+        with self.assertRaisesRegex(ValueError, "dimensions"):
+            dense_reference(prefix_problem, case)
+        prefix_reference = dense_reference(prefix_problem, case, target_count=3)
+        np.testing.assert_array_equal(prefix_reference["mean"], reference["mean"][:3])
         # The ceiling is checked before trying to access any problem data.
         with self.assertRaisesRegex(ValueError, "ceiling"):
             dense_reference({}, SimpleNamespace(n=225, num_times=8, m=450, q=64))
