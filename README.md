@@ -27,6 +27,7 @@ python -m graphgp.demo --steps 20
 python experiments/01_heat_hyperparameter_recovery.py --smoke
 python experiments/02_heat_identifiability.py --smoke --output results/identifiability_smoke
 python experiments/03_graph_time.py --smoke --output results/graph_time_smoke
+python experiments/04_scaling.py --smoke --output results/scaling_stage04_smoke
 ```
 
 The original short demo fits a smooth sine signal; it is an API demonstration. The scientific study samples independent latent
@@ -52,6 +53,11 @@ python experiments/02_plot_identifiability.py --input results/identifiability --
 python experiments/03_graph_time.py --output results/graph_time
 # Regenerate its three figures from saved CSV, without training or sampling
 python experiments/03_plot_graph_time.py --input results/graph_time --output docs/figures
+# Stage 04: isolated fixed-parameter solver sweep and operation scaling
+python experiments/04_scaling.py --output results/scaling_stage04
+# Solver sweep alone, or regenerate four figures without GP imports
+python experiments/04_solver_diagnostics.py --output results/solver_stage04
+python experiments/04_plot_scaling.py --input results/scaling_stage04 --output docs/figures
 ```
 
 Stage 01 saves config/environment JSON, diagnostic CSV, data/prediction NPZ arrays,
@@ -63,6 +69,13 @@ are gitignored. Selected evidence and report figures are retained under
 Stage 03 keeps its main comparison, matched dense/sparse training parity, and
 learned-noise diagnostic separate in the saved CSV. Its smoke command is a small
 API/numerical check and does not reproduce the full scientific study.
+
+Stage 04 measures fixed-parameter construction, prior products, MLL/gradients,
+three-update compatibility and cold mean/marginal prediction in separate,
+one-thread worker processes with a 180-second wall limit. It retains actual
+residuals, stochastic-probe errors and failed attempts. Its approximate correlated
+benchmark signal is separate from the independent exact small-case oracle.
+Experimental solver profiles do not change the production defaults.
 
 [Migration notes](docs/migration_notes.md) identify source provenance and tests.
 [Numerical safety](docs/numerical_safety.md) explains the enforced parameter domain,
