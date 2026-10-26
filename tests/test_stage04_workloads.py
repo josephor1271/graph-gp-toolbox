@@ -5,6 +5,7 @@ from copy import deepcopy
 from pathlib import Path
 import subprocess
 import sys
+import textwrap
 import unittest
 from unittest.mock import patch
 
@@ -98,6 +99,49 @@ class Stage04WorkloadTests(unittest.TestCase):
                 "('numpy','scipy','torch','gpytorch'))")
         subprocess.run([sys.executable, "-c", code], check=True,
                        cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
+
+    def test_both_backends_preload_diagnostics_and_threads_before_data_setup(self):
+        # A fresh interpreter is essential: an earlier oracle test could have
+        # imported these dependencies and concealed sparse-only import costs.
+        code = textwrap.dedent("""
+            import os, sys
+            from unittest.mock import patch
+            from graphgp.benchmarking.cases import smoke_case
+            from graphgp.benchmarking.coordinator import request
+            from graphgp.benchmarking.worker import DataConstructionError, THREAD_VARIABLES, run
+
+            assert 'scipy.linalg' not in sys.modules
+            assert 'graphgp.validation_graph_time' not in sys.modules
+            for name in THREAD_VARIABLES:
+                os.environ[name] = '3'
+            observed = []
+            backend = sys.argv[1]
+
+            class StopBeforeData(Exception):
+                pass
+
+            def inspect_setup(case):
+                assert 'scipy.linalg' in sys.modules
+                assert 'graphgp.validation_graph_time' in sys.modules
+                assert all(os.environ[name] == '1' for name in THREAD_VARIABLES)
+                assert sys.modules['torch'].get_num_threads() == 1
+                observed.append(backend)
+                raise StopBeforeData('verified before data and model construction')
+
+            with patch('graphgp.benchmarking.cases.make_problem', inspect_setup):
+                try:
+                    run(request(smoke_case(), 'construct', backend))
+                except DataConstructionError as error:
+                    assert isinstance(error.__cause__, StopBeforeData), repr(error.__cause__)
+                else:
+                    raise AssertionError('setup callback did not stop the worker')
+            assert observed == [backend], observed
+        """)
+        for backend in ("dense_exact", "sparse_chebyshev"):
+            with self.subTest(backend=backend):
+                subprocess.run([sys.executable, "-c", code, backend], check=True,
+                               cwd=Path(__file__).resolve().parents[1], capture_output=True,
+                               text=True, timeout=30)
 
     def test_dense_reference_enforces_ceiling_before_reading_arrays(self):
         from graphgp.benchmarking.reference import dense_reference
