@@ -30,5 +30,3 @@ def validate_study_laplacian(L) -> scipy.sparse.csr_matrix:
         np.max(L.diagonal()) > 1+1e-12):
         raise ValueError("expected symmetric Laplacian with maximum weighted degree <= 1")
     return L
-
-

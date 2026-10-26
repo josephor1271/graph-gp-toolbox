@@ -47,5 +47,3 @@ def instrument_operator(*, record_widths=False):
     with patch.object(ChebyshevFunctionLinearOperator, "_matmul", mm), \
          patch.object(ChebyshevFunctionLinearOperator, "_get_indices", get):
         yield stats
-
-

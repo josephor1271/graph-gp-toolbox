@@ -43,5 +43,20 @@
   "fix": "Preload SciPy.linalg and validation_graph_time for both backends before setup timers; separate import_seconds; enter guards before the model construction timer.",
   "fix_commit": "df831aa",
   "regression_commit": "060a308",
-  "remeasurement": "All 368 requests rerun from a fresh directory, with original run preserved and excluded from final timing/RSS summaries."
+  "remeasurement": "All 368 requests rerun from a fresh directory, with original run preserved and excluded from final timing/RSS summaries.",
+  "post_measurement_formatting": {
+    "reason": "Remove redundant blank lines at EOF flagged by git diff --check; computation unchanged.",
+    "files": {
+      "src/graphgp/inference/instrumentation.py": {
+        "measured_sha256": "b7b2cc63f0577b306f5b742fd54f375a6068ca8bb3885ea63d092e9de4eb7612",
+        "final_sha256": "bb282f741946819253a63df8a29d4382a12504cb61baf91286d447fc45c68bff",
+        "ast_unchanged": true
+      },
+      "src/graphgp/utils/study_domain.py": {
+        "measured_sha256": "75493bd667f86ff9ad89d80bc2ff37999fd8f92e5ee2e05aeb533d5a505c9ca9",
+        "final_sha256": "ca0cfde0add90a51f6272e5d468a8d1ccc3e2476bda65d9009cce31cf46de140",
+        "ast_unchanged": true
+      }
+    }
+  }
 }

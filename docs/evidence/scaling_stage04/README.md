@@ -6,6 +6,10 @@ table. It starts from main `4f90ba5d64f7fe08f9f89697f3be06ce508c450a`.
 The measured computational source is clean commit
 `060a3089cbfb008ca2c8775e35cb9503f967110c`; later commits add evidence/reporting.
 Source hashes and the actual interpreter/platform/package identities are recorded.
+After measurement, two extracted modules had redundant final blank lines removed.
+Their ASTs are unchanged; `measurement_correction.json` records both hashes.
+Environment source hashes identify the exact measured commit, before that
+formatting-only cleanup. No measured computation changed.
 
 | File | Unit and interpretation |
 |---|---|
