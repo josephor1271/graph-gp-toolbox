@@ -1,0 +1,62 @@
+{
+  "superseded_source": "b4eae3fb67c8b514d89a01caf0d46d28098dcd4f",
+  "superseded_output": "results/scaling_stage04",
+  "corrected_source": "060a3089cbfb008ca2c8775e35cb9503f967110c",
+  "corrected_output": "results/scaling_stage04_corrected",
+  "issue": "First sparse guard lazily imported SciPy/analysis dependencies inside construction; dense workers did not load that stack. Construction and peak-RSS comparisons were not matched.",
+  "reproduction": "Three fresh processes with the worker prelude and deterministic data, timing first/second empty guard entry and observing loaded modules/whole process peak.",
+  "guard_import_trials": [
+    {
+      "first_guard_seconds": 0.22853741701692343,
+      "second_guard_seconds": 0.0004405409563332796,
+      "first_second_ratio": 518.7654263047214,
+      "rss_before_mib": 259.53125,
+      "rss_after_first_mib": 281.53125,
+      "rss_after_second_mib": 281.53125,
+      "scipy_linalg_preloaded": false,
+      "validation_graph_time_preloaded": false,
+      "added_module_count": 251
+    },
+    {
+      "first_guard_seconds": 0.16002895892597735,
+      "second_guard_seconds": 0.0004898749757558107,
+      "first_second_ratio": 326.6730632220483,
+      "rss_before_mib": 258.84375,
+      "rss_after_first_mib": 281.734375,
+      "rss_after_second_mib": 281.734375,
+      "scipy_linalg_preloaded": false,
+      "validation_graph_time_preloaded": false,
+      "added_module_count": 251
+    },
+    {
+      "first_guard_seconds": 0.15828079194761813,
+      "second_guard_seconds": 0.0004718329291790724,
+      "first_second_ratio": 335.4594013245451,
+      "rss_before_mib": 258.796875,
+      "rss_after_first_mib": 281.15625,
+      "rss_after_second_mib": 281.15625,
+      "scipy_linalg_preloaded": false,
+      "validation_graph_time_preloaded": false,
+      "added_module_count": 251
+    }
+  ],
+  "fix": "Preload SciPy.linalg and validation_graph_time for both backends before setup timers; separate import_seconds; enter guards before the model construction timer.",
+  "fix_commit": "df831aa",
+  "regression_commit": "060a308",
+  "remeasurement": "All 368 requests rerun from a fresh directory, with original run preserved and excluded from final timing/RSS summaries.",
+  "post_measurement_formatting": {
+    "reason": "Remove redundant blank lines at EOF flagged by git diff --check; computation unchanged.",
+    "files": {
+      "src/graphgp/inference/instrumentation.py": {
+        "measured_sha256": "b7b2cc63f0577b306f5b742fd54f375a6068ca8bb3885ea63d092e9de4eb7612",
+        "final_sha256": "bb282f741946819253a63df8a29d4382a12504cb61baf91286d447fc45c68bff",
+        "ast_unchanged": true
+      },
+      "src/graphgp/utils/study_domain.py": {
+        "measured_sha256": "75493bd667f86ff9ad89d80bc2ff37999fd8f92e5ee2e05aeb533d5a505c9ca9",
+        "final_sha256": "ca0cfde0add90a51f6272e5d468a8d1ccc3e2476bda65d9009cce31cf46de140",
+        "ast_unchanged": true
+      }
+    }
+  }
+}

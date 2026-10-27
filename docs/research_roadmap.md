@@ -12,7 +12,7 @@ recovery and some optimizer disagreements remain limitations. Weak finite-data
 identification is a measured finding even where local Fisher information is
 nonsingular. See [the Stage 02 report](experiment_02_findings.md).
 
-Stage 03 is current: one separable graph × finite-time-grid heat/RBF GP through
+Stage 03 is complete: one separable graph × finite-time-grid heat/RBF GP through
 GPyTorch, with unit latent amplitude and vertex-major/time-minor coordinates.
 An independent dense oracle checks covariance action, gradients, likelihood and
 requested target marginals. The sparse graph factor acts through a Kronecker
@@ -24,11 +24,19 @@ dense/sparse training parity separate from the main comparison. The
 [Stage 03 report](experiment_03_findings.md) records measured outcomes and the
 prioritized next step; predictions do not have to favor the joint model.
 
-Future work includes spatiotemporal operator scalability under irregular
-observations, structured observation compression, temporal compression and
-validated scalable target-diagonal variance methods. Exact marginal variance
-extraction remains the present reference; an approximate estimator needs its own
-accuracy and cost study before replacing it.
+Stage 04 measures the current operator and GPyTorch inference pathway under
+fixed graph/time/observation/target workloads. It separates polynomial error,
+independently computed noisy-solve residuals and stochastic MLL/gradient error;
+isolated processes measure cold operation time and whole-worker peak RSS.
+The bounded refactor preserves old APIs and scientific thresholds. See the
+[Stage 04 report](experiment_04_findings.md) for actual accuracy qualification,
+performance limits, failed configurations and the selected next-stage decision.
+
+Stage 04 prioritizes a separate accuracy-and-cost study of approximate target
+marginal variances. Exact marginal variance extraction remains the reference;
+an estimator must meet independent error gates before replacing it. Improved
+iterative solves, trace estimation, structured observation compression and
+temporal compression remain separate later decisions.
 
 Kernel composition is a separate future stage: start with a nonnegative weighted
 sum of two heat kernels and an independent dense reference, assess covariance and

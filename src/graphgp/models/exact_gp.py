@@ -1,6 +1,8 @@
 """Zero-mean GPyTorch model and explicit iterative inference settings."""
-from contextlib import ExitStack, contextmanager
+from contextlib import contextmanager
 import gpytorch
+
+from graphgp.inference.solver_settings import IterativeConfig, iterative_context
 
 class GraphGP(gpytorch.models.ExactGP):
     def __init__(self, train_ids, train_y, likelihood, kernel):
@@ -15,19 +17,18 @@ class GraphGP(gpytorch.models.ExactGP):
 
 @contextmanager
 def iterative_settings(*, cg_tolerance=1e-5, trace_samples=32, lanczos_iterations=32):
-    """Explicit CG/SLQ settings; diagonal-based preconditioning is disabled."""
-    with ExitStack() as stack:
-        for setting in [
-            gpytorch.settings.max_cholesky_size(0),
-            gpytorch.settings.max_preconditioner_size(0),
-            gpytorch.settings.max_eager_kernel_size(0),
-            gpytorch.settings.cg_tolerance(cg_tolerance),
-            gpytorch.settings.eval_cg_tolerance(cg_tolerance),
-            gpytorch.settings.max_cg_iterations(500),
-            gpytorch.settings.max_lanczos_quadrature_iterations(lanczos_iterations),
-            gpytorch.settings.num_trace_samples(trace_samples),
-            gpytorch.settings.fast_computations(covar_root_decomposition=True, log_prob=True, solves=True),
-            gpytorch.settings.fast_pred_var(False),
-        ]:
-            stack.enter_context(setting)
+    """Legacy scoped CG/SLQ defaults, with preconditioning disabled.
+
+    Historically this helper inherited ``terminate_cg_by_size`` from its caller
+    (the installed default is False). Preserve that behavior even inside a
+    caller's overriding context; new measurements should set it explicitly in
+    ``IterativeConfig``. All other former settings retain their exact values.
+    """
+    config = IterativeConfig(
+        cg_tolerance=cg_tolerance, eval_cg_tolerance=cg_tolerance,
+        max_cg_iterations=500, trace_samples=trace_samples,
+        lanczos_iterations=lanczos_iterations, max_preconditioner_size=0,
+        terminate_cg_by_size=gpytorch.settings.terminate_cg_by_size.on(),
+    )
+    with iterative_context(config):
         yield

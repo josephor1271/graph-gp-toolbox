@@ -1,0 +1,85 @@
+{
+  "source_commit": "060a3089cbfb008ca2c8775e35cb9503f967110c",
+  "source_dirty": false,
+  "source_hashes": {
+    "experiments/04_plot_scaling.py": "a6b0f0eb33e944845c6554b10973a49a3d09c888f0975c44cbe54f094f6ef249",
+    "experiments/04_scaling.py": "049ee53417347bec556a0b95145abeac582d5bdc15f7c3eac26f4b18bd9c15bb",
+    "experiments/04_solver_diagnostics.py": "c8ab46467074f5c2746a4f30430c2d512dd8154eb90065e533d4f46f4cfd0304",
+    "src/graphgp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/analysis/__init__.py": "198f87259f6a95604289fb5d63145f6b2b9d6157cc4deda602affc28342dd4a2",
+    "src/graphgp/analysis/graph_time_oracle.py": "2a385ededd2c9e758ac994ddf225ba246610567bcfe0869717dc81b895dc4d51",
+    "src/graphgp/analysis/heat_identifiability.py": "c2706f154ed721b7f18ba8423eec1eff56ea4296b293696d7c1ecc7ba5644f92",
+    "src/graphgp/benchmarking/__init__.py": "ae10e1a61c389ece9aa42a91c7536fe9be77e18f39a2fc2ccd5c9acfa5b576cb",
+    "src/graphgp/benchmarking/cases.py": "253130f817445138c7d3e16ab6eab5dbf289720f1e0b106725a2ac06235dccaf",
+    "src/graphgp/benchmarking/coordinator.py": "39b8effb316a6c596081b90974b33603e20908b2cf0d9d132686f75d09736728",
+    "src/graphgp/benchmarking/reference.py": "ccf05f69080fb3c7bd207515d5b1592614d83e4dde4258da395de79716a9e1d9",
+    "src/graphgp/benchmarking/report.py": "2807e678e17e4a5b51fe395432ca800bcd0aa91767436baa38e774dade6362d8",
+    "src/graphgp/benchmarking/solver.py": "c7f4f2180cb7a4190d2997761dd9a9b44a8522e807f60c33b0e90ba80b81b7a8",
+    "src/graphgp/benchmarking/worker.py": "40f130c63d5ec839173db04fe17c1f0ce0e520e7e2a98590ae10cca2239bdd4d",
+    "src/graphgp/demo.py": "e44142848a7d7d20f82b9f100376da934d289eb64192421c4682e2b9677866e0",
+    "src/graphgp/diagnostics.py": "6c5ccb8ac0ec38d36e3c14abd2bb27345b040813e31fce3dcfaff1137b54742d",
+    "src/graphgp/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/inference/instrumentation.py": "b7b2cc63f0577b306f5b742fd54f375a6068ca8bb3885ea63d092e9de4eb7612",
+    "src/graphgp/inference/predict.py": "8afc526294dedb400f9c229c602b6e11e2526bec5225c8d7be68e9300b548855",
+    "src/graphgp/inference/solver_settings.py": "0de359880f16bc888691d80069a4b0e5b18a014c58dc07d6900f4037ee20dca6",
+    "src/graphgp/kernels/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/kernels/dense.py": "34b270906a5d7b134980cf8ddd7bf99ed5f810de9d4947d422682cdc28e9e460",
+    "src/graphgp/kernels/graph_time.py": "8e99a12f14ddbfeb94009835d031c0051c2da4a4ca74286349a5d4124017722a",
+    "src/graphgp/kernels/heat.py": "15175b32178847f3b6d8b803d22e6e48edb63c75c68ca2ad782adc340ccad632",
+    "src/graphgp/kernels/safety.py": "f03aa177ef1e9b726eb786b819ca33a27e8727a3c7d8df0a997794a9bf369ce9",
+    "src/graphgp/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/models/exact_gp.py": "78b758f41ad7564a66b5cdad706fb6b2a19ba0946a86bc3744b89ddbc1962177",
+    "src/graphgp/models/factory.py": "4fde48025d650c44acbe2a5bccf7eb451c20fb7c2bf2bc8deaa834921f28b410",
+    "src/graphgp/models/graph_time.py": "b93474cba513274759b8feaf7b981816a16163f57955aa86776abf5be29d8cf2",
+    "src/graphgp/operators/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/operators/chebyshev.py": "658735ace250919446100f61e85ab4b61b45291dd5ca84b4b8cf6bdae1a9640b",
+    "src/graphgp/operators/coefficients.py": "1c8c6341370ccb55f071eab6a12c2728396f78f8d3f5980129a2bf97d8652458",
+    "src/graphgp/recovery.py": "4651936a66b62b7a04850fe541d06d3f16733ee72e9d0d630b54d538deca58a2",
+    "src/graphgp/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/graphgp/utils/graphs.py": "368a5d93d2380b99f0a85815d4baaa4c54f52aaff1845303d3357e2339a54b5c",
+    "src/graphgp/utils/study_domain.py": "75493bd667f86ff9ad89d80bc2ff37999fd8f92e5ee2e05aeb533d5a505c9ca9",
+    "src/graphgp/validation.py": "e0b9ea776ec190068977185c7f8b5032fb97026c9251e3636787561d647d4d1a",
+    "src/graphgp/validation_graph_time.py": "c8570e68c2173ea5dea8af4bb8feeee7cfcb8ff6cbc8084b0c0b28f28e041920"
+  },
+  "python": "3.12.0 (v3.12.0:0fb18b02c8, Oct  2 2023, 09:45:56) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "cpu": "Apple M4",
+  "logical_cores": 10,
+  "physical_cores": "10",
+  "versions": {
+    "torch": "2.11.0",
+    "gpytorch": "1.15.2",
+    "linear_operator": "0.6.1",
+    "numpy": "2.4.3",
+    "scipy": "1.17.1",
+    "networkx": "3.6.1",
+    "matplotlib": "3.10.8"
+  },
+  "command_line": [
+    "experiments/04_scaling.py",
+    "--output",
+    "results/scaling_stage04_corrected"
+  ],
+  "timestamp_utc": "2026-10-26T19:02:23Z",
+  "host_memory_limit_enforced": false,
+  "memory_note": "No portable host memory ceiling imposed; per-worker wall timeout is enforced.",
+  "rss_note": "Whole isolated child peak: macOS ru_maxrss bytes / 2^20; Linux KiB / 1024. Imports/allocator/setup included. No peak subtraction.",
+  "derived_worker_thread_summary": {
+    "before_variants": [
+      {
+        "MKL_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "VECLIB_MAXIMUM_THREADS": null
+      }
+    ],
+    "effective": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "forced_override": true,
+    "torch_threads": 1
+  }
+}

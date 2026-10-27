@@ -15,3 +15,4 @@ jobs:
       - run: python experiments/01_heat_hyperparameter_recovery.py --smoke --output results/ci
       - run: python experiments/02_heat_identifiability.py --smoke --output results/ci_identifiability
       - run: python experiments/03_graph_time.py --smoke --output results/ci_graph_time
+      - run: python experiments/04_scaling.py --smoke --output results/ci_scaling_stage04

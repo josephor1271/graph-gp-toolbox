@@ -13,9 +13,9 @@ from linear_operator.operators import (
 from graphgp.kernels.dense import DenseExactGraphHeatKernel
 from graphgp.kernels.heat import GraphHeatKernel
 from graphgp.kernels.safety import heat_interpolation_certificate
-from graphgp.models.factory import HEAT_RANGE, validate_study_laplacian
-
-LENGTHSCALE_RANGE = (0.08, 0.8)
+from graphgp.utils.study_domain import (
+    HEAT_RANGE, LENGTHSCALE_RANGE, validate_study_laplacian,
+)
 
 
 def _initial_value(value: float, bounds: tuple[float, float], name: str) -> torch.Tensor:
