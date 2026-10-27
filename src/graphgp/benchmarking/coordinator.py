@@ -90,11 +90,14 @@ def scaling_requests(cases, smoke=False):
     return result
 
 
-def execute(spec, output, *, timeout=TIMEOUT_SECONDS, runner=subprocess.run):
+def execute(spec, output, *, timeout=TIMEOUT_SECONDS, runner=subprocess.run,
+            worker_module="graphgp.benchmarking.worker"):
+    if worker_module not in ("graphgp.benchmarking.worker", "graphgp.benchmarking.stage05_worker"):
+        raise ValueError(f"unknown worker module: {worker_module}")
     run_id = spec["run_id"]
     spec_path, result_path = output/"workers"/(run_id+".spec.json"), output/"workers"/(run_id+".json")
     write_json(spec_path, spec)
-    command = [sys.executable, "-m", "graphgp.benchmarking.worker", "--spec", str(spec_path), "--output", str(result_path)]
+    command = [sys.executable, "-m", worker_module, "--spec", str(spec_path), "--output", str(result_path)]
     start = time.perf_counter()
     try:
         child = runner(command, capture_output=True, text=True, timeout=timeout)
