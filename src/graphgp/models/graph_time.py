@@ -11,7 +11,8 @@ from graphgp.models.factory import NOISE_RANGE
 def make_graph_time_gp(L, train_pairs: torch.Tensor, train_y: torch.Tensor, *,
                        num_times: int, backend: str, heat_time: float = 0.7,
                        lengthscale: float = 0.4, noise_variance: float = 0.06,
-                       learn_noise: bool = False, degree: int = 32) -> GraphGP:
+                       learn_noise: bool = False, degree: int = 32,
+                       scaled_laplacian: bool = False) -> GraphGP:
     """Make a zero-mean, unit-amplitude graph × time ExactGP in CPU float64.
 
     ``train_pairs`` is nonempty ``(m, 2)`` with integer-valued vertex/time
@@ -28,7 +29,7 @@ def make_graph_time_gp(L, train_pairs: torch.Tensor, train_y: torch.Tensor, *,
         raise ValueError("learn_noise must be a bool")
     kernel = GraphTimeHeatRBFKernel(
         L, num_times=num_times, backend=backend, heat_time=heat_time,
-        lengthscale=lengthscale, degree=degree)
+        lengthscale=lengthscale, degree=degree, scaled_laplacian=scaled_laplacian)
     kernel.validate_pairs(train_pairs)
     if (not torch.is_tensor(train_y) or train_y.ndim != 1
             or train_y.shape[0] != train_pairs.shape[0]

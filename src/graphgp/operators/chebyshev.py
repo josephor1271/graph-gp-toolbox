@@ -62,8 +62,10 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
     """Represent ``c[0]/2 I + sum(c[k] T_k((L-center I)/radius))``.
 
     ``L`` must be a fixed, real, symmetric sparse matrix. Symmetry is a caller
-    contract: no dense symmetry check is performed. The raw matrix is stored
-    in CSR format; affine spectral scaling happens inside sparse products.
+    contract: no dense symmetry check is performed. By default the raw matrix
+    is stored in CSR format and affine scaling happens inside sparse products.
+    With ``pre_scaled=True``, L must already equal (raw_L-center I)/radius;
+    the caller owns that sparse preprocessing and this operator skips scaling.
     Coefficients determine dtype/device and retain their autograd connection.
 
     Only the graph is unbatched. RHS tensors may have shape ``(n,)``, ``(n,m)``
@@ -76,7 +78,9 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
     # Performance detail, not a model parameter or representation argument.
     _entry_block_width = 16
 
-    def __init__(self, L, cheb_coeffs, *, lambda_min, lambda_max):
+    def __init__(self, L, cheb_coeffs, *, lambda_min, lambda_max, pre_scaled=False):
+        if not isinstance(pre_scaled, bool):
+            raise TypeError("pre_scaled must be a bool")
         cheb_coeffs = torch.as_tensor(cheb_coeffs)
         if cheb_coeffs.is_complex():
             raise TypeError("cheb_coeffs must be real")
@@ -107,14 +111,18 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
 
         # The representation tree must reconstruct exactly the tensors used in
         # _matmul, including any dtype/device canonicalization.
-        super().__init__(L, cheb_coeffs, lambda_min=lambda_min, lambda_max=lambda_max)
+        super().__init__(L, cheb_coeffs, lambda_min=lambda_min, lambda_max=lambda_max,
+                         pre_scaled=pre_scaled)
         self.L = L
         self.cheb_coeffs = cheb_coeffs
         self.n = L.shape[0]
         self.center = lambda_min / 2 + lambda_max / 2
         self.radius = lambda_max / 2 - lambda_min / 2
+        self.pre_scaled = pre_scaled
 
     def _scaled_laplacian_matmul(self, rhs):
+        if self.pre_scaled:
+            return torch.sparse.mm(self.L, rhs)
         return (torch.sparse.mm(self.L, rhs) - self.center * rhs) / self.radius
 
     def _matmul(self, rhs):

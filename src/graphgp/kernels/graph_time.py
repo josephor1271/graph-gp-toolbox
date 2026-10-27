@@ -44,7 +44,8 @@ class GraphTimeHeatRBFKernel(gpytorch.kernels.Kernel):
     has_lengthscale = False
 
     def __init__(self, L, *, num_times: int, backend: str, heat_time: float = 0.7,
-                 lengthscale: float = 0.4, degree: int = 32, **kwargs):
+                 lengthscale: float = 0.4, degree: int = 32,
+                 scaled_laplacian: bool = False, **kwargs):
         super().__init__(**kwargs)
         if self.batch_shape or self.active_dims is not None:
             raise ValueError("graph/input batching and active_dims are unsupported")
@@ -53,6 +54,10 @@ class GraphTimeHeatRBFKernel(gpytorch.kernels.Kernel):
             raise ValueError("num_times must be an integer >= 2 in the float64 exact-int domain")
         if backend not in ("dense_exact", "sparse_chebyshev"):
             raise ValueError("backend must be 'dense_exact' or 'sparse_chebyshev'")
+        if not isinstance(scaled_laplacian, bool):
+            raise TypeError("scaled_laplacian must be a bool")
+        if scaled_laplacian and backend != "sparse_chebyshev":
+            raise ValueError("scaled_laplacian requires the sparse backend")
         laplacian = validate_study_laplacian(L)
         self.num_vertices = laplacian.shape[0]
         self.num_times = int(num_times)
@@ -64,7 +69,7 @@ class GraphTimeHeatRBFKernel(gpytorch.kernels.Kernel):
             graph_kernel = GraphHeatKernel(
                 laplacian, lambda_min=0.0, lambda_max=2.0,
                 num_coefficients=degree + 1, num_nodes=degree + 1,
-                heat_time=tau)
+                heat_time=tau, scaled_laplacian=scaled_laplacian)
         else:
             graph_kernel = DenseExactGraphHeatKernel(laplacian, heat_time=tau)
         graph_kernel.register_constraint(
