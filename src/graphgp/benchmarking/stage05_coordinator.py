@@ -57,6 +57,8 @@ def requests(*,smoke=False,profile_only=False,max_cases=None):
             for repeat in range(2 if case.n<=400 else 1):
                 for op in ('build','mll','train3','mean','marginal','mean_warm','marginal_warm','solve'):
                     for arm in available:output.append(request(case,op,arm,repeat=repeat))
+                    if case.case_id in ('s05_q016','s05_n100','s05_q256','s05_q256_n400') and op in ('mll','mean','marginal'):
+                        output.append(request(case,op,ARMS[2],campaign='entry_scalar_control',repeat=repeat,entry_strategy='scalar_reference'))
         # q variants share the same operator/data/RHS. Measure operator work
         # once per n/T/m and document this canonical mapping in config.
         if case.case_id.startswith('s05_q'):continue
@@ -90,13 +92,6 @@ def requests(*,smoke=False,profile_only=False,max_cases=None):
                 for strategy in ('scalar_reference','batched'):
                     output.append(request(c,'entries',ARMS[2],campaign='entries_'+strategy,repeat=repeat,
                                           entry_count=256,unique_columns=unique,entry_strategy=strategy))
-    for case in selected:
-        if case.case_id not in ('s05_q016','s05_n100','s05_q256','s05_q256_n400'):continue
-        # Matched old/new controls verify the >10% GP regression rule, and
-        # the q effect. Scalar controls change no covariance/solver setting.
-        for repeat in range(2):
-            for op in ('mll','mean','marginal'):
-                output.append(request(case,op,ARMS[2],campaign='entry_scalar_control',repeat=repeat,entry_strategy='scalar_reference'))
     return output
 
 
@@ -122,7 +117,7 @@ def orchestrate(output,*,smoke=False,profile_only=False,max_cases=None,candidate
         repeats='2 GP processes n<=400; 1 GP n1600/T32; 3 operator processes; fixed probe label301; labels302/303 accuracy only',
         operator_canonical_cases='q variants reuse n100/n400 operator rows: same base fingerprint and RHS; no duplicate operator timings',
         warmup='one untimed then five products; graph backward one untimed forward/backward; no GP warmup/update; warm predictions labeled separately',
-        ordering='case, repeat, operation, width, A/B/C32/C16 interleaved; candidate alternates baseline/scaled within each width',
+        ordering='case, repeat, operation, width, A/B/C32/C16 interleaved; old scalar controls follow each four-arm block; candidate alternates baseline/scaled within each width',
         timeout_seconds=TIMEOUT_SECONDS,master_seed=202605,probe_labels=[301,302,303],
         data='Stage04 degree32 heat-half @ Z @ chol(KT).T, approximate GP-like signal; independent noise; secondary-only T32 spectral PSD data root',
         memory='whole-worker peak RSS includes imports/setup; resident graph-kernel bytes = CSR crow+col+values + spectral nodes + cosine basis + raw tau; scaled replaces raw graph, no duplicate buffer',
