@@ -17,6 +17,11 @@ model, independent dense oracle, numerical validation and measured predictive re
 operation costs and resident memory. It finds no product or GP inference time
 crossover in the matched small range; some operations use less worker memory.
 Exact target marginal variances remain a major measured cost.
+[Stage 05](docs/experiment_05_findings.md) separates dense direct, dense iterative
+and sparse iterative inference, batches exact graph entries, and validates opt-in
+degree 16 and scaled CSR. Exact marginal latency improves, while stochastic
+gradient sign errors remain. C16 has a narrow warm-cache mean crossover at n=400;
+there is no matched cold MLL or marginal crossover through n=400.
 
 ## Install and run
 
@@ -32,6 +37,7 @@ python experiments/01_heat_hyperparameter_recovery.py --smoke
 python experiments/02_heat_identifiability.py --smoke --output results/identifiability_smoke
 python experiments/03_graph_time.py --smoke --output results/graph_time_smoke
 python experiments/04_scaling.py --smoke --output results/scaling_stage04_smoke
+python experiments/05_optimize_chebyshev.py --smoke --output results/chebyshev_stage05_smoke
 ```
 
 The original short demo fits a smooth sine signal; it is an API demonstration. The scientific study samples independent latent
@@ -62,6 +68,13 @@ python experiments/04_scaling.py --output results/scaling_stage04
 # Solver sweep alone, or regenerate four figures without GP imports
 python experiments/04_solver_diagnostics.py --output results/solver_stage04
 python experiments/04_plot_scaling.py --input results/scaling_stage04 --output docs/figures
+# Stage 05 fixed four-arm study (1,275 bounded, sequential workers)
+python experiments/05_optimize_chebyshev.py --output results/chebyshev_stage05
+# Diagnostic profiling, and the separately gated scaled-CSR operator study
+python experiments/05_optimize_chebyshev.py --profile-only --output results/chebyshev_stage05_profile
+python experiments/05_optimize_chebyshev.py --scaled-candidate --output results/stage05_scaled_candidate
+# Regenerate exactly three figures from committed CSVs; no fitting or sampling
+python experiments/05_plot_optimization.py --output results/chebyshev_stage05_figures
 ```
 
 Stage 01 saves config/environment JSON, diagnostic CSV, data/prediction NPZ arrays,
@@ -80,6 +93,15 @@ one-thread worker processes with a 180-second wall limit. It retains actual
 residuals, stochastic-probe errors and failed attempts. Its approximate correlated
 benchmark signal is separate from the independent exact small-case oracle.
 Experimental solver profiles do not change the production defaults.
+
+Stage 05 keeps degree 32 and the original CSR recurrence as defaults. Graph-time
+models accept `degree=16` and `scaled_laplacian=True` as independent explicit
+options. Scaled CSR is preprocessed once from a SciPy graph and replaces its raw
+resident graph buffer. Construct the same storage mode when restoring model
+state. Raw Torch CSR inputs to the lower-level `GraphHeatKernel` retain the
+original recurrence. The [evidence definitions](docs/evidence/chebyshev_stage05/README.md)
+separate cold/warm predictions, exact-oracle qualification, projected lifecycle
+costs, whole-worker RSS and persistent graph-storage bytes.
 
 [Migration notes](docs/migration_notes.md) identify source provenance and tests.
 [Numerical safety](docs/numerical_safety.md) explains the enforced parameter domain,

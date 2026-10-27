@@ -1,0 +1,18 @@
+{
+  "csv_only": true,
+  "byte_identical_regeneration": true,
+  "figures": {
+    "chebyshev_stage05_diagonal.png": {
+      "sha256": "09b7fec10e66bc2293e35c79f4efc7b253097dc7e76a9fe2080926478c814a44",
+      "bytes": 131758
+    },
+    "chebyshev_stage05_operator.png": {
+      "sha256": "80dc7fd58ccefe6cec8e88510d454bfce05d5896f80e0c810e5c808bb7779b82",
+      "bytes": 168133
+    },
+    "chebyshev_stage05_decomposition.png": {
+      "sha256": "5a3d926ca734dc219175ecca724ecc90b4af8023c26f0fd9be99e1e806625ff8",
+      "bytes": 227491
+    }
+  }
+}

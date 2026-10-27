@@ -26,16 +26,25 @@ class GraphHeatKernel(gpytorch.kernels.Kernel):
     with ARPACK; known enclosing bounds are preferable. Exact diagonals are
     correct but expensive. Force max_cholesky_size(0) and initially disable
     preconditioning to exercise the iterative inference path.
+
+    ``scaled_laplacian=True`` preprocesses a SciPy graph once, storing its
+    scaled CSR instead of a second graph copy. Coefficient nodes keep the
+    original spectral interval. Raw Torch CSR inputs use the default route.
+    Restore state into a kernel constructed with the same graph/storage mode.
     """
 
     has_lengthscale = False
 
     def __init__(self, L, *, lambda_max=None, lambda_min=0.0,
-                 num_coefficients=33, num_nodes=None, heat_time=1.0, **kwargs):
+                 num_coefficients=33, num_nodes=None, heat_time=1.0,
+                 scaled_laplacian=False, **kwargs):
         super().__init__(**kwargs)
+        if not isinstance(scaled_laplacian, bool):
+            raise TypeError("scaled_laplacian must be a bool")
         if self.batch_shape:
             raise ValueError("GraphHeatKernel supports one unbatched graph")
-        if scipy.sparse.issparse(L):
+        scipy_graph = L if scipy.sparse.issparse(L) else None
+        if scipy_graph is not None:
             L = scipy_csr_to_torch_csr(L)
         if not torch.is_tensor(L) or L.layout != torch.sparse_csr:
             raise TypeError("L must be a Torch sparse CSR tensor or SciPy sparse matrix")
@@ -49,6 +58,15 @@ class GraphHeatKernel(gpytorch.kernels.Kernel):
             L = L.to(dtype=torch.get_default_dtype())
         self.lambda_min, self.lambda_max = laplacian_eigenvalue_bounds(
             L, lambda_min=lambda_min, lambda_max=lambda_max)
+        # Opt-in preprocessing replaces the resident graph; it does not keep
+        # a second CSR copy. Raw Torch graphs retain the original runtime path.
+        self.scaled_laplacian = scaled_laplacian and scipy_graph is not None
+        if self.scaled_laplacian:
+            center = (self.lambda_min+self.lambda_max)/2
+            radius = (self.lambda_max-self.lambda_min)/2
+            scaled = (scipy_graph.tocsr()-center*scipy.sparse.eye(L.shape[0],format="csr"))/radius
+            scaled.sum_duplicates(); scaled.eliminate_zeros(); scaled.sort_indices()
+            L = scipy_csr_to_torch_csr(scaled,dtype=L.dtype,device=L.device)
         nodes, basis = chebyshev_basis_on_interval_torch(
             lambda_min=self.lambda_min, lambda_max=self.lambda_max,
             num_coefficients=num_coefficients, num_nodes=num_nodes,
@@ -75,11 +93,13 @@ class GraphHeatKernel(gpytorch.kernels.Kernel):
 
     def get_extra_state(self):
         # Keep Python interval constants consistent with the loaded L/basis.
-        return {"lambda_min": self.lambda_min, "lambda_max": self.lambda_max}
+        return {"lambda_min": self.lambda_min, "lambda_max": self.lambda_max,
+                "scaled_laplacian": self.scaled_laplacian}
 
     def set_extra_state(self, state):
         self.lambda_min = state["lambda_min"]
         self.lambda_max = state["lambda_max"]
+        self.scaled_laplacian = state.get("scaled_laplacian", False)
 
     def _node_indices(self, x):
         if x.ndim != 2 or x.shape[-1] != 1:
@@ -103,7 +123,8 @@ class GraphHeatKernel(gpytorch.kernels.Kernel):
         coefficients = chebyshev_coefficients_from_samples_torch(
             torch.exp(-self.heat_time * self.spectral_nodes), self.cosine_basis)
         return ChebyshevFunctionLinearOperator(
-            self.L, coefficients, lambda_min=self.lambda_min, lambda_max=self.lambda_max)
+            self.L, coefficients, lambda_min=self.lambda_min, lambda_max=self.lambda_max,
+            pre_scaled=self.scaled_laplacian)
 
     def forward(self, x1, x2, diag=False, last_dim_is_batch=False, **params):
         if last_dim_is_batch:

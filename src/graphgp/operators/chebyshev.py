@@ -62,8 +62,10 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
     """Represent ``c[0]/2 I + sum(c[k] T_k((L-center I)/radius))``.
 
     ``L`` must be a fixed, real, symmetric sparse matrix. Symmetry is a caller
-    contract: no dense symmetry check is performed. The raw matrix is stored
-    in CSR format; affine spectral scaling happens inside sparse products.
+    contract: no dense symmetry check is performed. By default the raw matrix
+    is stored in CSR format and affine scaling happens inside sparse products.
+    With ``pre_scaled=True``, L must already equal (raw_L-center I)/radius;
+    the caller owns that sparse preprocessing and this operator skips scaling.
     Coefficients determine dtype/device and retain their autograd connection.
 
     Only the graph is unbatched. RHS tensors may have shape ``(n,)``, ``(n,m)``
@@ -73,7 +75,12 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
     with automatically inferred bounds (supply a positive upper bound instead).
     """
 
-    def __init__(self, L, cheb_coeffs, *, lambda_min, lambda_max):
+    # Performance detail, not a model parameter or representation argument.
+    _entry_block_width = 16
+
+    def __init__(self, L, cheb_coeffs, *, lambda_min, lambda_max, pre_scaled=False):
+        if not isinstance(pre_scaled, bool):
+            raise TypeError("pre_scaled must be a bool")
         cheb_coeffs = torch.as_tensor(cheb_coeffs)
         if cheb_coeffs.is_complex():
             raise TypeError("cheb_coeffs must be real")
@@ -104,14 +111,18 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
 
         # The representation tree must reconstruct exactly the tensors used in
         # _matmul, including any dtype/device canonicalization.
-        super().__init__(L, cheb_coeffs, lambda_min=lambda_min, lambda_max=lambda_max)
+        super().__init__(L, cheb_coeffs, lambda_min=lambda_min, lambda_max=lambda_max,
+                         pre_scaled=pre_scaled)
         self.L = L
         self.cheb_coeffs = cheb_coeffs
         self.n = L.shape[0]
         self.center = lambda_min / 2 + lambda_max / 2
         self.radius = lambda_max / 2 - lambda_min / 2
+        self.pre_scaled = pre_scaled
 
     def _scaled_laplacian_matmul(self, rhs):
+        if self.pre_scaled:
+            return torch.sparse.mm(self.L, rhs)
         return (torch.sparse.mm(self.L, rhs) - self.center * rhs) / self.radius
 
     def _matmul(self, rhs):
@@ -146,21 +157,38 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
         return self
 
     def _get_indices(self, row_index, col_index, *batch_indices):
-        """Exact selected entries with one basis-vector MVP per entry.
+        """Exact polynomial entries using deduplicated, bounded basis blocks.
 
-        linear_operator 0.6.1's default attempts to batch/unsqueeze the CSR
-        representation, which PyTorch does not support. This correctness
-        fallback avoids both that path and an n-by-n identity allocation.
-        Diagonal extraction remains O(n * degree * nnz(L)); it is unoptimized.
+        Each block applies the existing differentiable operator once. Only
+        n×b basis/product workspace is needed, b<=16; neither the covariance
+        nor an n×n identity is constructed. Small n<=3 retains width-one call
+        granularity for the legacy instrumentation contract. No cache survives
+        this evaluation, so parameter/state/data changes cannot leave stale
+        graph entries behind.
         """
         if batch_indices:
             raise ValueError("batched graph indexing is unsupported")
         rows, cols = torch.broadcast_tensors(row_index, col_index)
-        entries = []
-        for row, col in zip(rows.reshape(-1), cols.reshape(-1)):
-            basis_vector = self.cheb_coeffs.new_zeros(self.n, 1)
-            basis_vector[col, 0] = 1
-            entries.append((self @ basis_vector)[row, 0])
-        if not entries:
-            return self.cheb_coeffs.new_empty(rows.shape)
-        return torch.stack(entries).reshape(rows.shape)
+        if rows.device != self.L.device or cols.device != self.L.device:
+            raise ValueError("entry indices must share the graph device")
+        if rows.dtype not in (torch.int32, torch.int64) or cols.dtype not in (torch.int32, torch.int64):
+            raise TypeError("entry indices must be integer tensors")
+        if ((rows < 0) | (rows >= self.n) | (cols < 0) | (cols >= self.n)).any():
+            raise IndexError("graph entry index out of range")
+        if rows.numel() == 0:
+            return self.cheb_coeffs.new_empty(rows.shape) + self.cheb_coeffs.sum()*0
+        flat_rows, flat_cols = rows.reshape(-1).long(), cols.reshape(-1).long()
+        unique, inverse = torch.unique(flat_cols, sorted=True, return_inverse=True)
+        if self.n == 1:
+            return (self @ self.cheb_coeffs.new_ones(1))[flat_rows].reshape(rows.shape)
+        width = 1 if self.n <= 3 else min(self._entry_block_width, self.n-1)
+        positions, entries = [], []
+        for start in range(0, unique.numel(), width):
+            block = unique[start:start+width]
+            basis = self.cheb_coeffs.new_zeros(self.n, block.numel())
+            basis[block, torch.arange(block.numel(), device=block.device)] = 1
+            product = self @ basis
+            selected = torch.nonzero((inverse >= start) & (inverse < start+block.numel()), as_tuple=False).flatten()
+            positions.append(selected)
+            entries.append(product[flat_rows[selected], inverse[selected]-start])
+        return torch.cat(entries)[torch.argsort(torch.cat(positions))].reshape(rows.shape)

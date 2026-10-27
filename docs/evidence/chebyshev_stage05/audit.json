@@ -1,0 +1,172 @@
+{
+  "historical_files_checked": 95,
+  "historical_mismatches": {},
+  "measured_source_files_checked": 47,
+  "measured_source_mismatches": {},
+  "raw_csv_recomputation": "byte-identical",
+  "prebenchmark_checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "wall_seconds": 17.965070915874094,
+      "log": "results/stage05_prebenchmark_check_0.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/01_heat_hyperparameter_recovery.py",
+        "--smoke",
+        "--output",
+        "results/stage05_prebenchmark_heat"
+      ],
+      "returncode": 0,
+      "wall_seconds": 2.0605920830275863,
+      "log": "results/stage05_prebenchmark_check_1.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/02_heat_identifiability.py",
+        "--smoke",
+        "--output",
+        "results/stage05_prebenchmark_identifiability"
+      ],
+      "returncode": 0,
+      "wall_seconds": 1.38117420906201,
+      "log": "results/stage05_prebenchmark_check_2.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/03_graph_time.py",
+        "--smoke",
+        "--output",
+        "results/stage05_prebenchmark_graph_time"
+      ],
+      "returncode": 0,
+      "wall_seconds": 4.219989999895915,
+      "log": "results/stage05_prebenchmark_check_3.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/04_scaling.py",
+        "--smoke",
+        "--output",
+        "results/stage05_prebenchmark_scaling"
+      ],
+      "returncode": 0,
+      "wall_seconds": 23.27990737510845,
+      "log": "results/stage05_prebenchmark_check_4.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/05_optimize_chebyshev.py",
+        "--smoke",
+        "--output",
+        "results/stage05_prebenchmark_chebyshev"
+      ],
+      "returncode": 0,
+      "wall_seconds": 23.01777737494558,
+      "log": "results/stage05_prebenchmark_check_5.log"
+    }
+  ],
+  "worker_statuses": {
+    "ok": 1275
+  },
+  "raw_file_sha256": {
+    "config.json": "d598a2b97456bfb15c883184ec2d015fde0aa03e68b1e6a52f4020c393ee4c1b",
+    "requests.json": "dbc383c9fd57a80bec9f410f741ff3181dbe39ccb468b2de4f6bd02c5b09a7bb",
+    "environment.json": "43a362eeb0caff44487867fe1b2a432a3ec166f27787c6d2b9b219ad75705c36",
+    "completion.json": "d536380b66787bf4b9eb459bbba86f14bc9fc6352feef205263797b2fab5474e",
+    "records.json": "2fd7ce4e2ba3c5b5a107f85dfe766676d25ac0f5b6dce4e9e172c6bd16517cdc"
+  },
+  "final_checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "wall_seconds": 18.32310879183933,
+      "log": "results/stage05_final_check_0.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/01_heat_hyperparameter_recovery.py",
+        "--smoke",
+        "--output",
+        "results/stage05_final_heat"
+      ],
+      "returncode": 0,
+      "wall_seconds": 2.09905712492764,
+      "log": "results/stage05_final_check_1.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/02_heat_identifiability.py",
+        "--smoke",
+        "--output",
+        "results/stage05_final_identifiability"
+      ],
+      "returncode": 0,
+      "wall_seconds": 1.3806054580491036,
+      "log": "results/stage05_final_check_2.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/03_graph_time.py",
+        "--smoke",
+        "--output",
+        "results/stage05_final_graph_time"
+      ],
+      "returncode": 0,
+      "wall_seconds": 4.149372624931857,
+      "log": "results/stage05_final_check_3.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/04_scaling.py",
+        "--smoke",
+        "--output",
+        "results/stage05_final_scaling"
+      ],
+      "returncode": 0,
+      "wall_seconds": 23.704464667011052,
+      "log": "results/stage05_final_check_4.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "experiments/05_optimize_chebyshev.py",
+        "--smoke",
+        "--output",
+        "results/stage05_final_chebyshev"
+      ],
+      "returncode": 0,
+      "wall_seconds": 22.41218458302319,
+      "log": "results/stage05_final_check_5.log"
+    }
+  ],
+  "reporting_script_sha256": "68135953fd73dce21fc14db338df61d2b8f3f6318ab39d584f6a9fed01b15d14",
+  "completion_annotation": "The empty primary candidate result is labeled not_attempted_in_primary and linked to the separate measured admission result.",
+  "candidate_source_note": "Candidate source 5421c89; only unimported coordinator primary/control request ordering changed before full source de592cf. Candidate requests and every worker/numerical source were unchanged."
+}

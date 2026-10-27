@@ -32,11 +32,19 @@ The bounded refactor preserves old APIs and scientific thresholds. See the
 [Stage 04 report](experiment_04_findings.md) for actual accuracy qualification,
 performance limits, failed configurations and the selected next-stage decision.
 
-Stage 04 prioritizes a separate accuracy-and-cost study of approximate target
-marginal variances. Exact marginal variance extraction remains the reference;
-an estimator must meet independent error gates before replacing it. Improved
-iterative solves, trace estimation, structured observation compression and
-temporal compression remain separate later decisions.
+Stage 05 supersedes the earlier approximate-variance priority with a measured
+representation/inference decomposition. Exact entry batching improves marginal
+prediction, degree 16 and scaled CSR pass their opt-in gates, and a narrow warm
+mean crossover appears at n=400. Cold sparse inference remains slower than the
+best matched dense arm; shared stochastic gradients can reverse sign. See the
+[Stage 05 report](experiment_05_findings.md) and its separate accuracy-qualified
+timing and memory results.
+
+The next single priority is a dedicated iterative-training fidelity and cost
+study, including preconditioning/logdet-gradient diagnostics with fixed explicit
+graph options and independent residual/gradient gates. Keep exact requested
+marginal variances as the reference. Approximate target variances, structured
+observation compression and temporal compression remain separate later decisions.
 
 Kernel composition is a separate future stage: start with a nonnegative weighted
 sum of two heat kernels and an independent dense reference, assess covariance and

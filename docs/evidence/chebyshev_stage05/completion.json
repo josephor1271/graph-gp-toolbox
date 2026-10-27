@@ -1,0 +1,49 @@
+{
+  "expected_rows": 1275,
+  "actual_rows": 1275,
+  "status_counts": {
+    "ok": 1275
+  },
+  "cases_attempted": [
+    "s05_n016",
+    "s05_n049",
+    "s05_n100",
+    "s05_n1600",
+    "s05_n400",
+    "s05_n6400_mvp",
+    "s05_q016",
+    "s05_q256",
+    "s05_q256_n400",
+    "s05_t32_secondary"
+  ],
+  "missing_rows": [],
+  "duplicate_keys": false,
+  "numerical_warning_records": 108,
+  "numerical_warning_count": 135,
+  "wrong_sign_fixed_mll_rows": 39,
+  "accuracy_qualified_GP_crossovers": [
+    {
+      "case_id": "s05_n400",
+      "arm": "C16_sparse_iterative",
+      "operation": "mean_warm",
+      "A_seconds_over_method": 1.242645925587913,
+      "B_seconds_over_method": 1.182568955901708
+    },
+    {
+      "case_id": "s05_q256_n400",
+      "arm": "C16_sparse_iterative",
+      "operation": "mean_warm",
+      "A_seconds_over_method": 1.1677355819439725,
+      "B_seconds_over_method": 1.14559807598214
+    }
+  ],
+  "failures": [],
+  "candidate": {
+    "status": "not_attempted_in_primary",
+    "separate_evidence": "scaled_candidate.json",
+    "separate_status": "passed"
+  },
+  "smoke_screen": [],
+  "total_worker_wall_seconds": 1751.0550425397232,
+  "total_coordinator_wall_seconds": 1752.6088437079452
+}

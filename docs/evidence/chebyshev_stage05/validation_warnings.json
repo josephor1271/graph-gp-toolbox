@@ -1,0 +1,86 @@
+[
+  {
+    "category": "DeprecationWarning",
+    "message": "`torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`."
+  },
+  {
+    "category": "DeprecationWarning",
+    "message": "`torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`."
+  },
+  {
+    "category": "UserWarning",
+    "message": "Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/Context.cpp:767.)"
+  },
+  {
+    "category": "UserWarning",
+    "message": "Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:51.)"
+  },
+  {
+    "category": "UserWarning",
+    "message": "TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()"
+  },
+  {
+    "category": "UserWarning",
+    "message": "torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:656.)"
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 6.865207501397378e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.1887784911295136e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.116102388115749e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.200316523065403e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.161867567493786e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 6.865207501397327e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.188778491129504e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.116102388115528e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.200316523065443e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.161867567493572e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 6.865207501397498e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.188778491129503e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.116102388115786e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.200316523065373e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  },
+  {
+    "category": "NumericalWarning",
+    "message": "CG terminated in 500 iterations with average residual norm 7.161867567493799e-06 which is larger than the tolerance of 1e-08 specified by linear_operator.settings.cg_tolerance. If performance is affected, consider raising the maximum number of CG iterations by running code in a linear_operator.settings.max_cg_iterations(value) context."
+  }
+]
