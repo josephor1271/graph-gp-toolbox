@@ -1,0 +1,148 @@
+{
+  "study": "fixed_full",
+  "baseline_main": "ac8bffe0443436d623840130609582f599824d9d",
+  "expected_rows": 1275,
+  "cases": [
+    {
+      "case_id": "s05_n016",
+      "n": 16,
+      "num_times": 8,
+      "m": 32,
+      "q": 32
+    },
+    {
+      "case_id": "s05_n049",
+      "n": 49,
+      "num_times": 8,
+      "m": 98,
+      "q": 64
+    },
+    {
+      "case_id": "s05_n100",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 64
+    },
+    {
+      "case_id": "s05_n400",
+      "n": 400,
+      "num_times": 8,
+      "m": 800,
+      "q": 64
+    },
+    {
+      "case_id": "s05_n1600",
+      "n": 1600,
+      "num_times": 8,
+      "m": 3200,
+      "q": 64
+    },
+    {
+      "case_id": "s05_n6400_mvp",
+      "n": 6400,
+      "num_times": 8,
+      "m": 0,
+      "q": 0
+    },
+    {
+      "case_id": "s05_q016",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 16
+    },
+    {
+      "case_id": "s05_q256",
+      "n": 100,
+      "num_times": 8,
+      "m": 200,
+      "q": 256
+    },
+    {
+      "case_id": "s05_q256_n400",
+      "n": 400,
+      "num_times": 8,
+      "m": 800,
+      "q": 256
+    },
+    {
+      "case_id": "s05_t32_secondary",
+      "n": 100,
+      "num_times": 32,
+      "m": 200,
+      "q": 64
+    }
+  ],
+  "arms": [
+    "A_dense_direct",
+    "B_dense_iterative",
+    "C32_sparse_iterative",
+    "C16_sparse_iterative"
+  ],
+  "model": {
+    "heat_time": 1.2,
+    "lengthscale": 0.24,
+    "noise_variance": 0.06,
+    "amplitude": 1,
+    "mean": 0,
+    "default_degree": 32,
+    "entry_block_width": 16
+  },
+  "profiles": {
+    "balanced": {
+      "trace_samples": 16,
+      "lanczos_iterations": 32,
+      "cg_tolerance": 0.0001,
+      "max_cg_iterations": 500
+    },
+    "strict": {
+      "trace_samples": 16,
+      "lanczos_iterations": 32,
+      "cg_tolerance": 1e-06,
+      "max_cg_iterations": 500
+    }
+  },
+  "fixed_settings": {
+    "eval_cg_tolerance": "same as cg_tolerance",
+    "max_preconditioner_size": 0,
+    "terminate_cg_by_size": false,
+    "max_cholesky_size": 0,
+    "max_eager_kernel_size": 0,
+    "fast_pred_var": false
+  },
+  "screening": {
+    "nll_abs": 0.05,
+    "raw_gradient_atol": 0.02,
+    "raw_gradient_rtol": 0.2,
+    "posterior_abs": 0.01,
+    "true_residual": 0.001,
+    "wrong_sign_reference_minimum": 0.001
+  },
+  "repeats": "2 GP processes n<=400; 1 GP n1600/T32; 3 operator processes; fixed probe label301; labels302/303 accuracy only",
+  "operator_canonical_cases": "q variants reuse n100/n400 operator rows: same base fingerprint and RHS; no duplicate operator timings",
+  "warmup": "one untimed then five products; graph backward one untimed forward/backward; no GP warmup/update; warm predictions labeled separately",
+  "ordering": "case, repeat, operation, width, A/B/C32/C16 interleaved; old scalar controls follow each four-arm block; candidate alternates baseline/scaled within each width",
+  "timeout_seconds": 180,
+  "master_seed": 202605,
+  "probe_labels": [
+    301,
+    302,
+    303
+  ],
+  "data": "Stage04 degree32 heat-half @ Z @ chol(KT).T, approximate GP-like signal; independent noise; secondary-only T32 spectral PSD data root",
+  "memory": "whole-worker peak RSS includes imports/setup; resident graph-kernel bytes = CSR crow+col+values + spectral nodes + cosine basis + raw tau; scaled replaces raw graph, no duplicate buffer",
+  "candidate_gates": {
+    "profile_graph_fraction_min": 0.4,
+    "median_elapsed_reduction_min": 0.1,
+    "minimum_sizes": 2,
+    "max_regression_fraction": 0.1,
+    "max_resident_operator_memory_increase": 0.15
+  },
+  "projected_lifecycle_counts": [
+    1,
+    20,
+    100
+  ],
+  "debug_max_cases": null
+}

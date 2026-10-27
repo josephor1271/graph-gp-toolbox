@@ -1,0 +1,378 @@
+{
+  "completion": {
+    "expected_rows": 90,
+    "actual_rows": 90,
+    "status_counts": {
+      "ok": 90
+    },
+    "cases_attempted": [
+      "s05_n100",
+      "s05_n1600",
+      "s05_n400",
+      "s05_n6400_mvp"
+    ],
+    "missing_rows": [],
+    "duplicate_keys": false,
+    "numerical_warning_records": 0,
+    "numerical_warning_count": 0,
+    "wrong_sign_fixed_mll_rows": 0,
+    "accuracy_qualified_GP_crossovers": [],
+    "failures": [],
+    "candidate": {
+      "passed": true,
+      "performance_and_memory_gates": true,
+      "same_width_two_size_speed_gate": true,
+      "pairs": [
+        {
+          "n": 100,
+          "rhs_width": 1,
+          "complete": true,
+          "speedup": 1.493183604214299,
+          "elapsed_ratio": 0.6697100056400578,
+          "resident_memory_ratio": 0.9402985074626866
+        },
+        {
+          "n": 100,
+          "rhs_width": 8,
+          "complete": true,
+          "speedup": 1.3007943168874767,
+          "elapsed_ratio": 0.7687610462450256,
+          "resident_memory_ratio": 0.9402985074626866
+        },
+        {
+          "n": 100,
+          "rhs_width": 32,
+          "complete": true,
+          "speedup": 1.3017755441488725,
+          "elapsed_ratio": 0.7681815843712293,
+          "resident_memory_ratio": 0.9402985074626866
+        },
+        {
+          "n": 100,
+          "rhs_width": 128,
+          "complete": true,
+          "speedup": 1.3553803527508341,
+          "elapsed_ratio": 0.7378002772213967,
+          "resident_memory_ratio": 0.9402985074626866
+        },
+        {
+          "n": 400,
+          "rhs_width": 1,
+          "complete": true,
+          "speedup": 1.264202477521832,
+          "elapsed_ratio": 0.7910125298601391,
+          "resident_memory_ratio": 0.8791946308724832
+        },
+        {
+          "n": 400,
+          "rhs_width": 8,
+          "complete": true,
+          "speedup": 1.2979051200312823,
+          "elapsed_ratio": 0.7704723439074636,
+          "resident_memory_ratio": 0.8791946308724832
+        },
+        {
+          "n": 400,
+          "rhs_width": 32,
+          "complete": true,
+          "speedup": 1.3697402141484576,
+          "elapsed_ratio": 0.730065445747084,
+          "resident_memory_ratio": 0.8791946308724832
+        },
+        {
+          "n": 400,
+          "rhs_width": 128,
+          "complete": true,
+          "speedup": 1.3871499532264815,
+          "elapsed_ratio": 0.7209025943258845,
+          "resident_memory_ratio": 0.8791946308724832
+        },
+        {
+          "n": 1600,
+          "rhs_width": 1,
+          "complete": true,
+          "speedup": 1.2442881011721247,
+          "elapsed_ratio": 0.8036723963348967,
+          "resident_memory_ratio": 0.8430775918278635
+        },
+        {
+          "n": 1600,
+          "rhs_width": 8,
+          "complete": true,
+          "speedup": 1.2683120860696564,
+          "elapsed_ratio": 0.7884494762632732,
+          "resident_memory_ratio": 0.8430775918278635
+        },
+        {
+          "n": 1600,
+          "rhs_width": 32,
+          "complete": true,
+          "speedup": 1.2904945798516245,
+          "elapsed_ratio": 0.7748967067455452,
+          "resident_memory_ratio": 0.8430775918278635
+        },
+        {
+          "n": 1600,
+          "rhs_width": 128,
+          "complete": true,
+          "speedup": 1.4428704632030405,
+          "elapsed_ratio": 0.6930629086273563,
+          "resident_memory_ratio": 0.8430775918278635
+        },
+        {
+          "n": 6400,
+          "rhs_width": 1,
+          "complete": true,
+          "speedup": 1.2316068060003562,
+          "elapsed_ratio": 0.811947445506168,
+          "resident_memory_ratio": 0.8283392585068563
+        },
+        {
+          "n": 6400,
+          "rhs_width": 8,
+          "complete": true,
+          "speedup": 1.2884689274640213,
+          "elapsed_ratio": 0.776114952161253,
+          "resident_memory_ratio": 0.8283392585068563
+        },
+        {
+          "n": 6400,
+          "rhs_width": 32,
+          "complete": true,
+          "speedup": 1.3853696838047578,
+          "elapsed_ratio": 0.7218289902617296,
+          "resident_memory_ratio": 0.8283392585068563
+        }
+      ],
+      "memory_scope": "persistent graph-kernel tensor bytes including CSR indices/values, nodes, cosine basis and raw tau; graph replaced, no extra raw CSR; whole-process RSS reported separately"
+    },
+    "smoke_screen": [],
+    "total_worker_wall_seconds": 105.43551878677681,
+    "total_coordinator_wall_seconds": 105.59894474991597
+  },
+  "config": {
+    "study": "scaled_candidate",
+    "baseline_main": "ac8bffe0443436d623840130609582f599824d9d",
+    "expected_rows": 90,
+    "cases": [
+      {
+        "case_id": "s05_n016",
+        "n": 16,
+        "num_times": 8,
+        "m": 32,
+        "q": 32
+      },
+      {
+        "case_id": "s05_n049",
+        "n": 49,
+        "num_times": 8,
+        "m": 98,
+        "q": 64
+      },
+      {
+        "case_id": "s05_n100",
+        "n": 100,
+        "num_times": 8,
+        "m": 200,
+        "q": 64
+      },
+      {
+        "case_id": "s05_n400",
+        "n": 400,
+        "num_times": 8,
+        "m": 800,
+        "q": 64
+      },
+      {
+        "case_id": "s05_n1600",
+        "n": 1600,
+        "num_times": 8,
+        "m": 3200,
+        "q": 64
+      },
+      {
+        "case_id": "s05_n6400_mvp",
+        "n": 6400,
+        "num_times": 8,
+        "m": 0,
+        "q": 0
+      },
+      {
+        "case_id": "s05_q016",
+        "n": 100,
+        "num_times": 8,
+        "m": 200,
+        "q": 16
+      },
+      {
+        "case_id": "s05_q256",
+        "n": 100,
+        "num_times": 8,
+        "m": 200,
+        "q": 256
+      },
+      {
+        "case_id": "s05_q256_n400",
+        "n": 400,
+        "num_times": 8,
+        "m": 800,
+        "q": 256
+      },
+      {
+        "case_id": "s05_t32_secondary",
+        "n": 100,
+        "num_times": 32,
+        "m": 200,
+        "q": 64
+      }
+    ],
+    "arms": [
+      "A_dense_direct",
+      "B_dense_iterative",
+      "C32_sparse_iterative",
+      "C16_sparse_iterative"
+    ],
+    "model": {
+      "heat_time": 1.2,
+      "lengthscale": 0.24,
+      "noise_variance": 0.06,
+      "amplitude": 1,
+      "mean": 0,
+      "default_degree": 32,
+      "entry_block_width": 16
+    },
+    "profiles": {
+      "balanced": {
+        "trace_samples": 16,
+        "lanczos_iterations": 32,
+        "cg_tolerance": 0.0001,
+        "max_cg_iterations": 500
+      },
+      "strict": {
+        "trace_samples": 16,
+        "lanczos_iterations": 32,
+        "cg_tolerance": 1e-06,
+        "max_cg_iterations": 500
+      }
+    },
+    "fixed_settings": {
+      "eval_cg_tolerance": "same as cg_tolerance",
+      "max_preconditioner_size": 0,
+      "terminate_cg_by_size": false,
+      "max_cholesky_size": 0,
+      "max_eager_kernel_size": 0,
+      "fast_pred_var": false
+    },
+    "screening": {
+      "nll_abs": 0.05,
+      "raw_gradient_atol": 0.02,
+      "raw_gradient_rtol": 0.2,
+      "posterior_abs": 0.01,
+      "true_residual": 0.001,
+      "wrong_sign_reference_minimum": 0.001
+    },
+    "repeats": "2 GP processes n<=400; 1 GP n1600/T32; 3 operator processes; fixed probe label301; labels302/303 accuracy only",
+    "operator_canonical_cases": "q variants reuse n100/n400 operator rows: same base fingerprint and RHS; no duplicate operator timings",
+    "warmup": "one untimed then five products; graph backward one untimed forward/backward; no GP warmup/update; warm predictions labeled separately",
+    "ordering": "case, repeat, operation, width, A/B/C32/C16 interleaved; candidate alternates baseline/scaled within each width",
+    "timeout_seconds": 180,
+    "master_seed": 202605,
+    "probe_labels": [
+      301,
+      302,
+      303
+    ],
+    "data": "Stage04 degree32 heat-half @ Z @ chol(KT).T, approximate GP-like signal; independent noise; secondary-only T32 spectral PSD data root",
+    "memory": "whole-worker peak RSS includes imports/setup; resident graph-kernel bytes = CSR crow+col+values + spectral nodes + cosine basis + raw tau; scaled replaces raw graph, no duplicate buffer",
+    "candidate_gates": {
+      "profile_graph_fraction_min": 0.4,
+      "median_elapsed_reduction_min": 0.1,
+      "minimum_sizes": 2,
+      "max_regression_fraction": 0.1,
+      "max_resident_operator_memory_increase": 0.15
+    },
+    "projected_lifecycle_counts": [
+      1,
+      20,
+      100
+    ],
+    "debug_max_cases": null
+  },
+  "environment": {
+    "source_commit": "5421c89c2629acff0b4cc05b84bae50ba2c7bfc2",
+    "source_dirty": false,
+    "source_hashes": {
+      "experiments/04_plot_scaling.py": "a6b0f0eb33e944845c6554b10973a49a3d09c888f0975c44cbe54f094f6ef249",
+      "experiments/04_scaling.py": "049ee53417347bec556a0b95145abeac582d5bdc15f7c3eac26f4b18bd9c15bb",
+      "experiments/04_solver_diagnostics.py": "c8ab46467074f5c2746a4f30430c2d512dd8154eb90065e533d4f46f4cfd0304",
+      "src/graphgp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/analysis/__init__.py": "198f87259f6a95604289fb5d63145f6b2b9d6157cc4deda602affc28342dd4a2",
+      "src/graphgp/analysis/graph_time_oracle.py": "2a385ededd2c9e758ac994ddf225ba246610567bcfe0869717dc81b895dc4d51",
+      "src/graphgp/analysis/heat_identifiability.py": "c2706f154ed721b7f18ba8423eec1eff56ea4296b293696d7c1ecc7ba5644f92",
+      "src/graphgp/benchmarking/__init__.py": "ae10e1a61c389ece9aa42a91c7536fe9be77e18f39a2fc2ccd5c9acfa5b576cb",
+      "src/graphgp/benchmarking/cases.py": "253130f817445138c7d3e16ab6eab5dbf289720f1e0b106725a2ac06235dccaf",
+      "src/graphgp/benchmarking/coordinator.py": "39b8effb316a6c596081b90974b33603e20908b2cf0d9d132686f75d09736728",
+      "src/graphgp/benchmarking/reference.py": "ccf05f69080fb3c7bd207515d5b1592614d83e4dde4258da395de79716a9e1d9",
+      "src/graphgp/benchmarking/report.py": "2807e678e17e4a5b51fe395432ca800bcd0aa91767436baa38e774dade6362d8",
+      "src/graphgp/benchmarking/solver.py": "c7f4f2180cb7a4190d2997761dd9a9b44a8522e807f60c33b0e90ba80b81b7a8",
+      "src/graphgp/benchmarking/stage05_cases.py": "7c2bfc6d7d770804974d9887047ef66ac4ed4f6b269d5963cd4db3cc5bdd0ee7",
+      "src/graphgp/benchmarking/stage05_coordinator.py": "12e7f41fc94586a1d75564270b8c9a3c975b61c72ab6d67bf26be18a4d588555",
+      "src/graphgp/benchmarking/stage05_operations.py": "483ac63d38b3fa6e8e92b04ab001044a0f271672b21744e13cadaaae26edd2d0",
+      "src/graphgp/benchmarking/stage05_report.py": "44fefe44aa707f2fc40f4ef8ccc6a263c374c3c56726036332c1a48c8f43b8c8",
+      "src/graphgp/benchmarking/stage05_runtime.py": "c11ecce8cd286efa589d74d457434896a4cb82810974841bdeb6390931a8b714",
+      "src/graphgp/benchmarking/stage05_validation.py": "141143aa9d462acfb241c75273d2e8048c36487fedf561f6d366b824ff318bab",
+      "src/graphgp/benchmarking/stage05_worker.py": "f1494a9757b0eab3af1a2e7ac059df593a0251916130824b8bf309754ecd3b48",
+      "src/graphgp/benchmarking/worker.py": "40f130c63d5ec839173db04fe17c1f0ce0e520e7e2a98590ae10cca2239bdd4d",
+      "src/graphgp/demo.py": "e44142848a7d7d20f82b9f100376da934d289eb64192421c4682e2b9677866e0",
+      "src/graphgp/diagnostics.py": "6c5ccb8ac0ec38d36e3c14abd2bb27345b040813e31fce3dcfaff1137b54742d",
+      "src/graphgp/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/inference/instrumentation.py": "bb282f741946819253a63df8a29d4382a12504cb61baf91286d447fc45c68bff",
+      "src/graphgp/inference/predict.py": "8afc526294dedb400f9c229c602b6e11e2526bec5225c8d7be68e9300b548855",
+      "src/graphgp/inference/solver_settings.py": "0de359880f16bc888691d80069a4b0e5b18a014c58dc07d6900f4037ee20dca6",
+      "src/graphgp/kernels/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/kernels/dense.py": "34b270906a5d7b134980cf8ddd7bf99ed5f810de9d4947d422682cdc28e9e460",
+      "src/graphgp/kernels/graph_time.py": "4ed2265ca37eb36aa65d594a7587ad6531b17a9ef8b3fff0d70fe1cca2584e25",
+      "src/graphgp/kernels/heat.py": "ee55bbe97508cc1bb3fbb010562edef399e65ad3f6faa2c7b19042134da1075d",
+      "src/graphgp/kernels/safety.py": "f03aa177ef1e9b726eb786b819ca33a27e8727a3c7d8df0a997794a9bf369ce9",
+      "src/graphgp/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/models/exact_gp.py": "78b758f41ad7564a66b5cdad706fb6b2a19ba0946a86bc3744b89ddbc1962177",
+      "src/graphgp/models/factory.py": "4fde48025d650c44acbe2a5bccf7eb451c20fb7c2bf2bc8deaa834921f28b410",
+      "src/graphgp/models/graph_time.py": "151f088bdde79d924eba557a08527728610842963d2d435e06f413134eed1d59",
+      "src/graphgp/operators/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/operators/chebyshev.py": "edd0d720a12acb325bf65f274a4bfeb5569d231100aba9c77c06c6fb73c909f6",
+      "src/graphgp/operators/coefficients.py": "1c8c6341370ccb55f071eab6a12c2728396f78f8d3f5980129a2bf97d8652458",
+      "src/graphgp/recovery.py": "4651936a66b62b7a04850fe541d06d3f16733ee72e9d0d630b54d538deca58a2",
+      "src/graphgp/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/graphgp/utils/graphs.py": "368a5d93d2380b99f0a85815d4baaa4c54f52aaff1845303d3357e2339a54b5c",
+      "src/graphgp/utils/study_domain.py": "ca0cfde0add90a51f6272e5d468a8d1ccc3e2476bda65d9009cce31cf46de140",
+      "src/graphgp/validation.py": "e0b9ea776ec190068977185c7f8b5032fb97026c9251e3636787561d647d4d1a",
+      "src/graphgp/validation_graph_time.py": "c8570e68c2173ea5dea8af4bb8feeee7cfcb8ff6cbc8084b0c0b28f28e041920",
+      "experiments/05_optimize_chebyshev.py": "12030c9724451f19c90314bf9b3e04420ad0d86e34264dae7f4156c4d547c202",
+      "experiments/05_plot_optimization.py": "5e48fad325b6645202305cec08bbc8320dbfb01e8ce63ff5e0bf7b80c15360c0"
+    },
+    "python": "3.12.0 (v3.12.0:0fb18b02c8, Oct  2 2023, 09:45:56) [Clang 13.0.0 (clang-1300.0.29.30)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "cpu": "Apple M4",
+    "logical_cores": 10,
+    "physical_cores": "10",
+    "versions": {
+      "torch": "2.11.0",
+      "gpytorch": "1.15.2",
+      "linear_operator": "0.6.1",
+      "numpy": "2.4.3",
+      "scipy": "1.17.1",
+      "networkx": "3.6.1",
+      "matplotlib": "3.10.8"
+    },
+    "command_line": [
+      "experiments/05_optimize_chebyshev.py",
+      "--scaled-candidate",
+      "--output",
+      "results/stage05_scaled_candidate"
+    ],
+    "timestamp_utc": "2026-10-27T16:18:11Z",
+    "host_memory_limit_enforced": false,
+    "memory_note": "No portable host memory ceiling imposed; per-worker wall timeout is enforced.",
+    "rss_note": "Whole isolated child peak: macOS ru_maxrss bytes / 2^20; Linux KiB / 1024. Imports/allocator/setup included. No peak subtraction."
+  }
+}

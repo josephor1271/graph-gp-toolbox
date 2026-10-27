@@ -1,0 +1,10 @@
+{
+  "method": "secondary-only spectral PSD data square root",
+  "minimum_eigenvalue": -3.8494939235764215e-16,
+  "maximum_eigenvalue": 15.821636149752221,
+  "eigenvalue_tolerance": 1.582163614975222e-11,
+  "effective_rank": 15,
+  "positive_eigenvalues": 27,
+  "maximum_covariance_correction": 4.218847493575595e-15,
+  "maximum_eigenvalue_correction": 3.8494939235764215e-16
+}

@@ -1,0 +1,520 @@
+{
+  "master_seed": 202605,
+  "seed_label": 301,
+  "effective_probe_seed": 2373275290,
+  "data_sha256": "97c2aa031b0ec04765f89ba3c1c98bb6d7481de229fb7817b29f41c427ef51f6",
+  "reference_nll": 0.9321555984775892,
+  "arms": {
+    "A_dense_direct": {
+      "nll": 0.9321555984775892,
+      "raw_gradients": {
+        "heat_time": 0.019931368579858413,
+        "lengthscale": -0.08330274566604799
+      },
+      "mean": [
+        0.09373252109397558,
+        0.0010002057632932646,
+        -0.4141970079518186,
+        -0.018435888251072063,
+        -0.11480432461370248,
+        -0.365187786792689,
+        0.7713509248444861,
+        -0.2783900458657226,
+        0.08487655546780115,
+        -0.21522803673574786,
+        0.40693011622632536,
+        0.5336041397012837,
+        -0.6405278033841499,
+        0.32746925208806554,
+        0.23595877643049457,
+        0.5638540237916028,
+        -0.029076341787636576,
+        0.12645977148220539,
+        0.0018024449355673396,
+        0.4822433507202289,
+        -0.16222823145467022,
+        -0.07399958391001263,
+        0.07041058041385508,
+        0.35157989972171483,
+        -0.161979717052129,
+        0.29818318112250336,
+        0.1100341871291302,
+        0.03389401207763505,
+        -0.3655135711973853,
+        0.18757244279908908,
+        0.251037284322579,
+        -0.3711596930247613
+      ],
+      "latent_variance": [
+        0.3488970967881819,
+        0.39280506785014124,
+        0.12307680322846087,
+        0.11907384196084875,
+        0.18636337295157251,
+        0.4062529963068422,
+        0.1690092657566254,
+        0.05294569337812016,
+        0.40918004722060675,
+        0.3005859918651465,
+        0.09605478510261817,
+        0.20656904848683405,
+        0.14497913888490288,
+        0.3252261470822203,
+        0.09624965430137983,
+        0.13163167828876207,
+        0.12123417037794582,
+        0.11885763774642388,
+        0.3994796323508686,
+        0.15615201315229288,
+        0.5477158613212332,
+        0.5620296608679416,
+        0.3675551333236437,
+        0.1536082485792835,
+        0.24760893238157006,
+        0.5219465009805608,
+        0.4087447309990064,
+        0.42151330580904517,
+        0.15471498709697612,
+        0.06651992510249216,
+        0.30390048181054874,
+        0.2032985590112572
+      ],
+      "mean_max_error": 1.2212453270876722e-15,
+      "variance_max_error": 7.216449660063518e-16,
+      "mll_seconds": 0.012254416011273861,
+      "marginal_seconds": 0.0025259999092668295,
+      "training": {
+        "operator_matmul_calls": 0,
+        "estimated_sparse_l_mvps": 0,
+        "get_indices_calls": 0,
+        "get_indices_entries": 0,
+        "matmul_seconds": 0.0,
+        "get_indices_seconds": 0.0,
+        "rhs_width_counts": {}
+      },
+      "prediction": {
+        "operator_matmul_calls": 0,
+        "estimated_sparse_l_mvps": 0,
+        "get_indices_calls": 0,
+        "get_indices_entries": 0,
+        "matmul_seconds": 0.0,
+        "get_indices_seconds": 0.0,
+        "rhs_width_counts": {}
+      },
+      "solver": {
+        "cg_calls": 0,
+        "cg_rhs_shapes": [],
+        "cg_tridiag_counts": [],
+        "cg_actual_tridiagonal_orders": [],
+        "cg_call_settings": [],
+        "slq_calls": 0,
+        "slq_tridiagonal_orders": [],
+        "slq_probe_counts": [],
+        "effective_settings": {
+          "cg_tolerance": 1,
+          "max_cg_iterations": 1000,
+          "num_trace_samples": 10,
+          "max_lanczos_quadrature_iterations": 20,
+          "max_preconditioner_size": 15,
+          "max_cholesky_size": 1000000000,
+          "eval_cg_tolerance": 0.01,
+          "max_eager_kernel_size": 0,
+          "terminate_cg_by_size": false,
+          "fast_pred_var": false,
+          "fast_log_prob": false,
+          "fast_solves": false,
+          "fast_covar_root_decomposition": false
+        },
+        "actual_cg_iterations": null,
+        "iteration_count_limitation": "Not instrumented; call/workload counts are recorded instead."
+      },
+      "entries": [],
+      "warnings": []
+    },
+    "B_dense_iterative": {
+      "nll": 0.9363600962115757,
+      "raw_gradients": {
+        "heat_time": 0.012361780322770447,
+        "lengthscale": -0.095490258101554
+      },
+      "mean": [
+        0.09374560222067088,
+        0.0009801823724107793,
+        -0.41414464524558636,
+        -0.018442063675857268,
+        -0.11480292666422576,
+        -0.36517829036486815,
+        0.7713271644131209,
+        -0.2783876239294623,
+        0.08486926327708681,
+        -0.21522641583072377,
+        0.4068940633337696,
+        0.5335848958632013,
+        -0.6405069011063645,
+        0.3274216137761232,
+        0.23595183345267084,
+        0.5638457183402111,
+        -0.029101028365129056,
+        0.12647433132615404,
+        0.0017890873469219564,
+        0.4822303633488003,
+        -0.16220846994700577,
+        -0.07398966275548753,
+        0.07038725704490809,
+        0.3515059330609568,
+        -0.1619871727341768,
+        0.29817817352766374,
+        0.1100366285081071,
+        0.03389316367608209,
+        -0.3655173107332359,
+        0.18755700686444465,
+        0.2510171457268694,
+        -0.3710369775157073
+      ],
+      "latent_variance": [
+        0.34889709793031176,
+        0.39280507075176646,
+        0.12307680405060611,
+        0.11907384265777282,
+        0.18636337671332867,
+        0.4062529978059476,
+        0.16900926579978598,
+        0.05294569555045325,
+        0.4091800476327503,
+        0.3005859941307768,
+        0.09605479313526294,
+        0.206569048635514,
+        0.1449791402253559,
+        0.3252261471657949,
+        0.09624966589457667,
+        0.13163168179603313,
+        0.12123417520597185,
+        0.11885763984996917,
+        0.3994796345943116,
+        0.1561520132817859,
+        0.5477158614937703,
+        0.5620296608869294,
+        0.36755513549995905,
+        0.15360824863627892,
+        0.24760893443949633,
+        0.5219465010560678,
+        0.4087447318367374,
+        0.42151330674896403,
+        0.15471499171884157,
+        0.06651992544413021,
+        0.30390048237300576,
+        0.20329855919990275
+      ],
+      "mean_max_error": 0.00012271550905412765,
+      "variance_max_error": 1.1593196791448435e-08,
+      "mll_seconds": 0.02272345800884068,
+      "marginal_seconds": 0.0034693749621510506,
+      "training": {
+        "operator_matmul_calls": 0,
+        "estimated_sparse_l_mvps": 0,
+        "get_indices_calls": 0,
+        "get_indices_entries": 0,
+        "matmul_seconds": 0.0,
+        "get_indices_seconds": 0.0,
+        "rhs_width_counts": {}
+      },
+      "prediction": {
+        "operator_matmul_calls": 0,
+        "estimated_sparse_l_mvps": 0,
+        "get_indices_calls": 0,
+        "get_indices_entries": 0,
+        "matmul_seconds": 0.0,
+        "get_indices_seconds": 0.0,
+        "rhs_width_counts": {}
+      },
+      "solver": {
+        "cg_calls": 3,
+        "cg_rhs_shapes": [
+          [
+            32,
+            17
+          ],
+          [
+            32,
+            1
+          ],
+          [
+            32,
+            32
+          ]
+        ],
+        "cg_tridiag_counts": [
+          16,
+          0,
+          0
+        ],
+        "cg_actual_tridiagonal_orders": [
+          22
+        ],
+        "cg_call_settings": [
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          },
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          },
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          }
+        ],
+        "slq_calls": 1,
+        "slq_tridiagonal_orders": [
+          22
+        ],
+        "slq_probe_counts": [
+          16
+        ],
+        "effective_settings": {
+          "cg_tolerance": 0.0001,
+          "max_cg_iterations": 500,
+          "num_trace_samples": 16,
+          "max_lanczos_quadrature_iterations": 32,
+          "max_preconditioner_size": 0,
+          "max_cholesky_size": 0,
+          "eval_cg_tolerance": 0.0001,
+          "max_eager_kernel_size": 0,
+          "terminate_cg_by_size": false,
+          "fast_pred_var": false,
+          "fast_log_prob": true,
+          "fast_solves": true,
+          "fast_covar_root_decomposition": true
+        },
+        "actual_cg_iterations": null,
+        "iteration_count_limitation": "Not instrumented; call/workload counts are recorded instead."
+      },
+      "entries": [],
+      "warnings": [
+        {
+          "category": "UserWarning",
+          "message": "TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()"
+        },
+        {
+          "category": "UserWarning",
+          "message": "torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:656.)"
+        }
+      ]
+    },
+    "C32_sparse_iterative": {
+      "nll": 0.9363600962115817,
+      "raw_gradients": {
+        "heat_time": 0.012361780322798341,
+        "lengthscale": -0.09549025810158229
+      },
+      "mean": [
+        0.09374560222067348,
+        0.0009801823724192795,
+        -0.4141446452455713,
+        -0.01844206367585005,
+        -0.11480292666420369,
+        -0.3651782903648584,
+        0.771327164413126,
+        -0.2783876239294163,
+        0.08486926327708863,
+        -0.21522641583069815,
+        0.406894063333786,
+        0.5335848958632067,
+        -0.640506901106328,
+        0.32742161377612505,
+        0.23595183345269793,
+        0.563845718340219,
+        -0.02910102836510519,
+        0.12647433132616603,
+        0.001789087346930804,
+        0.4822303633488033,
+        -0.16220846994700022,
+        -0.07398966275548444,
+        0.07038725704491525,
+        0.35150593306096073,
+        -0.16198717273416421,
+        0.29817817352767095,
+        0.11003662850811108,
+        0.03389316367608833,
+        -0.36551731073320437,
+        0.1875570068644501,
+        0.2510171457268745,
+        -0.37103697751570086
+      ],
+      "latent_variance": [
+        0.3488970979303116,
+        0.3928050707517656,
+        0.12307680405060595,
+        0.11907384265777948,
+        0.18636337671332764,
+        0.4062529978059482,
+        0.16900926579978592,
+        0.05294569555044987,
+        0.4091800476327502,
+        0.3005859941307747,
+        0.09605479313526333,
+        0.20656904863551412,
+        0.1449791402253564,
+        0.32522614716579445,
+        0.0962496658945774,
+        0.13163168179603296,
+        0.1212341752059718,
+        0.11885763984997327,
+        0.3994796345943113,
+        0.15615201328178974,
+        0.54771586149377,
+        0.5620296608869292,
+        0.36755513549994623,
+        0.15360824863627892,
+        0.24760893443949594,
+        0.5219465010560675,
+        0.4087447318367372,
+        0.42151330674896337,
+        0.1547149917188398,
+        0.06651992544412866,
+        0.30390048237301603,
+        0.20329855919990264
+      ],
+      "mean_max_error": 0.00012271550906056694,
+      "variance_max_error": 1.15931975130934e-08,
+      "mll_seconds": 0.018256250070407987,
+      "marginal_seconds": 0.01956470892764628,
+      "training": {
+        "operator_matmul_calls": 37,
+        "estimated_sparse_l_mvps": 1184,
+        "get_indices_calls": 0,
+        "get_indices_entries": 0,
+        "matmul_seconds": 0.014233536552637815,
+        "get_indices_seconds": 0.0,
+        "rhs_width_counts": {
+          "136": 37
+        }
+      },
+      "prediction": {
+        "operator_matmul_calls": 34,
+        "estimated_sparse_l_mvps": 1088,
+        "get_indices_calls": 1,
+        "get_indices_entries": 32,
+        "matmul_seconds": 0.013136126333847642,
+        "get_indices_seconds": 0.0031909169629216194,
+        "rhs_width_counts": {
+          "8": 17,
+          "256": 16,
+          "15": 1
+        }
+      },
+      "solver": {
+        "cg_calls": 3,
+        "cg_rhs_shapes": [
+          [
+            32,
+            17
+          ],
+          [
+            32,
+            1
+          ],
+          [
+            32,
+            32
+          ]
+        ],
+        "cg_tridiag_counts": [
+          16,
+          0,
+          0
+        ],
+        "cg_actual_tridiagonal_orders": [
+          22
+        ],
+        "cg_call_settings": [
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          },
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          },
+          {
+            "tolerance": 0.0001,
+            "max_iter": 500,
+            "max_tridiag_iter": 32,
+            "preconditioner_supplied": false,
+            "eps": 1e-10,
+            "stop_updating_after": 1e-10
+          }
+        ],
+        "slq_calls": 1,
+        "slq_tridiagonal_orders": [
+          22
+        ],
+        "slq_probe_counts": [
+          16
+        ],
+        "effective_settings": {
+          "cg_tolerance": 0.0001,
+          "max_cg_iterations": 500,
+          "num_trace_samples": 16,
+          "max_lanczos_quadrature_iterations": 32,
+          "max_preconditioner_size": 0,
+          "max_cholesky_size": 0,
+          "eval_cg_tolerance": 0.0001,
+          "max_eager_kernel_size": 0,
+          "terminate_cg_by_size": false,
+          "fast_pred_var": false,
+          "fast_log_prob": true,
+          "fast_solves": true,
+          "fast_covar_root_decomposition": true
+        },
+        "actual_cg_iterations": null,
+        "iteration_count_limitation": "Not instrumented; call/workload counts are recorded instead."
+      },
+      "entries": [
+        {
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "entries": 32,
+          "unique_columns": 15,
+          "stack": [
+            "_diagonal",
+            "<genexpr>",
+            "_diagonal",
+            "_diagonal",
+            "__getitem__",
+            "_get_indices",
+            "_get_indices",
+            "get",
+            "get"
+          ]
+        }
+      ],
+      "warnings": []
+    }
+  },
+  "timing_scope": "single diagnostic process, ordered arms; NOT headline timing evidence"
+}

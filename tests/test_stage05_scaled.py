@@ -48,6 +48,9 @@ class Stage05Scaled(unittest.TestCase):
                     fresh=GraphHeatKernel(matrix,lambda_max=2,scaled_laplacian=True).double()
                     fresh.load_state_dict(torch.load(state,weights_only=True));fresh=fresh.to(dtype=torch.float64)
                     torch.testing.assert_close(b@rhs,fresh.full_graph_operator()@rhs,rtol=0,atol=0)
+                    loaded_gradient=torch.autograd.grad((fresh.full_graph_operator()@rhs).square().sum(),fresh.raw_heat_time)[0]
+                    torch.testing.assert_close(ga,loaded_gradient,rtol=1e-8,atol=1e-9)
+                    torch.testing.assert_close(b@rhs,b.to(device='cpu',dtype=torch.float64)@rhs,rtol=0,atol=0)
                     self.assertTrue(candidate.L.is_sparse_csr)
                     self.assertEqual(candidate.L.values().numel(),candidate.L.col_indices().numel())
         raw=scipy_csr_to_torch_csr(L,dtype=torch.float64)

@@ -1,0 +1,451 @@
+{
+  "run_id": "gate-n400",
+  "case": {
+    "case_id": "s05_n400",
+    "n": 400,
+    "num_times": 8,
+    "m": 800,
+    "q": 64
+  },
+  "operation": "profile",
+  "arm": "C32_sparse_iterative",
+  "backend": "C32_sparse_iterative",
+  "profile": "balanced",
+  "campaign": "profile_gate",
+  "probe_seed": 301,
+  "repeat": 0,
+  "rhs_width": 0,
+  "status": "ok",
+  "import_seconds": 1.1980324999894947,
+  "common_imports_preloaded": true,
+  "threads_before": {
+    "OMP_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "VECLIB_MAXIMUM_THREADS": null
+  },
+  "threads_effective": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "torch_threads": 1,
+  "actual_cg_iterations": null,
+  "memory_scope": "whole isolated worker peak including setup/imports",
+  "data_setup_seconds": 0.23169304197654128,
+  "data_fingerprint": "9f4954e2cf537ede46368328f289341f1ad67e9654b46a999911001c70235eae",
+  "base_fingerprint": "ea82d48cac94791d8509004a57ba601519ca0231846239c9d0de80801a4efb7b",
+  "streams": {
+    "master_seed": 202605,
+    "stream_id": 4,
+    "stream_scheme": "SeedSequence(202605,spawn_key=(stream_id,*key))",
+    "latent": [
+      4,
+      0
+    ],
+    "noise": [
+      4,
+      1
+    ],
+    "train_mask": [
+      4,
+      2,
+      0
+    ],
+    "target_mask": [
+      4,
+      2,
+      1
+    ],
+    "probe": [
+      4,
+      3,
+      "label"
+    ],
+    "solve_normals": [
+      [
+        4,
+        4,
+        0
+      ],
+      [
+        4,
+        4,
+        1
+      ]
+    ],
+    "graph_rhs": [
+      4,
+      5,
+      0
+    ],
+    "full_rhs": [
+      4,
+      5,
+      1
+    ],
+    "sampling": "degree32 heat-half @ Z @ temporal-factor.T; approximate GP-like signal",
+    "temporal_factor": {
+      "method": "plain temporal Cholesky",
+      "correction": 0.0
+    }
+  },
+  "nnz": 1920,
+  "graph_scale": 4.0,
+  "settings": {
+    "cg_tolerance": 0.0001,
+    "eval_cg_tolerance": 0.0001,
+    "max_cg_iterations": 500,
+    "trace_samples": 16,
+    "lanczos_iterations": 32,
+    "max_preconditioner_size": 0,
+    "terminate_cg_by_size": false,
+    "max_cholesky_size": 0,
+    "max_eager_kernel_size": 0,
+    "fast_computations": {
+      "covar_root_decomposition": true,
+      "log_prob": true,
+      "solves": true
+    },
+    "fast_pred_var": false
+  },
+  "effective_probe_seed": 3604998223,
+  "graph_backend": "sparse_chebyshev",
+  "inference": "iterative",
+  "degree": 32,
+  "entry_block_width": 16,
+  "model_build_seconds": 0.005876125069335103,
+  "operator_prebuild_seconds": 4.1606836020946503e-07,
+  "rss_before_operation_mib": 283.515625,
+  "result": {
+    "elapsed_seconds": 0.2340171670075506,
+    "forward_seconds": 0.19832604192197323,
+    "backward_seconds": 0.033769749803468585,
+    "nll": 0.8436788914431793,
+    "raw_gradients": {
+      "heat_time": -0.02082371912396598,
+      "lengthscale": -0.004787232555019037
+    },
+    "physical_gradients": {
+      "heat_time": -0.025544624402931985,
+      "lengthscale": -0.038468832515040775
+    },
+    "trajectory": [
+      {
+        "step": 0,
+        "nll": 0.8436788914431793,
+        "raw_gradients": {
+          "heat_time": -0.02082371912396598,
+          "lengthscale": -0.004787232555019037
+        },
+        "physical_gradients": {
+          "heat_time": -0.025544624402931985,
+          "lengthscale": -0.038468832515040775
+        },
+        "heat_time": 1.2,
+        "lengthscale": 0.24000000000000002,
+        "noise_variance": 0.060000000000000005
+      }
+    ],
+    "updates": 0,
+    "final_gradient_norm": 0.021366910719373088,
+    "profiled_wall_seconds": 0.23433012492023408,
+    "profile_inclusive_cpu_us": 234116.248,
+    "graph_range_cpu_us": 162465.4079999999,
+    "graph_fraction_of_inclusive": 0.693951869585745,
+    "graph_fraction_of_profiled_wall": 0.6933184884158752,
+    "maximum_graph_range_depth": 1,
+    "events": [
+      {
+        "name": "aten::addmm",
+        "calls": 2438,
+        "self_cpu_us": 50446.482000000615,
+        "inclusive_cpu_us": 129915.12499999997,
+        "net_cpu_memory_bytes": 1049920000
+      },
+      {
+        "name": "aten::mul",
+        "calls": 3790,
+        "self_cpu_us": 28777.457999998802,
+        "inclusive_cpu_us": 30208.976999999228,
+        "net_cpu_memory_bytes": 1562073608
+      },
+      {
+        "name": "aten::sub",
+        "calls": 2342,
+        "self_cpu_us": 28696.600000000344,
+        "inclusive_cpu_us": 28696.600000000344,
+        "net_cpu_memory_bytes": 1014566528
+      },
+      {
+        "name": "InvQuadLogdet",
+        "calls": 1,
+        "self_cpu_us": 26422.537000000477,
+        "inclusive_cpu_us": 191537.779,
+        "net_cpu_memory_bytes": 211344
+      },
+      {
+        "name": "stage05_inclusive_mll_backward",
+        "calls": 1,
+        "self_cpu_us": 17922.015999999916,
+        "inclusive_cpu_us": 234116.248,
+        "net_cpu_memory_bytes": 16
+      },
+      {
+        "name": "aten::add",
+        "calls": 1218,
+        "self_cpu_us": 13587.826999999765,
+        "inclusive_cpu_us": 13589.61899999978,
+        "net_cpu_memory_bytes": 515289888
+      },
+      {
+        "name": "aten::copy_",
+        "calls": 2857,
+        "self_cpu_us": 11620.844000000232,
+        "inclusive_cpu_us": 11621.219000000232,
+        "net_cpu_memory_bytes": 0
+      },
+      {
+        "name": "aten::fill_",
+        "calls": 2640,
+        "self_cpu_us": 10326.157000000025,
+        "inclusive_cpu_us": 10326.157000000025,
+        "net_cpu_memory_bytes": 0
+      },
+      {
+        "name": "aten::div",
+        "calls": 1256,
+        "self_cpu_us": 9332.965999999922,
+        "inclusive_cpu_us": 9337.882999999909,
+        "net_cpu_memory_bytes": 515596936
+      },
+      {
+        "name": "stage05_chebyshev_graph_mvp",
+        "calls": 37,
+        "self_cpu_us": 8696.89300000073,
+        "inclusive_cpu_us": 162465.4079999999,
+        "net_cpu_memory_bytes": 30028808
+      },
+      {
+        "name": "aten::_linalg_eigh",
+        "calls": 1,
+        "self_cpu_us": 1447.3759999999893,
+        "inclusive_cpu_us": 2087.1699999999837,
+        "net_cpu_memory_bytes": 135168
+      },
+      {
+        "name": "aten::alias",
+        "calls": 3553,
+        "self_cpu_us": 1321.0999999998257,
+        "inclusive_cpu_us": 1321.0999999998257,
+        "net_cpu_memory_bytes": 0
+      },
+      {
+        "name": "InvQuadLogdetBackward",
+        "calls": 1,
+        "self_cpu_us": 1291.043000000238,
+        "inclusive_cpu_us": 17783.437999999995,
+        "net_cpu_memory_bytes": 32776
+      },
+      {
+        "name": "RBFCovariance",
+        "calls": 1,
+        "self_cpu_us": 1258.7069999999985,
+        "inclusive_cpu_us": 3874.3379999999997,
+        "net_cpu_memory_bytes": 1024
+      },
+      {
+        "name": "aten::select",
+        "calls": 1698,
+        "self_cpu_us": 1045.003999999898,
+        "inclusive_cpu_us": 1253.3159999999552,
+        "net_cpu_memory_bytes": 0
+      },
+      {
+        "name": "aten::linalg_vector_norm",
+        "calls": 36,
+        "self_cpu_us": 1040.125999999902,
+        "inclusive_cpu_us": 1040.125999999902,
+        "net_cpu_memory_bytes": 400
+      },
+      {
+        "name": "aten::nonzero",
+        "calls": 4,
+        "self_cpu_us": 1012.5429999999869,
+        "inclusive_cpu_us": 1014.458999999988,
+        "net_cpu_memory_bytes": 25600
+      },
+      {
+        "name": "aten::sum",
+        "calls": 150,
+        "self_cpu_us": 960.668999999607,
+        "inclusive_cpu_us": 1236.875999999933,
+        "net_cpu_memory_bytes": 13448
+      },
+      {
+        "name": "aten::addcmul",
+        "calls": 131,
+        "self_cpu_us": 860.7179999998734,
+        "inclusive_cpu_us": 860.7179999998734,
+        "net_cpu_memory_bytes": 3694712
+      },
+      {
+        "name": "aten::equal",
+        "calls": 135,
+        "self_cpu_us": 747.9549999999758,
+        "inclusive_cpu_us": 754.2850000000367,
+        "net_cpu_memory_bytes": 0
+      },
+      {
+        "name": "aten::_sparse_mm",
+        "calls": 1184,
+        "self_cpu_us": 737.7129999995686,
+        "inclusive_cpu_us": 71821.06799999972,
+        "net_cpu_memory_bytes": 515276800
+      },
+      {
+        "name": "aten::_to_copy",
+        "calls": 1291,
+        "self_cpu_us": 635.8969999999586,
+        "inclusive_cpu_us": 2212.7529999996573,
+        "net_cpu_memory_bytes": 692264
+      },
+      {
+        "name": "aten::zeros",
+        "calls": 1293,
+        "self_cpu_us": 622.3539999994964,
+        "inclusive_cpu_us": 6376.932000000025,
+        "net_cpu_memory_bytes": 534783080
+      },
+      {
+        "name": "aten::empty",
+        "calls": 2883,
+        "self_cpu_us": 610.264000000012,
+        "inclusive_cpu_us": 610.264000000012,
+        "net_cpu_memory_bytes": 568498645
+      },
+      {
+        "name": "aten::zero_",
+        "calls": 2584,
+        "self_cpu_us": 578.804000000132,
+        "inclusive_cpu_us": 10539.33900000009,
+        "net_cpu_memory_bytes": 0
+      }
+    ],
+    "profiler_note": "CPU event net memory is not peak allocation; profile timings excluded from headline performance"
+  },
+  "elapsed_seconds": 0.2340171670075506,
+  "operator": {
+    "operator_matmul_calls": 37,
+    "estimated_sparse_l_mvps": 1184,
+    "get_indices_calls": 0,
+    "get_indices_entries": 0,
+    "matmul_seconds": 0.16220404393970966,
+    "get_indices_seconds": 0.0,
+    "rhs_width_counts": {
+      "136": 37
+    }
+  },
+  "solver": {
+    "cg_calls": 1,
+    "cg_rhs_shapes": [
+      [
+        800,
+        17
+      ]
+    ],
+    "cg_tridiag_counts": [
+      16
+    ],
+    "cg_actual_tridiagonal_orders": [
+      32
+    ],
+    "cg_call_settings": [
+      {
+        "tolerance": 0.0001,
+        "max_iter": 500,
+        "max_tridiag_iter": 32,
+        "preconditioner_supplied": false,
+        "eps": 1e-10,
+        "stop_updating_after": 1e-10
+      }
+    ],
+    "slq_calls": 1,
+    "slq_tridiagonal_orders": [
+      32
+    ],
+    "slq_probe_counts": [
+      16
+    ],
+    "effective_settings": {
+      "cg_tolerance": 0.0001,
+      "max_cg_iterations": 500,
+      "num_trace_samples": 16,
+      "max_lanczos_quadrature_iterations": 32,
+      "max_preconditioner_size": 0,
+      "max_cholesky_size": 0,
+      "eval_cg_tolerance": 0.0001,
+      "max_eager_kernel_size": 0,
+      "terminate_cg_by_size": false,
+      "fast_pred_var": false,
+      "fast_log_prob": true,
+      "fast_solves": true,
+      "fast_covar_root_decomposition": true
+    },
+    "actual_cg_iterations": null,
+    "iteration_count_limitation": "Not instrumented; call/workload counts are recorded instead."
+  },
+  "direct": {
+    "operator_cholesky_calls": 0,
+    "torch_cholesky_calls": 0
+  },
+  "actions": {
+    "dense_graph_calls": 0,
+    "dense_graph_seconds": 0.0,
+    "dense_graph_widths": {},
+    "temporal_calls": 36,
+    "temporal_seconds": 0.00040787761099636555,
+    "entry_unique_columns": [],
+    "entry_counts": []
+  },
+  "rss_peak_mib": 756.015625,
+  "memory_status": "measured",
+  "warnings": [
+    {
+      "category": "DeprecationWarning",
+      "message": "`torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "`torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`."
+    },
+    {
+      "category": "UserWarning",
+      "message": "Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/Context.cpp:767.)"
+    },
+    {
+      "category": "UserWarning",
+      "message": "Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:51.)"
+    },
+    {
+      "category": "UserWarning",
+      "message": "Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True."
+    },
+    {
+      "category": "UserWarning",
+      "message": "TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()"
+    },
+    {
+      "category": "UserWarning",
+      "message": "torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:656.)"
+    }
+  ],
+  "numerical_warning_count": 0,
+  "source_provenance": {
+    "production_commit": "155de23c1130ebc1f4fe3e76c455fbfb3b513533",
+    "dirty": true,
+    "note": "Before scaled-CSR implementation; Stage05 profiling harness was untracked. The committed profile helper body is unchanged; diagnostic times are excluded from headline comparisons.",
+    "unchanged_profile_helper_sha256": "483ac63d38b3fa6e8e92b04ab001044a0f271672b21744e13cadaaae26edd2d0"
+  }
+}
