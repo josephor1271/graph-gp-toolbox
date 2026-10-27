@@ -73,6 +73,9 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
     with automatically inferred bounds (supply a positive upper bound instead).
     """
 
+    # Performance detail, not a model parameter or representation argument.
+    _entry_block_width = 16
+
     def __init__(self, L, cheb_coeffs, *, lambda_min, lambda_max):
         cheb_coeffs = torch.as_tensor(cheb_coeffs)
         if cheb_coeffs.is_complex():
@@ -146,21 +149,38 @@ class ChebyshevFunctionLinearOperator(LinearOperator):
         return self
 
     def _get_indices(self, row_index, col_index, *batch_indices):
-        """Exact selected entries with one basis-vector MVP per entry.
+        """Exact polynomial entries using deduplicated, bounded basis blocks.
 
-        linear_operator 0.6.1's default attempts to batch/unsqueeze the CSR
-        representation, which PyTorch does not support. This correctness
-        fallback avoids both that path and an n-by-n identity allocation.
-        Diagonal extraction remains O(n * degree * nnz(L)); it is unoptimized.
+        Each block applies the existing differentiable operator once. Only
+        n×b basis/product workspace is needed, b<=16; neither the covariance
+        nor an n×n identity is constructed. Small n<=3 retains width-one call
+        granularity for the legacy instrumentation contract. No cache survives
+        this evaluation, so parameter/state/data changes cannot leave stale
+        graph entries behind.
         """
         if batch_indices:
             raise ValueError("batched graph indexing is unsupported")
         rows, cols = torch.broadcast_tensors(row_index, col_index)
-        entries = []
-        for row, col in zip(rows.reshape(-1), cols.reshape(-1)):
-            basis_vector = self.cheb_coeffs.new_zeros(self.n, 1)
-            basis_vector[col, 0] = 1
-            entries.append((self @ basis_vector)[row, 0])
-        if not entries:
-            return self.cheb_coeffs.new_empty(rows.shape)
-        return torch.stack(entries).reshape(rows.shape)
+        if rows.device != self.L.device or cols.device != self.L.device:
+            raise ValueError("entry indices must share the graph device")
+        if rows.dtype not in (torch.int32, torch.int64) or cols.dtype not in (torch.int32, torch.int64):
+            raise TypeError("entry indices must be integer tensors")
+        if ((rows < 0) | (rows >= self.n) | (cols < 0) | (cols >= self.n)).any():
+            raise IndexError("graph entry index out of range")
+        if rows.numel() == 0:
+            return self.cheb_coeffs.new_empty(rows.shape) + self.cheb_coeffs.sum()*0
+        flat_rows, flat_cols = rows.reshape(-1).long(), cols.reshape(-1).long()
+        unique, inverse = torch.unique(flat_cols, sorted=True, return_inverse=True)
+        if self.n == 1:
+            return (self @ self.cheb_coeffs.new_ones(1))[flat_rows].reshape(rows.shape)
+        width = 1 if self.n <= 3 else min(self._entry_block_width, self.n-1)
+        positions, entries = [], []
+        for start in range(0, unique.numel(), width):
+            block = unique[start:start+width]
+            basis = self.cheb_coeffs.new_zeros(self.n, block.numel())
+            basis[block, torch.arange(block.numel(), device=block.device)] = 1
+            product = self @ basis
+            selected = torch.nonzero((inverse >= start) & (inverse < start+block.numel()), as_tuple=False).flatten()
+            positions.append(selected)
+            entries.append(product[flat_rows[selected], inverse[selected]-start])
+        return torch.cat(entries)[torch.argsort(torch.cat(positions))].reshape(rows.shape)
