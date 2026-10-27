@@ -1,9 +1,13 @@
 """Paired cases, mandatory accounting, failures and per-operation qualification."""
+import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import torch
@@ -14,6 +18,31 @@ from graphgp.benchmarking.stage05_report import validate,operation_accuracy,cand
 
 
 class Stage05Study(unittest.TestCase):
+    def test_archival_provenance_checks_historical_bytes_and_fails_closed(self):
+        spec = importlib.util.spec_from_file_location('curator', 'experiments/05_curate_evidence.py')
+        curator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(curator)
+        content = b'original measured source\n'
+        environment = dict(
+            source_commit='a' * 40,
+            source_hashes={'worker.py': hashlib.sha256(content).hexdigest()},
+        )
+        revision = environment['source_commit'] + ':worker.py'
+        with patch.object(curator.subprocess, 'check_output', return_value=content) as git_show:
+            curator._verify_measured_sources(environment)
+            git_show.assert_called_once_with(['git', 'show', revision], stderr=subprocess.PIPE)
+            with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+                curator._verify_measured_sources({**environment, 'source_hashes': {'worker.py': '0' * 64}})
+        failures = (
+            OSError('Git unavailable'),
+            subprocess.CalledProcessError(128, ['git', 'show'], stderr=b'unknown commit'),
+            subprocess.CalledProcessError(128, ['git', 'show'], stderr=b'path missing'),
+        )
+        for error in failures:
+            with patch.object(curator.subprocess, 'check_output', side_effect=error):
+                with self.assertRaisesRegex(RuntimeError, 'historical measured source'):
+                    curator._verify_measured_sources(environment)
+
     def test_fixed_cases_streams_fingerprints_and_nested_disjoint_targets(self):
         chosen={c.case_id:c for c in cases()}
         self.assertEqual(len(chosen),10)
@@ -52,12 +81,20 @@ class Stage05Study(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);(root/'workers').mkdir()
             def timeout(command,**kw):
-                self.assertEqual(kw['timeout'],.001);self.assertEqual(command[2],'graphgp.benchmarking.stage05_worker')
+                self.assertEqual(kw['timeout'], .001)
+                self.assertEqual(command[:3], [sys.executable, '-m', 'graphgp.benchmarking.stage05_worker'])
                 raise subprocess.TimeoutExpired(command,kw['timeout'])
             self.assertEqual(run_worker(spec,root,timeout=.001,runner=timeout)['status'],'timeout')
             for code,status in [(2,'nonzero_exit'),(-9,'signal')]:
                 r=run_worker(spec,root,runner=lambda *a,**k:subprocess.CompletedProcess(a[0],code,'','out of memory'))
                 self.assertEqual(r['status'],status);self.assertTrue(r['oom_indicator'])
+            missing = run_worker(
+                spec, root, runner=lambda command, **kwargs: subprocess.CompletedProcess(command, 0, '', '')
+            )
+            self.assertEqual(missing['status'], 'missing_output')
+            def cannot_spawn(command, **kwargs):
+                raise OSError('injected spawn failure')
+            self.assertEqual(run_worker(spec, root, runner=cannot_spawn)['status'], 'launch_error')
             def invalid(command,**kw):
                 Path(command[-1]).write_text('{}');return subprocess.CompletedProcess(command,0,'','')
             self.assertEqual(run_worker(spec,root,runner=invalid)['status'],'invalid_output')

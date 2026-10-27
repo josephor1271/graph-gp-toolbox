@@ -33,6 +33,7 @@ class Stage04BenchmarkTests(unittest.TestCase):
 
         def timeout(command, **kwargs):
             calls.append(command)
+            self.assertEqual(command[:3], [sys.executable, "-m", "graphgp.benchmarking.worker"])
             raise subprocess.TimeoutExpired(command, kwargs["timeout"])
 
         timed_out = self._execute(timeout)
@@ -62,6 +63,9 @@ class Stage04BenchmarkTests(unittest.TestCase):
             raise OSError("injected spawn failure")
 
         self.assertEqual(self._execute(cannot_spawn)["status"], "launch_error")
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "unknown worker module"):
+                execute(self._spec(), Path(directory), worker_module="unapproved.worker")
 
     def test_unsupported_memory_keeps_success_and_failure_denominators(self):
         with patch("graphgp.benchmarking.worker.platform.system", return_value="unsupported"):

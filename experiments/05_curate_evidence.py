@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import tempfile
 
 from graphgp.benchmarking.coordinator import write_json
@@ -16,6 +17,18 @@ from graphgp.benchmarking.stage05_report import write_report
 
 
 def load(path):return json.loads(Path(path).read_text())
+
+
+def _verify_measured_sources(environment):
+    commit = environment['source_commit']
+    for path, expected in environment['source_hashes'].items():
+        revision = f'{commit}:{path}'
+        try:
+            content = subprocess.check_output(['git', 'show', revision], stderr=subprocess.PIPE)
+        except (OSError, subprocess.CalledProcessError) as error:
+            raise RuntimeError(f'Cannot read historical measured source {revision}') from error
+        if hashlib.sha256(content).hexdigest() != expected:
+            raise ValueError(f'Historical measured source hash mismatch: {revision}')
 
 
 def baseline_metadata():
@@ -56,7 +69,7 @@ def main():
         for path in staging.glob('*.csv'):
             if path.read_bytes()!=(args.source/path.name).read_bytes():raise ValueError('raw-to-CSV recomputation mismatch: '+path.name)
     args.output.mkdir(parents=True)
-    for name in ('config.json','environment.json','completion.json','operator_micro.csv','inference.csv','accuracy.csv','entry_diagonal.csv','solver.csv','summary.csv','pairing.csv','t32_supplement.csv'):
+    for name in ('config.json','environment.json','completion.json','operator_micro.csv','inference.csv','accuracy.csv','entry_diagonal.csv','summary.csv','pairing.csv'):
         shutil.copyfile(args.source/name,args.output/name)
     baseline=baseline_metadata();write_json(args.output/'baseline.json',baseline)
     validation=load('results/stage05_validation.json')
@@ -94,11 +107,11 @@ def main():
         for path,digest in baseline['historical_sha256'].items() if hashlib.sha256(Path(path).read_bytes()).hexdigest()!=digest}
     if mismatches:raise ValueError('Historical evidence changed: '+str(mismatches))
     measured=load(args.source/'environment.json')
-    source_mismatches={path:dict(measured=digest,current=hashlib.sha256(Path(path).read_bytes()).hexdigest())
-        for path,digest in measured['source_hashes'].items() if hashlib.sha256(Path(path).read_bytes()).hexdigest()!=digest}
-    if source_mismatches:raise ValueError('Measured source changed: '+str(source_mismatches))
+    _verify_measured_sources(measured)
     write_json(args.output/'audit.json',dict(historical_files_checked=len(baseline['historical_sha256']),historical_mismatches=mismatches,
-        measured_source_files_checked=len(measured['source_hashes']),measured_source_mismatches=source_mismatches,
+        measured_source_files_checked=len(measured['source_hashes']),measured_source_mismatches={},
+        curation_type='archival_recuration',source_verification_commit=measured['source_commit'],
+        source_verification_scope='recorded Git commit bytes; current working tree is not compared',
         raw_csv_recomputation='byte-identical',prebenchmark_checks=load('results/stage05_prebenchmark_checks.json') if Path('results/stage05_prebenchmark_checks.json').exists() else
             load('docs/evidence/chebyshev_stage05/audit.json')['prebenchmark_checks'],
         worker_statuses=dict(Counter(r['status'] for r in records)),

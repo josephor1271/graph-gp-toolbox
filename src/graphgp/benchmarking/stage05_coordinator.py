@@ -95,11 +95,11 @@ def requests(*,smoke=False,profile_only=False,max_cases=None):
     return output
 
 
-def run_worker(spec,output,*,timeout=TIMEOUT_SECONDS,runner=subprocess.run):
-    def stage05_runner(command,**kwargs):
-        command=list(command);command[2]='graphgp.benchmarking.stage05_worker'
-        return runner(command,**kwargs)
-    return execute(spec,output,timeout=timeout,runner=stage05_runner)
+def run_worker(spec, output, *, timeout=TIMEOUT_SECONDS, runner=subprocess.run):
+    return execute(
+        spec, output, timeout=timeout, runner=runner,
+        worker_module="graphgp.benchmarking.stage05_worker",
+    )
 
 
 def orchestrate(output,*,smoke=False,profile_only=False,max_cases=None,candidate=False):

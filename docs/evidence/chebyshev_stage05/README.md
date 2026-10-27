@@ -45,6 +45,11 @@ calling it the old method. The original scalar implementation also remains a
 scoped benchmark-only reference, and all original/new timings in entry_diagonal.csv
 use the same present source, data and solver settings.
 
+Archival re-curation verifies source hashes at the measured commit recorded in
+environment.json using local Git objects, not current working-tree source. Keep
+that Git history available; missing objects/paths or hash mismatches are errors.
+Fresh audits are labeled re-curation; this package's historical audit is unchanged.
+
 ## Interpretation and scope
 
 - config.json fixes all case shapes, settings, repeats, numerical gates and
@@ -79,7 +84,7 @@ use the same present source, data and solver settings.
   A wrong sign for a raw reference magnitude >0.001 additionally disqualifies a
   training crossover even when the loose screen passes. Strict and exhaustive
   tiny controls have separate labels and never enter primary timing medians.
-- solver.csv retains actual CG calls/RHS shapes, returned Lanczos orders, warnings
+- inference.csv retains actual CG calls/RHS shapes, returned Lanczos orders, warnings
   and three fresh noisy-covariance residuals. CG iteration counts remain null;
   polynomial recurrence applications are not scalar-vector FLOPs. Inclusive
   method timers overlap outer wall time and may not be added into a cost budget.
@@ -99,10 +104,15 @@ use the same present source, data and solver settings.
   byte count is distinct from whole-worker peak RSS. Candidate plot lines come
   from this separate interleaved microstudy; admission ratios use its matched
   baseline rather than a main-study timing from a different execution block.
-- t32_supplement.json/csv label the secondary-only spectral PSD square root used
+- inference.csv and operator_micro.csv retain all 12 T=32 operation rows;
+  t32_supplement.json labels the secondary-only spectral PSD square root used
   for noiseless data. Only tolerated negative temporal eigenvalues were clipped
   for sampling. The inference kernel and historical Stage04 failures were not
   repaired or overwritten.
+
+The redundant solver.csv and t32_supplement.csv remain recoverable at commit
+`b4da90af45954562509965ad8831add2d9e5f32a`. Their shared fields and residual aliases
+were verified against the retained tables; no underlying measurements were removed.
 
 Exactly three figures read the committed CSVs only. Their PNG bytes are
 reproducible in the recorded Matplotlib/font environment. They do not run GP
