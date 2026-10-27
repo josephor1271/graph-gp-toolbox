@@ -104,7 +104,7 @@ with iterative_settings(cg_tolerance=1e-4):
     mean_only = predict_marginals(model, torch.tensor([1, 3]), mean_only=True)
 ```
 
-`noise` is observation **variance**, not standard deviation. `moments` contains
+`noise` is observation **variance**. `moments` contains
 mean, latent variance and observation variance. The model is zero-mean; amplitude
 is fixed to one unless `learn_amplitude=True`. Node IDs may be unordered or repeated.
 The factory uses the degree-scaled combinatorial Laplacian with spectrum in [0,2]
