@@ -54,8 +54,8 @@ def degree_domain():
 def tiny_gates():
     import numpy as np,torch
     from graphgp.benchmarking.stage05_cases import cases,ARMS,ARM_CONFIG,make_problem,profile,probe_seed
-    from graphgp.benchmarking.stage05_runtime import inference_context,selected_dense_reference
-    from graphgp.benchmarking.stage05_operations import mll_measurement
+    from graphgp.benchmarking.reference import selected_dense_reference
+    from graphgp.benchmarking.stage05_operations import inference_context,mll_measurement
     from graphgp.benchmarking.solver import solver_diagnostics
     from graphgp.inference.instrumentation import instrument_operator
     from graphgp.inference.predict import predict_marginals
