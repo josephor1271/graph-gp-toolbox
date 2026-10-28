@@ -27,12 +27,10 @@ def run(spec):
     from graphgp.benchmarking.stage05_cases import (
         Stage05Case, ARM_CONFIG, make_problem, profile, probe_seed,
     )
-    from graphgp.benchmarking.stage05_runtime import (
-        inference_context, selected_dense_reference, warm_prediction, action_diagnostics,
-    )
+    from graphgp.benchmarking.reference import selected_dense_reference
     from graphgp.benchmarking.stage05_operations import (
         product_measurement, entry_measurement, mll_measurement, profile_mll,
-        gather_scatter_measurement,
+        gather_scatter_measurement, inference_context, warm_prediction, action_diagnostics,
     )
     from graphgp.benchmarking.solver import solver_diagnostics, relative_residual
     from graphgp.benchmarking.worker import guarded_sparse

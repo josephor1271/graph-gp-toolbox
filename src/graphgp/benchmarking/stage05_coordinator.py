@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import time
 
-from graphgp.benchmarking.coordinator import execute,environment,write_json,TIMEOUT_SECONDS
+from graphgp.benchmarking.coordinator import collect_records,execute,environment,write_json,TIMEOUT_SECONDS
 from graphgp.benchmarking.stage05_cases import cases,arms,ARMS,BASELINE_SHA
 
 
@@ -126,11 +126,8 @@ def orchestrate(output,*,smoke=False,profile_only=False,max_cases=None,candidate
     env=environment()
     env['source_hashes'].update({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(Path('experiments').glob('05_*.py'))})
     write_json(output/'config.json',config);write_json(output/'environment.json',env);write_json(output/'requests.json',specs)
-    records=[];start=time.perf_counter()
-    for i,spec in enumerate(specs):
-        row=run_worker(spec,output);records.append(row)
-        with (output/'records.jsonl').open('a') as stream:stream.write(json.dumps(row,allow_nan=False)+'\n')
-        print(f"{i+1}/{len(specs)} {spec['run_id']}: {row['status']} wall={row['child_wall_seconds']:.3f}s",flush=True)
+    start = time.perf_counter()
+    records = collect_records(specs, output, worker_module="graphgp.benchmarking.stage05_worker")
     completion=write_report(output,specs,records)
     completion['total_worker_wall_seconds']=sum(r['child_wall_seconds'] for r in records)
     completion['total_coordinator_wall_seconds']=time.perf_counter()-start

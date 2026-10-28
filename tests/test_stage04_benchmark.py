@@ -13,7 +13,7 @@ import unittest
 from unittest.mock import patch
 
 from graphgp.benchmarking.cases import dense_eligible, primary_cases
-from graphgp.benchmarking.coordinator import execute, request, scaling_requests, solver_requests
+from graphgp.benchmarking.coordinator import collect_records, execute, request, scaling_requests, solver_requests
 from graphgp.benchmarking.report import compare_accuracy, flatten, summarize, validate_records
 from graphgp.benchmarking.worker import peak_rss_mib
 
@@ -170,13 +170,59 @@ class Stage04BenchmarkTests(unittest.TestCase):
             self.assertEqual(actual, expected)
         self.assertFalse(any(row["profile"] == "exhaustive_tiny" and row["case"]["n"] != 16 for row in sweep))
 
+    def test_shared_collector_preserves_dispatch_order_journal_and_progress(self):
+        specs = [self._spec(repeat=index) for index in range(3)]
+        rows = [{**spec, "status": status, "child_wall_seconds": 1.2345}
+                for spec, status in zip(specs, ("ok", "timeout", "signal"))]
+        for module in ("graphgp.benchmarking.worker", "graphgp.benchmarking.stage05_worker"):
+            with self.subTest(module=module), tempfile.TemporaryDirectory() as directory:
+                output = Path(directory)
+                journal = output / "records.jsonl"
+                calls = []
+
+                def execute_once(spec, path, *, worker_module):
+                    self.assertEqual(path, output)
+                    self.assertEqual(worker_module, module)
+                    expected = "".join(json.dumps(row, allow_nan=False) + "\n" for row in calls)
+                    self.assertEqual(journal.read_text() if journal.exists() else "", expected)
+                    self.assertEqual(spec, specs[len(calls)])
+                    calls.append(rows[len(calls)])
+                    return calls[-1]
+
+                with patch("graphgp.benchmarking.coordinator.execute", side_effect=execute_once):
+                    with patch("builtins.print") as progress:
+                        self.assertEqual(collect_records(specs, output, worker_module=module), rows)
+                self.assertEqual(calls, rows)
+                self.assertEqual([json.loads(line) for line in journal.read_text().splitlines()], rows)
+                self.assertEqual(progress.call_count, len(specs))
+                for index, (call, row) in enumerate(zip(progress.call_args_list, rows), start=1):
+                    self.assertEqual(call.args, (
+                        f"{index}/3 {row['run_id']}: {row['status']} wall=1.234s",
+                    ))
+                    self.assertEqual(call.kwargs, {"flush": True})
+
+    def test_shared_collector_keeps_prior_journal_on_exception_or_nonfinite_row(self):
+        specs = [self._spec(repeat=index) for index in range(3)]
+        good = {**specs[0], "status": "ok", "child_wall_seconds": 1.0}
+        bad = {**specs[1], "status": "ok", "child_wall_seconds": float("nan")}
+        for outcome, error in ((bad, ValueError), (OSError("injected failure"), OSError)):
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as directory:
+                output = Path(directory)
+                with patch("graphgp.benchmarking.coordinator.execute", side_effect=[good, outcome]) as run:
+                    with patch("builtins.print"), self.assertRaises(error):
+                        collect_records(specs, output, worker_module="graphgp.benchmarking.worker")
+                self.assertEqual(run.call_count, 2)
+                self.assertEqual((output / "records.jsonl").read_text(), json.dumps(good) + "\n")
+
     def test_parent_coordinator_import_does_not_load_numerical_stack(self):
-        command = """import json, sys
-import graphgp.benchmarking.coordinator
+        for module in ("graphgp.benchmarking.coordinator", "graphgp.benchmarking.stage05_coordinator"):
+            command = f"""import json, sys
+import {module}
 print(json.dumps(sorted(name for name in ('torch','gpytorch','numpy','scipy') if name in sys.modules)))
 """
-        output = subprocess.check_output([sys.executable, "-c", command], text=True)
-        self.assertEqual(json.loads(output), [])
+            with self.subTest(module=module):
+                output = subprocess.check_output([sys.executable, "-c", command], text=True)
+                self.assertEqual(json.loads(output), [])
 
 
 if __name__ == "__main__":
