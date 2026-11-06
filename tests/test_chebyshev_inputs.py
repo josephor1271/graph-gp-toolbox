@@ -12,7 +12,7 @@ from graphgp.operators.coefficients import (
     chebyshev_coefficients_from_samples_torch,
 )
 from graphgp.operators.chebyshev import ChebyshevFunctionLinearOperator
-from graphgp.diagnostics import heat_polynomial_diagnostics
+from graphgp.validation import polynomial_diagnostics
 from tests.helpers import DTYPE, dense_heat, path_laplacian, random_tensor
 
 
@@ -90,14 +90,14 @@ class CoefficientTests(unittest.TestCase):
 
     def test_heat_polynomial_safe_regime(self):
         for time in [0.25, 1.1, 4.0]:
-            result = heat_polynomial_diagnostics(heat_time=time)
+            result = polynomial_diagnostics({'lambda_max': 4.0}, degree=32, heat_time=time)
             with self.subTest(time=time):
-                self.assertGreater(result["minimum"], 0)
-                self.assertLess(result["max_abs_error"], 1e-12)
+                self.assertGreater(result["scalar_minimum"], 0)
+                self.assertLess(result["scalar_max_abs_error"], 1e-12)
 
     def test_diagnostic_exposes_negative_truncation(self):
-        coarse = heat_polynomial_diagnostics(heat_time=4, degree=4)
-        resolved = heat_polynomial_diagnostics(heat_time=4, degree=32)
-        self.assertLess(coarse["minimum"], -1e-3)
-        self.assertGreater(resolved["minimum"], 0)
-        self.assertLess(resolved["max_abs_error"], coarse["max_abs_error"])
+        coarse = polynomial_diagnostics({'lambda_max': 4.0}, degree=4, heat_time=4)
+        resolved = polynomial_diagnostics({'lambda_max': 4.0}, degree=32, heat_time=4)
+        self.assertLess(coarse["scalar_minimum"], -1e-3)
+        self.assertGreater(resolved["scalar_minimum"], 0)
+        self.assertLess(resolved["scalar_max_abs_error"], coarse["scalar_max_abs_error"])

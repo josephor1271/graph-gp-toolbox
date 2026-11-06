@@ -10,8 +10,7 @@ from graphgp.operators.chebyshev import scipy_csr_to_torch_csr
 from graphgp.utils.graphs import make_laplacian
 from graphgp.benchmarking.worker import guarded_sparse
 from graphgp.benchmarking.stage05_cases import cases,make_problem,profile,probe_seed,ARMS
-from graphgp.benchmarking.stage05_runtime import inference_context
-from graphgp.benchmarking.stage05_operations import mll_measurement
+from graphgp.benchmarking.stage05_operations import inference_context,mll_measurement
 from graphgp.models.graph_time import make_graph_time_gp
 from graphgp.inference.predict import predict_marginals
 

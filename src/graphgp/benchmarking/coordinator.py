@@ -123,6 +123,19 @@ def execute(spec, output, *, timeout=TIMEOUT_SECONDS, runner=subprocess.run,
     return row
 
 
+def collect_records(specs, output, *, worker_module):
+    """Run each measurement once and journal it before starting the next."""
+    records = []
+    for index, spec in enumerate(specs, start=1):
+        row = execute(spec, output, worker_module=worker_module)
+        records.append(row)
+        # Crash-visible journal; measurements are never retried or resumed implicitly.
+        with (output / "records.jsonl").open("a") as stream:
+            stream.write(json.dumps(row, allow_nan=False) + "\n")
+        print(f"{index}/{len(specs)} {spec['run_id']}: {row['status']} wall={row['child_wall_seconds']:.3f}s", flush=True)
+    return records
+
+
 def orchestrate(output, *, smoke=False, max_cases=None, solver_only=False):
     output = Path(output)
     if output.exists():
@@ -151,14 +164,7 @@ def orchestrate(output, *, smoke=False, max_cases=None, solver_only=False):
     write_json(output/"config.json", config)
     write_json(output/"environment.json", environment())
     write_json(output/"requests.json", specs)
-    records = []
-    for i, spec in enumerate(specs):
-        row = execute(spec, output)
-        records.append(row)
-        # Crash-visible journal; measurements are never retried or resumed implicitly.
-        with (output/"records.jsonl").open("a") as stream:
-            stream.write(json.dumps(row, allow_nan=False)+"\n")
-        print(f"{i+1}/{len(specs)} {spec['run_id']}: {row['status']} wall={row['child_wall_seconds']:.3f}s", flush=True)
+    records = collect_records(specs, output, worker_module="graphgp.benchmarking.worker")
     checks, accuracy = compare_accuracy(records)
     raw = [flatten(r) | ({"polynomial_mvp_max_abs_error": r["polynomial_mvp_max_abs_error"]} if "polynomial_mvp_max_abs_error" in r else {}) for r in records]
     summary = summarize(raw)

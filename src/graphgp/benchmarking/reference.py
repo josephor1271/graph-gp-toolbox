@@ -9,7 +9,7 @@ from typing import Any
 
 import gpytorch
 import numpy as np
-from scipy.linalg import cho_factor, cho_solve
+from scipy.linalg import cho_factor, cho_solve, expm
 import torch
 
 from graphgp.analysis.graph_time_oracle import (
@@ -101,4 +101,70 @@ def dense_reference(problem: dict[str, Any], case, *, tau: float = 1.2,
         exact_solutions=cho_solve(factor, rhs).tolist(),
         prior_mvp=(prior @ mvp_rhs).tolist(),
         reference="independent scipy expm/NumPy RBF/Cholesky; independent Torch raw derivatives",
+    )
+
+
+def selected_dense_reference(problem, case):
+    """Independent selected-space oracle up to n400, without a full nT prior."""
+    if case.n > 400 or case.secondary:
+        raise ValueError('independent dense reference restricted to primary n<=400')
+    laplacian = problem['L'].toarray()
+    graph_covariance = expm(-1.2 * laplacian)
+    time_grid = problem['time_grid']
+    train = problem['train_pairs'].astype(np.int64)
+    target = problem['target_pairs'].astype(np.int64)
+
+    def block(left, right):
+        return graph_covariance[left[:, 0, None], right[None, :, 0]] * np.exp(
+            -(time_grid[left[:, 1, None]] - time_grid[right[None, :, 1]])**2 / (2 * .24**2)
+        )
+
+    covariance = block(train, train) + .06 * np.eye(case.m)
+    factor = cho_factor(covariance, lower=True)
+    observations = problem['train_y']
+    alpha = cho_solve(factor, observations)
+    cross = block(target, train)
+    mean = cross @ alpha
+    variance = np.diag(graph_covariance)[target[:, 0]] - np.sum(cross * cho_solve(factor, cross.T).T, axis=1)
+    nll = float((np.log(np.diag(factor[0])).sum()*2 + observations @ alpha + case.m*np.log(2*np.pi)) / (2*case.m))
+    raw = []
+    physical = []
+    for value, bounds in [(1.2, HEAT_RANGE), (.24, LENGTHSCALE_RANGE)]:
+        constraint = gpytorch.constraints.Interval(*bounds).double()
+        parameter = constraint.inverse_transform(torch.tensor(value, dtype=torch.float64)).detach().requires_grad_(True)
+        raw.append(parameter)
+        physical.append(constraint.transform(parameter))
+    tau, ell = physical
+    graph = torch.matrix_exp(-tau * torch.from_numpy(laplacian))
+    pairs = torch.from_numpy(train)
+    times = torch.from_numpy(time_grid)
+    cov = graph[pairs[:, 0, None], pairs[None, :, 0]] * torch.exp(
+        -(times[pairs[:, 1, None]] - times[pairs[None, :, 1]])**2 / (2 * ell**2)
+    ) + .06 * torch.eye(case.m, dtype=torch.float64)
+    chol = torch.linalg.cholesky(cov)
+    values = torch.from_numpy(observations)
+    loss = (
+        2 * chol.diagonal().log().sum() + values @ torch.cholesky_solve(values[:, None], chol)[:, 0]
+        + case.m * np.log(2 * np.pi)
+    ) / (2 * case.m)
+    gradients = torch.autograd.grad(loss, raw)
+    products = {}
+    temporal = np.exp(-(time_grid[:, None] - time_grid[None, :])**2 / (2 * .24**2))
+    for width in (1, 8, 32):
+        graph_product = graph_covariance @ problem['graph_rhs'][:, :width]
+        full_rhs = problem['full_rhs'][:, :width].reshape(case.n, case.num_times, width)
+        full_product = np.stack(
+            [graph_covariance @ full_rhs[:, :, k] @ temporal.T for k in range(width)], axis=-1,
+        ).reshape(case.nT, width)
+        for kind, array in [('graph_mvp', graph_product), ('full_mvp', full_product)]:
+            indices = np.linspace(0, len(array)-1, min(32, len(array)), dtype=np.int64)
+            products[kind + str(width)] = dict(
+                sample_rows=indices.tolist(), product_sample=array[indices].tolist(),
+            )
+    return dict(
+        nll=nll, raw_gradients=dict(zip(('heat_time', 'lengthscale'), [float(x) for x in gradients])),
+        mean=mean.tolist(), latent_variance=variance.tolist(),
+        observation_variance=(variance + .06).tolist(),
+        exact_solutions=cho_solve(factor, problem['solve_rhs']).tolist(), products=products,
+        reference_kind='independent scipy expm/selected NumPy RBF/Cholesky and Torch matrix-exp derivatives',
     )
